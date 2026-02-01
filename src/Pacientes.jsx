@@ -1,7 +1,7 @@
 
 
 
-import { Articulo } from "./components/articulo"
+import { Articulo } from "./components/Articulo"
 import { Footer } from "./components/Footer"
 import { Header } from "./components/Header"
 
