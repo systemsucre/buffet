@@ -29,8 +29,7 @@ export function Tramites() {
                 </div> */}
 
 
-                <div className="row g-3 mb-4 " style={{ padding: '10px' }}>
-                    {/* Tarjeta: Total */}
+                <div className="row g-3 mb-4 " style={{ padding: '10px'  }}>
                     <div className="col-lg-4 col-md-4 col-sm-6 col-6 panel-custom bg-primary-light ">
                         <div className="border-0 shadow-sm p-3 border-start border-primary border-4 card-stats">
                             <div className="d-flex align-items-center justify-content-between">
@@ -45,7 +44,6 @@ export function Tramites() {
                         </div>
                     </div>
 
-                    {/* Tarjeta: En Proceso */}
                     <div className="col-lg-4 col-md-4 col-sm-6 col-6 panel-custom bg-warning-light">
                         <div className=" border-0 shadow-sm p-3 border-start border-warning border-4 card-stats">
                             <div className="d-flex align-items-center justify-content-between">
@@ -62,7 +60,6 @@ export function Tramites() {
                         </div>
                     </div>
 
-                    {/* Tarjeta: Urgentes */}
                     <div className="col-lg-4 col-md-4 col-sm-12 col-12 panel-custom bg-danger-light">
                         <div className=" border-0 shadow-sm p-3 border-start border-danger border-4 card-stats">
                             <div className="d-flex align-items-center justify-content-between">
@@ -83,7 +80,7 @@ export function Tramites() {
                 <div className="panel-custom">
 
                     {/* BARRA DE ACCIONES: Buscador a la derecha */}
-                    <div className="d-flex align-items-center mb-3 bg-white p-3 pr-0 pl-0 m-0 shadow-sm row ">
+                    <div className="d-flex align-items-center mb-3 bg-white p-0 pt-3 pr-0 pl-0 pb-0 m-0 shadow-sm row ">
                         <div className="col-sm-12">
                             <div className="d-flex gap-2">
                                 {/* Filtros rápidos opcionales */}

@@ -392,10 +392,10 @@ button:not(:disabled),
 
 @media (max-width: 500px) {
   .container-xl {
-  
+
     padding-right: 0;
     padding-left: 0;
-  
+
   }
 }
 
@@ -560,9 +560,9 @@ button:not(:disabled),
 }
 
 @media (max-width: 500px) {
- .btn {
-     padding: 5px;
-     font-size: 12px;
+  .btn {
+    padding: 5px;
+    font-size: 12px;
   }
 }
 
@@ -771,11 +771,13 @@ button:not(:disabled),
 .p-3 {
   padding: 1rem !important;
 }
-.pr-0{
-   padding-right: 0 !important;
+
+.pr-0 {
+  padding-right: 0 !important;
 }
-.pl-0{
-   padding-left: 0 !important;
+
+.pl-0 {
+  padding-left: 0 !important;
 }
 
 .px-5 {
@@ -1428,6 +1430,10 @@ button:not(:disabled),
 
 /* --- MAGIA PARA MÓVILES (Celulares y Tablets pequeñas) --- */
 @media (max-width: 878px) {
+  .table-responsive-custom {
+    min-width: 300px;
+  }
+
   .table-responsive-custom thead {
     display: none;
     /* Escondemos los headers arriba */
@@ -1438,7 +1444,7 @@ button:not(:disabled),
     margin-bottom: 1.5rem;
     border: 1px solid var(--hospital-blue);
     border-radius: 12px;
-    padding: 10px;
+    padding: 3px;
     background: #fff;
   }
 
