@@ -29,7 +29,7 @@ export function Tramites() {
                 </div> */}
 
 
-                <div className="row g-3 mb-4 " style={{ padding: '10px'  }}>
+                {/* <div className="row g-3 mb-4 " style={{ padding: '10px'  }}>
                     <div className="col-lg-4 col-md-4 col-sm-6 col-6 panel-custom bg-primary-light ">
                         <div className="border-0 shadow-sm p-3 border-start border-primary border-4 card-stats">
                             <div className="d-flex align-items-center justify-content-between">
@@ -75,7 +75,7 @@ export function Tramites() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="panel-custom">
 
