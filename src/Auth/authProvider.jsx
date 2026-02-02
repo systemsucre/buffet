@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem("user");
         localStorage.removeItem("tiempo");
         axios.post(URL + "/logout", { token: token });
-        return <Navigate to = '/' />
+        return <Navigate to = '/login' />
       }
     }
     check();
@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
       localStorage.removeItem("id-municipio");
       localStorage.removeItem("id-comunidad");
       axios.post(URL + "/logout", { token: token });
-      return <Navigate to = '/' />
+      return <Navigate to = '/login' />
 
       // window.location.href = LOCAL_URL+"/";
     },

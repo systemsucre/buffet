@@ -89,7 +89,6 @@ export function Tramites() {
                             </div>
                         </div>
                         <div className="col-sm-12">
-
                             <div style={{ width: '260px' }}>
                                 <InputUsuarioSearch
                                     name="input-default-search"

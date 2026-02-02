@@ -10,7 +10,7 @@ export default function Check({ component: Component, ...rest }) {
 
     return (
 
-        auth.isLogged() ? <Component /> :  <Navigate to={LOCAL_URL} replace />
+        auth.isLogged() ? <Component /> :  <Navigate to={LOCAL_URL+'/login'} replace />
 
 
     )

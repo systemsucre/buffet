@@ -16,7 +16,7 @@ export default function PublicRoute({ component: Component, ...rest }) {
     }
     return (
         auth.isLogged() ? (
-            <Navigate to={url ? LOCAL_URL + url : LOCAL_URL} replace />
+            <Navigate to={url ? LOCAL_URL + url : LOCAL_URL+'/login'} replace />
         ) : (
             <Component /> // RUTA PUBLICA
         )

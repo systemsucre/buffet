@@ -21,23 +21,24 @@ const Navbar = () => {
     <nav className={` nav-main ${isScrolled ? 'nav-scrolled' : ''}`}>
       <div className="nav-container">
         <NavLink to="/" className="nav-brand">
-          <div className="brand-icon">🏥</div>
-          <span className="brand-text">MED<span className="text-primary">FLOW</span></span>
+          <div className="brand-icon">👔</div>
+          <span className="brand-text">KR<span className="text-primary">ESTUDIOS</span></span>
         </NavLink>
 
         {/* Desktop Menu */}
         <ul className="nav-menu-desktop">
           <li><NavLink to="/" end className="nav-link-item">Dashboard</NavLink></li>
-          <li><NavLink to="/pacientes" className="nav-link-item">Pacientes</NavLink></li>
-          <li><NavLink to="/citas" className="nav-link-item">Agenda</NavLink></li>
+          <li><NavLink to="/pacientes" className="nav-link-item">Tramites</NavLink></li>
+          <li><NavLink to="/citas" className="nav-link-item">Ingresos</NavLink></li>
+          <li><NavLink to="/reportes" className="nav-link-item">Salidas</NavLink></li>
           <li><NavLink to="/reportes" className="nav-link-item">Reportes</NavLink></li>
           <li className="nav-action">
-            <NavLink to="/perfil" className="btn-nav-profile">Dr. Garcia</NavLink>
+            <NavLink to="/perfil" className="btn-nav-profile">Mi Perfil</NavLink>
           </li>
         </ul>
 
         {/* Mobile Toggle */}
-        <button 
+        <button
           className={`nav-toggle ${isMobileMenuOpen ? 'active' : ''}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
@@ -48,10 +49,12 @@ const Navbar = () => {
 
         {/* Mobile Overlay Menu */}
         <div className={`nav-menu-mobile ${isMobileMenuOpen ? 'open' : ''}`}>
-           <NavLink to="/" end className="mobile-link">Dashboard</NavLink>
-           <NavLink to={LOCAL_URL+"/pacientes"} className="mobile-link">Pacientes</NavLink>
-           <NavLink to="/citas" className="mobile-link">Agenda</NavLink>
-           <NavLink to="/perfil" className="mobile-link profile">Mi Perfil</NavLink>
+          <NavLink to="/" end className="mobile-link">Dashboard</NavLink>
+          <NavLink to={LOCAL_URL + "/pacientes"} className="mobile-link">Tramites</NavLink>
+          <NavLink to="/citas" className="mobile-link">Ingresos</NavLink>
+          <NavLink to="/citas" className="mobile-link">Salidas</NavLink>
+          <NavLink to="/citas" className="mobile-link">Reportes</NavLink>
+          <NavLink to="/perfil" className="mobile-link profile">Mi Perfil</NavLink>
         </div>
       </div>
     </nav>

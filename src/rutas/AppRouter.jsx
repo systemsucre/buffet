@@ -76,8 +76,6 @@ export default function AppRouter() {
 
   const ruta1 = createBrowserRouter([
 
-
-
     // --- GRUPO 1: RUTAS PÚBLICAS LOGIN (Sin Navbar) ---
     {
       path: LOCAL_URL + "/login",
