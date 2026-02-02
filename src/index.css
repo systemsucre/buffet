@@ -1369,7 +1369,7 @@ button:not(:disabled),
 .table-container {
   background: white;
   border-radius: 15px;
-  padding: 20px;
+  padding: 10px;
   box-shadow: var(--bs-shadow-md);
   margin-top: 0.5rem;
   overflow: hidden;
