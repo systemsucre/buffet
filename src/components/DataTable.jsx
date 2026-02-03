@@ -1,6 +1,7 @@
-import React from 'react';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const DataTable = ({ columns, data, onEdit, onDelete }) => {
+const DataTable = ({ columns, data, onEdit, onDelete, funciones }) => {
     return (
         <div className="  table-container animate-fade-up">
 
@@ -22,20 +23,17 @@ const DataTable = ({ columns, data, onEdit, onDelete }) => {
                                         {col.render ? col.render(item) : item[col.field]}
                                     </td>
                                 ))}
-                                <td data-label="Acciones" className="text-center">
-                                    <div className="d-flex gap-2 justify-content-center">
-                                        <button
-                                            onClick={() => onEdit(item)}
-                                            className="btn btn-dark-clinical py-1 px-3 x-small"
-                                        >
-                                            Editar
-                                        </button>
-                                        <button
-                                            onClick={() => onDelete(item.id)}
-                                            className="btn btn-danger py-1 px-3 x-small"
-                                        >
-                                            Borrar
-                                        </button>
+                                <td>
+                                    <div className="contenedor-botones">
+                                        {funciones.map((f, index) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => f.boton(item.id)}
+                                                className={f.className}
+                                            >
+                                                <FontAwesomeIcon icon={f.icono}/>
+                                            </button>
+                                        ))}
                                     </div>
                                 </td>
                             </tr>
@@ -43,7 +41,7 @@ const DataTable = ({ columns, data, onEdit, onDelete }) => {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     );
 };
 

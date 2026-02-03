@@ -1,5 +1,5 @@
 
-import { faClock, faExclamationTriangle, faFolder } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faClock, faEdit, faExclamationTriangle, faFolder, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "./components/DataTable";
 import { InputUsuarioSearch } from "./components/input/elementos";
 import { ColumnsTableTramites } from "./conf/columnTableTramites";
@@ -102,8 +102,12 @@ export function Tramites() {
                     <DataTable
                         columns={ColumnsTableTramites}
                         data={tramitesFiltrados}
-                        onEdit={null}
-                        onDelete={null}
+
+                        funciones={[
+                            { boton: null,  className: 'btn btn-info py-1 px-3 x-small', icono :faEdit },
+                            { boton: null,  className: 'btn btn-danger py-1 px-3 x-small', icono :faTrashAlt  },
+                            { boton: null,  className: 'btn btn-dark-clinical py-1 px-3 x-small', icono:faCheck },
+                        ]}
 
                     />
                 </div>

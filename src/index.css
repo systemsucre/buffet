@@ -617,6 +617,23 @@ button:not(:disabled),
   --bs-btn-disabled-border-color: #dc3545;
 }
 
+.btn-info {
+  --bs-btn-color: #000;
+  --bs-btn-bg: #0dcaf0;
+  --bs-btn-border-color: #0dcaf0;
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #31d2f2;
+  --bs-btn-hover-border-color: #25cff2;
+  --bs-btn-focus-shadow-rgb: 11, 172, 204;
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #3dd5f3;
+  --bs-btn-active-border-color: #25cff2;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #000;
+  --bs-btn-disabled-bg: #0dcaf0;
+  --bs-btn-disabled-border-color: #0dcaf0;
+}
+
 .btn-dark {
   --bs-btn-color: #FFF;
   --bs-btn-bg: #262626;
@@ -1153,6 +1170,42 @@ button:not(:disabled),
   border-bottom: 1px solid rgba(0, 123, 255, 0.1);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .nav-container {
   width: 90%;
   max-width: 1300px;
@@ -1180,6 +1233,7 @@ button:not(:disabled),
   gap: 35px;
   align-items: center;
 }
+
 
 .nav-link-item {
   text-decoration: none;
@@ -1216,16 +1270,134 @@ button:not(:disabled),
   color: #007bff;
 }
 
+
+/* --- CONTENEDOR PADRE --- */
+.nav-item-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Flechita indicadora */
+.arrow {
+  font-size: 0.6rem;
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+/* --- EL SUBMENÚ (FLOTANTE) --- */
+.submenu-list {
+  position: absolute;
+  top: 100%;
+  /* Justo debajo del padding del padre */
+  left: 0;
+  background: #ffffff;
+  min-width: 180px;
+  list-style: none;
+  padding: 10px 0;
+  margin: 10px 0 0 0;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2eefb;
+
+  /* Animación de entrada */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+  z-index: 1000;
+}
+
+/* --- ESTADO HOVER --- */
+.has-submenu:hover .submenu-list {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.has-submenu:hover .arrow {
+  transform: rotate(180deg);
+}
+
+/* --- LINKS DEL SUBMENÚ --- */
+.submenu-link {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.submenu-link:hover {
+  background-color: #f0f7ff;
+  color: #007bff;
+  padding-left: 25px;
+  /* Efecto de desplazamiento */
+}
+
+/* Estilo activo dentro del submenú */
+.submenu-link.active {
+  color: #007bff;
+  background-color: #f0f7ff;
+  border-left: 3px solid #007bff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* --- BOTÓN PERFIL --- */
 .btn-nav-profile {
-  background: #1e293b;
-  color: white;
   padding: 10px 22px;
   border-radius: 50px;
   text-decoration: none;
-  font-weight: 700;
   transition: all 0.3s ease;
   border: 2px solid transparent;
+
+  margin-top: 20px;
+  color: #198754;
+  border-bottom: none;
+  background: rgba(25, 135, 84, 0.05);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 700;
+
 }
 
 .btn-nav-profile:hover {
@@ -1594,4 +1766,25 @@ button:not(:disabled),
     padding: 0.75rem !important;
     /* Menos espacio interno en móvil */
   }
+}
+
+
+/* Contenedor principal */
+.contenedor-botones {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  width: 100%;
+  /* Asegura que ocupe todo el espacio */
+  min-width: max-content;
+  /* OBLIGA al contenedor a expandirse según sus hijos */
+  align-content: center;
+}
+
+/* Opcional: Para que los botones no se deformen */
+.contenedor-botones button {
+  flex: 0 0 auto !important;
+  /* Prohíbe crecer, prohíbe encoger */
+  white-space: nowrap !important;
+  /* Prohíbe que el texto se parta */
 }

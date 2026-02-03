@@ -28,35 +28,65 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <ul className="nav-menu-desktop">
           <li><NavLink to="/" end className="nav-link-item">Dashboard</NavLink></li>
-          <li><NavLink to="/pacientes" className="nav-link-item">Tramites</NavLink></li>
+          <div className="nav-item-container has-submenu">
+            {/* El NavLink padre */}
+            <NavLink to="#" className="nav-link-item">
+              Tramites <span className="arrow">▼</span>
+            </NavLink>
+
+            {/* El submenú */}
+            <ul className="submenu-list">
+              <li><NavLink to={LOCAL_URL+"/admin/tramites/nuevo"} className="submenu-link">Nuevo Trámite</NavLink></li>
+              <li><NavLink to={LOCAL_URL+"/admin/tramites/lista"} className="submenu-link">Listar Tramite</NavLink></li>
+            </ul>
+          </div>
           <li><NavLink to="/citas" className="nav-link-item">Ingresos</NavLink></li>
           <li><NavLink to="/reportes" className="nav-link-item">Salidas</NavLink></li>
           <li><NavLink to="/reportes" className="nav-link-item">Reportes</NavLink></li>
           <li className="nav-action">
             <NavLink to="/perfil" className="btn-nav-profile">Mi Perfil</NavLink>
+            {/* <NavLink to="/perfil" className="mobile-link profile" style={{color:'#198754'}}>Mi Perfil</NavLink> */}
+
           </li>
         </ul>
 
-        {/* Mobile Toggle */}
-        <button
-          className={`nav-toggle ${isMobileMenuOpen ? 'active' : ''}`}
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          <span className="bar"></span>
-          <span className="bar"></span>
-          <span className="bar"></span>
-        </button>
 
-        {/* Mobile Overlay Menu */}
-        <div className={`nav-menu-mobile ${isMobileMenuOpen ? 'open' : ''}`}>
-          <NavLink to="/" end className="mobile-link">Dashboard</NavLink>
-          <NavLink to={LOCAL_URL + "/pacientes"} className="mobile-link">Tramites</NavLink>
-          <NavLink to="/citas" className="mobile-link">Ingresos</NavLink>
-          <NavLink to="/citas" className="mobile-link">Salidas</NavLink>
-          <NavLink to="/citas" className="mobile-link">Reportes</NavLink>
-          <NavLink to="/perfil" className="mobile-link profile">Mi Perfil</NavLink>
-        </div>
+
+        {window.innerWidth < 993 ? <>
+          {/* Mobile Toggle */}
+          <button
+            className={`nav-toggle ${isMobileMenuOpen ? 'active' : ''}`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+          </button>
+
+          {/* Mobile Overlay Menu */}
+          <div className={`nav-menu-mobile ${isMobileMenuOpen ? 'open' : ''}`}>
+            <NavLink to="/" end className="mobile-link">Dashboard</NavLink>
+            <div className="nav-item-container has-submenu">
+
+              <NavLink to="/tramites" className="nav-link-item">
+                Tramites <span className="arrow">▼</span>
+              </NavLink>
+              <ul className="submenu-list">
+                <li><NavLink to="/tramites/nuevo" className="submenu-link">Nuevo Trámite</NavLink></li>
+                <li><NavLink to="/tramites/historial" className="submenu-link">Historial</NavLink></li>
+                <li><NavLink to="/tramites/pendientes" className="submenu-link">Pendientes</NavLink></li>
+              </ul>
+            </div>
+
+            <NavLink to="/citas" className="mobile-link">Ingresos</NavLink>
+            <NavLink to="/citas" className="mobile-link">Salidas</NavLink>
+            <NavLink to="/citas" className="mobile-link">Reportes</NavLink>
+            <NavLink to="/perfil" className="mobile-link profile">Mi Perfil</NavLink>
+          </div>
+        </> : null}
       </div>
+
+
     </nav>
   );
 };

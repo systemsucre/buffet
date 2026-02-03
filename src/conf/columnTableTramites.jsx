@@ -12,7 +12,7 @@ export const ColumnsTableTramites = [
         )
     },
     {
-        label: 'Vencimiento',
+        label: 'Plazo',
         field: 'fecha_limite',
         render: (row) => {
             const hoy = new Date();
@@ -23,11 +23,24 @@ export const ColumnsTableTramites = [
             if (diasRestantes <= 7) color = 'text-warning fw-bold animate-pulse'; // ¡Urgente!
             if (diasRestantes <= 4) color = 'text-danger';
 
-            return (
+            return (<div>
+                {/* Gastos realizados en el trámite */}
+                <div className="small text-muted" title="Gastos de gestión/tasas">
+                    <i className="bi bi-arrow-down-circle me-1"></i>
+                    Fecha ingreso: {row.fecha_creacion}
+                </div>
+
+
+               <div className="x-small text-info" title="Gastos de gestión/tasas">
+                    <i className="bi bi-arrow-down-circle me-1"></i>
+                    Fecha Entrega: {row.fecha_limite}
+                </div>
                 <span className={color}>
                     <i className="bi bi-clock-history me-1"></i>
-                    {row.fecha_limite} ({diasRestantes} días)
+                    Dias restantes:  ({diasRestantes} días)
                 </span>
+            </div>
+
             );
         }
     },
