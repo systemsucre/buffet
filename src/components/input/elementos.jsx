@@ -122,6 +122,7 @@ const InputUsuarioSearch = ({
   );
 };
 
+
 const Select1 = ({
   estado,
   cambiarEstado,
@@ -130,62 +131,86 @@ const Select1 = ({
   lista,
   name,
   funcion = null,
-  msg, etiqueta = null,
-  opcion = "seleccionar", select = true, importante = true,
+  msg,
+  etiqueta = null,
+  importante = true,
 }) => {
-  const [mensaje, setMensaje] = useState(null);
-  useEffect(() => {
-    setTimeout(() => {
-      setMensaje(null);
-    }, 10000);
-  }, [mensaje]);
+  const [mostrarMsg, setMostrarMsg] = useState(false);
 
-  const onChange = (e) => {
-    cambiarEstado({ campo: parseInt(e.target.value), valido: "true" });
-  };
-  const validacion = (e) => {
-    document.getElementById(name).style.display = 'none'
+  useEffect(() => {
+    let timer;
+    if (mostrarMsg) {
+      timer = setTimeout(() => {
+        setMostrarMsg(false);
+      }, 5000); // Reducido a 5s para mejor UX
+    }
+    return () => clearTimeout(timer);
+  }, [mostrarMsg]);
+
+  const handleChange = (selectedOption) => {
+    // 1. Extraer el valor (si es null por borrar la selección, ponemos null)
+    const valor = selectedOption ? parseInt(selectedOption.value) : null;
+
+    // 2. Validar inmediatamente con la ExpresionRegular
+    let esValido = "null";
     if (ExpresionRegular) {
-      if (ExpresionRegular.test(estado.campo)) {
-        cambiarEstado({ ...estado, valido: "true" }); //el valor del campo valido, debe ser una cadena
-        setMensaje(null);
-        if (funcion) funcion(parseInt(e.target.value))
-      } else {
-        cambiarEstado({ ...estado, valido: "false" });
-        setMensaje(msg);
-      }
+      esValido = ExpresionRegular.test(valor) ? "true" : "false";
+    }
+
+    // 3. Actualizar el estado global
+    cambiarEstado({ 
+      ...estado, 
+      campo: valor, 
+      valido: esValido 
+    });
+
+    // 4. Manejar mensajes de error
+    setMostrarMsg(esValido === "false");
+
+    // 5. Ejecutar función extra (como la del prefijo LOT-)
+    if (funcion && selectedOption) {
+      funcion(valor);
     }
   };
-  // console.log(lista)
+
   return (
+    <div className="mb-3">
+      {etiqueta && (
+        <label className="hospital-label w-100 mb-2 fw-bold" style={{ fontSize: '14px' }}>
+          {etiqueta} {importante && <span style={{ color: 'red' }}>*</span>}
+        </label>
+      )}
 
-    <FormGroup>
-      <label htmlFor={name}>
-        {etiqueta ? <> {etiqueta} {importante ? <span style={{ color: 'red' }}>*</span> : null}</> : null}
-      </label>
-      <Input
+      <Select
         name={Name}
-        type="select"
-        onChange={onChange}
-        valido={estado.valido}
-        value={estado.campo || ""}
-        onClick={validacion}
-      >
-        {select && <option>{opcion}</option>}
-        {lista.map((r) => (
-          <option
-            key={r.id}
-            value={r.id}
-          >
-            {r.label}
-          </option>
-        ))}
-      </Input>
-      {/* </SelectStyle> */}
-      <IconoValidacionSelect valido={estado.valido} icon={estado.valido === 'true' ? faCheckCircle : faTimesCircle} />
-      <label id={name} style={{ display: 'none', color: '#FF3D85', fontSize: '12px', fontWeight: 'bold' }}>Campo Incorrecto</label>
+        id={name}
+        placeholder={'Seleccione...'}
+        onChange={handleChange}
+        options={lista}
+        // react-select necesita el objeto completo, lo buscamos en la lista por su ID
+        value={lista.find(opt => opt.value === estado.campo) || null}
+        isSearchable={true}
+        isClearable={true}
+        styles={{
+          control: (base) => ({
+            ...base,
+            borderRadius: '8px',
+            minHeight: '45px',
+            borderColor: estado.valido === 'true' ? '#1ed12d' : estado.valido === 'false' ? '#dc3545' : '#dee2e6',
+            boxShadow: 'none',
+            '&:hover': {
+              borderColor: estado.valido === 'true' ? '#1ed12d' : estado.valido === 'false' ? '#dc3545' : '#86b7fe'
+            }
+          })
+        }}
+      />
 
-    </FormGroup >
+      {mostrarMsg && (
+        <small className="text-danger fw-bold d-block mt-1 animate__animated animate__fadeIn" style={{ fontSize: '11px' }}>
+          {msg}
+        </small>
+      )}
+    </div>
   );
 };
 
@@ -197,7 +222,8 @@ const Select1EasyColors = ({
   lista,
   name,
   funcion = null,
-  msg, etiqueta = null,
+  msg,
+  etiqueta = null,
   nivel = null,
 }) => {
 

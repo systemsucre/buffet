@@ -17,6 +17,7 @@ const INPUT = {
     TELEFONO: /^[+0-9 ]{2,18}$/, // /^\d{5,15}$/, // 7 a 10 numeros.
     CUENTA: /^\d{5,30}$/, // 7 a 10 numeros.
     ID: /^\d{1,10}$/, // id de redes, 1 a 4 digitos
+    CODIGO_TRAMITE:/^[A-Z]{3}-\d{8}$/,
     FECHA: /\d{4}[-]\d{2}[-]\d{2}/,
     MES: /\d{4}[-]\d{2}/,
     HORA: /\d{2}[:]\d{2}/,

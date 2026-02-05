@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, Link } from 'react-router-dom';
 import { LOCAL_URL } from '../../Auth/config';
 
 const Navbar = () => {
@@ -30,14 +30,14 @@ const Navbar = () => {
           <li><NavLink to="/" end className="nav-link-item">Dashboard</NavLink></li>
           <div className="nav-item-container has-submenu">
             {/* El NavLink padre */}
-            <NavLink to="#" className="nav-link-item">
+            <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
               Tramites <span className="arrow">▼</span>
             </NavLink>
 
             {/* El submenú */}
             <ul className="submenu-list">
-              <li><NavLink to={LOCAL_URL+"/admin/tramites/nuevo"} className="submenu-link">Nuevo Trámite</NavLink></li>
-              <li><NavLink to={LOCAL_URL+"/admin/tramites/lista"} className="submenu-link">Listar Tramite</NavLink></li>
+              <li><NavLink to={LOCAL_URL+"/admin/nuevo-tramite"} className="submenu-link">Nuevo Trámite</NavLink></li>
+              <li><NavLink to={LOCAL_URL+"/admin/tramites"} className="submenu-link">Lista Tramites</NavLink></li>
             </ul>
           </div>
           <li><NavLink to="/citas" className="nav-link-item">Ingresos</NavLink></li>
@@ -65,16 +65,15 @@ const Navbar = () => {
 
           {/* Mobile Overlay Menu */}
           <div className={`nav-menu-mobile ${isMobileMenuOpen ? 'open' : ''}`}>
-            <NavLink to="/" end className="mobile-link">Dashboard</NavLink>
+            <NavLink to="#" end className="mobile-link">Dashboard</NavLink>
             <div className="nav-item-container has-submenu">
 
-              <NavLink to="/tramites" className="nav-link-item">
+              <NavLink to="#"  className="nav-link-item" onClick={(e) => e.preventDefault()}> 
                 Tramites <span className="arrow">▼</span>
               </NavLink>
               <ul className="submenu-list">
-                <li><NavLink to="/tramites/nuevo" className="submenu-link">Nuevo Trámite</NavLink></li>
-                <li><NavLink to="/tramites/historial" className="submenu-link">Historial</NavLink></li>
-                <li><NavLink to="/tramites/pendientes" className="submenu-link">Pendientes</NavLink></li>
+                <li><NavLink to = {LOCAL_URL+"/admin/nuevo-tramite"} className="submenu-link">Nuevo Trámite</NavLink></li>
+                <li><NavLink to = {LOCAL_URL+"/admin/tramites"}  className="submenu-link">Lista Tramites</NavLink></li>
               </ul>
             </div>
 

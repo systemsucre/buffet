@@ -1,7 +1,8 @@
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom'
 
-const DataTable = ({ columns, data, onEdit, onDelete, funciones }) => {
+const DataTable = ({ columns, data, funciones }) => {
     return (
         <div className="  table-container animate-fade-up">
 
@@ -26,13 +27,15 @@ const DataTable = ({ columns, data, onEdit, onDelete, funciones }) => {
                                 <td>
                                     <div className="contenedor-botones">
                                         {funciones.map((f, index) => (
-                                            <button
-                                                key={index}
-                                                onClick={() => f.boton(item.id)}
-                                                className={f.className}
-                                            >
-                                                <FontAwesomeIcon icon={f.icono}/>
-                                            </button>
+                                            !f.enlace ?
+                                                <button
+                                                    key={index}
+                                                    onClick={() => f.boton(item.id)}
+                                                    className={f.className}
+                                                >
+                                                   <FontAwesomeIcon icon={f.icono} />{f.label} 
+                                                </button>
+                                                : <Link key={index} className={f.className} to={`${f.enlace}/${item.id}`} > <FontAwesomeIcon icon={f.icono} /> {f.label} </Link>
                                         ))}
                                     </div>
                                 </td>

@@ -19,6 +19,8 @@ import Navbar from "../components/etc/menu";
 import { Tramites } from "../Tramites";
 import Pacientes from "../Pacientes";
 import { Footer } from "../components/Footer";
+import NuevoTramite from "../NuevoTramite";
+import EditarTramite from "../EditarTramite";
 
 
 
@@ -97,8 +99,15 @@ export default function AppRouter() {
       children: [
         {
           path: 'tramites',
-          // element: <Check component={Pacientes} />,
           element: <Check component={Tramites} />,
+        },
+        {
+          path: 'nuevo-tramite',
+          element: <Check component={NuevoTramite} />,
+        },
+        {
+          path: 'editar-tramite/:cliente',
+          element: <Check component={EditarTramite} />,
         },
         // ... tus otras rutas
       ],

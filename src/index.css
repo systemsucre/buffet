@@ -435,6 +435,15 @@ button:not(:disabled),
   width: 50%;
 }
 
+.col-12 {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+
+
+
+
 .col-4 {
   flex: 0 0 auto;
   width: 33.33333333%;
@@ -477,6 +486,11 @@ button:not(:disabled),
     flex: 0 0 auto;
     width: 50%;
   }
+
+  .col-md-10 {
+    flex: 0 0 auto;
+    width: 83.33333%;
+  }
 }
 
 @media (min-width: 992px) {
@@ -484,6 +498,35 @@ button:not(:disabled),
     flex: 0 0 auto;
     width: 33.33333333%;
   }
+
+  .col-lg-7 {
+    flex: 0 0 auto;
+    width: 58.33333%;
+  }
+}
+
+@media (min-width: 1300px) {
+  .col-lg-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+  }
+
+  .col-lg-7 {
+    flex: 0 0 auto;
+    width: 58.33333%;
+  }
+
+  .col-xl-6 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+
+  .col-xl-6 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+
+
 }
 
 .table {
@@ -632,6 +675,24 @@ button:not(:disabled),
   --bs-btn-disabled-color: #000;
   --bs-btn-disabled-bg: #0dcaf0;
   --bs-btn-disabled-border-color: #0dcaf0;
+}
+.btn-success {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #198754;
+  --bs-btn-border-color: #198754;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #157347;
+  --bs-btn-hover-border-color: #146c43;
+  --bs-btn-focus-shadow-rgb: 60, 153, 110;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #146c43;
+  --bs-btn-active-border-color: #13653f;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #198754;
+  --bs-btn-disabled-border-color: #198754;
+  border-radius: 4px;
+
 }
 
 .btn-dark {
@@ -909,6 +970,9 @@ button:not(:disabled),
   }
 }
 
+.m-auto {
+  margin: auto !important;
+}
 @media (min-width: 1200px) {
   .fs-1 {
     font-size: 4.4rem !important;
@@ -1027,6 +1091,7 @@ button:not(:disabled),
   position: relative;
   width: 100%;
   height: 100vh;
+  margin-top: 2rem;
   /* Ocupa toda la altura de la ventana */
 }
 
@@ -1044,6 +1109,13 @@ button:not(:disabled),
 .login-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.15);
+}
+
+@media (max-width: 992px) {
+  .login-card {
+    padding: 10px;
+  }
+
 }
 
 /* --- ANIMACIÓN DE ENTRADA --- */

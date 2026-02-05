@@ -1,10 +1,10 @@
 
-import { faCheck, faClock, faEdit, faExclamationTriangle, faFolder, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faCheck,  faEdit,  faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "./components/DataTable";
 import { InputUsuarioSearch } from "./components/input/elementos";
 import { ColumnsTableTramites } from "./conf/columnTableTramites";
 import { UseTramites } from "./hooks/UseTramites"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {LOCAL_URL} from './Auth/config'
 
 
 export function Tramites() {
@@ -102,11 +102,10 @@ export function Tramites() {
                     <DataTable
                         columns={ColumnsTableTramites}
                         data={tramitesFiltrados}
-
                         funciones={[
-                            { boton: null,  className: 'btn btn-info py-1 px-3 x-small', icono :faEdit },
-                            { boton: null,  className: 'btn btn-danger py-1 px-3 x-small', icono :faTrashAlt  },
-                            { boton: null,  className: 'btn btn-dark-clinical py-1 px-3 x-small', icono:faCheck },
+                            { boton: null, className: 'btn btn-info py-1 px-3 x-small', icono: faEdit, enlace: LOCAL_URL + '/admin/editar-tramite', label:'Editar' },
+                            { boton: null, className: 'btn btn-danger py-1 px-3 x-small', icono: faTrashAlt, enlace: null, label:'Eliminar'},
+                            { boton: null, className: 'btn btn-dark-clinical py-1 px-3 x-small', icono: faCheck, enlace: null },
                         ]}
 
                     />
