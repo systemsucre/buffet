@@ -15,12 +15,18 @@ import PublicRoute from "./publicRoute";
 import E500 from "./e500";
 
 import HomeLogin from "../Login";
-import Navbar from "../components/etc/menu";
-import { Tramites } from "../Tramites";
-import Pacientes from "../Pacientes";
+import NavbarAdmin from "../components/etc/menuAdmin";
 import { Footer } from "../components/Footer";
-import NuevoTramite from "../NuevoTramite";
-import EditarTramite from "../EditarTramite";
+
+import NuevoTramite from "../tramite/NuevoTramite";
+import { ListaTramites } from "../tramite/ListaTramites";
+
+import NuevoUsuario from "../usuario/NuevoUsuario";
+import { ListaUsuarios } from "../usuario/ListaUsuario";
+import NuevoCliente from "../cliente/NuevoCliente";
+import { ListaClientes } from "../cliente/ListaClientes";
+import ListaTipoTramite from "../tipoTramite/ListaTipoTramites";
+import NuevoTipoTramite from "../tipoTramite/NuevoTipoTramite";
 
 
 
@@ -89,7 +95,7 @@ export default function AppRouter() {
     {
       path: LOCAL_URL + '/admin',
       element: <>
-        <Navbar />
+        <NavbarAdmin />
         <main className="main-content">
           {/* Outlet es donde se renderizarán las páginas (Pacientes, Login, etc.) */}
           <Outlet />
@@ -97,19 +103,60 @@ export default function AppRouter() {
       </>, // El Layout siempre se muestra
       errorElement: <E500 />,
       children: [
+
         {
-          path: 'tramites',
-          element: <Check component={Tramites} />,
+          path: 'lista-clientes',
+          element: <Check component={ListaClientes} />,
+        },
+        {
+          path: 'nuevo-cliente',
+          element: <Check component={NuevoCliente} />,
+        },
+        {
+          path: 'editar-cliente/:id',
+          element: <Check component={NuevoCliente} />,
+        },
+
+
+        {
+          path: 'lista-usuarios',
+          element: <Check component={ListaUsuarios} />,
+        },
+        {
+          path: 'nuevo-usuario',
+          element: <Check component={NuevoUsuario} />,
+        },
+        {
+          path: 'editar-usuario/:id',
+          element: <Check component={NuevoUsuario} />,
+        },
+
+
+        {
+          path: 'lista-tramites',
+          element: <Check component={ListaTramites} />,
         },
         {
           path: 'nuevo-tramite',
           element: <Check component={NuevoTramite} />,
         },
         {
-          path: 'editar-tramite/:cliente',
-          element: <Check component={EditarTramite} />,
+          path: 'editar-tramite/:id',
+          element: <Check component={NuevoTramite} />,
         },
-        // ... tus otras rutas
+
+        {
+          path: 'lista-tipo-tramites',
+          element: <Check component={ListaTipoTramite} />,
+        },
+        {
+          path: 'nuevo-tipo-tramite',
+          element: <Check component={NuevoTipoTramite} />,
+        },
+        {
+          path: 'editar-tipo-tramite/:id',
+          element: <Check component={NuevoTipoTramite} />,
+        },
       ],
     },
   ]);

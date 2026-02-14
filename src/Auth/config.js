@@ -1,6 +1,6 @@
 // const URL = 'https://etvs.alwaysdata.net/server_chagas/'
-const URL = 'https://sedeschuquisaca.gob.bo/server_chagas/'
-// const URL = 'http://localhost:3005/server_chagas/'
+// const URL = 'https://sedeschuquisaca.gob.bo/server_chagas/'
+const URL = 'http://localhost:3005/'
 const LOCAL_URL = '/kr'
 
 const TIEMPO_INACTIVO = 60 // MINUTOS DE TOLERANCIA ANTESDE QUE EL USUARIO VUELVA A INTERACTUAR CON EL SISTEMA YA SEA MEDIANTE MUOSE O TECLADO

@@ -1,13 +1,13 @@
 
 import { faCheck,  faEdit,  faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import DataTable from "./components/DataTable";
-import { InputUsuarioSearch } from "./components/input/elementos";
-import { ColumnsTableTramites } from "./conf/columnTableTramites";
-import { UseTramites } from "./hooks/UseTramites"
-import {LOCAL_URL} from './Auth/config'
+import DataTable from "../components/DataTable";
+import { InputUsuarioSearch } from "../components/input/elementos";
+import { ColumnsTableTramites } from "./columnTableTramites";
+import { UseTramites } from "../hooks/UseTramites"
+import {LOCAL_URL} from '../Auth/config'
 
 
-export function Tramites() {
+export function ListaTramites() {
 
 
     // custom hook
@@ -116,4 +116,4 @@ export function Tramites() {
     )
 }
 
-export default Tramites
+export default ListaTramites

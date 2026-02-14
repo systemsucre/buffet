@@ -940,6 +940,10 @@ button:not(:disabled),
   --bs-bg-opacity: 1;
   background-color: var(--bs-success, var(--bs-bg-opacity)) !important;
 }
+.bg-danger {
+  --bs-bg-opacity: 1;
+  background-color: var(--bs-danger, var(--bs-bg-opacity)) !important;
+}
 
 .bg-info {
   --bs-bg-opacity: 1;

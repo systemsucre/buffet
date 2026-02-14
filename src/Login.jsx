@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { INPUT, LOCAL_URL, URL } from "./Auth/config";
 import useAuth from "./Auth/useAuth";
 import { ComponenteCheck, InputUsuarioStandard } from './components/input/elementos';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const HomeLogin = () => {
 
@@ -17,7 +19,7 @@ const HomeLogin = () => {
         const recordado = localStorage.getItem('recordarUsuario');
         const usuarioGuardado = localStorage.getItem('nombreUsuario');
 
-        console.log(usuarioGuardado)
+        // console.log(usuarioGuardado)
         if (recordado === 'true') {
             if (usuarioGuardado != null) {
                 setUsuario({ ...usuario, campo: usuarioGuardado, valido: 'true' });
@@ -46,39 +48,38 @@ const HomeLogin = () => {
             localStorage.removeItem('nombreUsuario'); // Limpiar también el usuario si existe
         }
     };
-    const iniciarSesion = async () => {
+    const iniciarSesion = async (e) => {
+        e.preventDefault();
         if (usuario.campo && password.campo) {
-            auth.login('ok')
-            localStorage.setItem('numRol', 1)
-            // axios.get(URL, {
-            //     params: {
-            //         'intel': usuario.campo,
-            //         'power': '8989389892njn89h8982njcnjnskdjcn909u09j3oi2n3i2093j2kn3k23',
-            //         'viva': md5(password.campo),
-            //         'tigo': 'juana',
-            //         'start': 'garay',
-            //         'pass': '7827huin3jnud3978EEy9uhn88839j8nld32d23d32dcdsvDFDEewrer',
-            //     }
-            // }).then(json => {
-            //     if (json.data.ok) {
-            //         localStorage.setItem('tiempo', new Date().getMinutes())
-            //         localStorage.setItem("token", json.data.token)
-            //         localStorage.setItem('username', json.data.username)
-            //         localStorage.setItem('nombre', json.data.nombre)
-            //         localStorage.setItem('rol', json.data.rol_des)
-            //         localStorage.setItem('numRol', json.data.rol)
-            //         localStorage.setItem('est', json.data.hospital_des)
-            //         localStorage.setItem('mun', json.data.municipio_des)
-            //         localStorage.setItem('red', json.data.red_des)
-            //         localStorage.setItem('id_', json.data.id_)
-            //         localStorage.setItem('est_', json.data.est_)
-            //         auth.login('ok')
-            //     }
-            //     else
-            //         toast.error(json.data.msg)
-            // }).catch(function (error) {
-            //     toast.error(error.toJSON().message);
-            // });
+            // auth.login('ok')
+            // localStorage.setItem('numRol', 1)
+            axios.get(URL, {
+                params: {
+                    'intel': usuario.campo,
+                    'power': '8989389892njn89h8982njcnjnskdjcn909u09j3oi2n3i2093j2kn3k23',
+                    'viva': md5(password.campo),
+                    'tigo': 'juana',
+                    'start': 'garay',
+                    'pass': '7827huin3jnud3978EEy9uhn88839j8nld32d23d32dcdsvDFDEewrer',
+                }
+            }).then(json => {
+                alert(json.data.ok)
+
+                if (json.data.ok) {
+                    localStorage.setItem('tiempo', new Date().getMinutes())
+                    localStorage.setItem("token", json.data.token)
+                    localStorage.setItem('username', json.data.username)
+                    localStorage.setItem('nombre', json.data.nombre)
+                    localStorage.setItem('rol', json.data.rol_des)
+                    localStorage.setItem('numRol', json.data.numRol)
+                    localStorage.setItem('id_', json.data.id_)
+                    auth.login('ok')
+                }
+                else
+                    toast.error(json.data.msg)
+            }).catch(function (error) {
+                toast.error(error.toJSON().message);
+            });
         } else toast.error('Introduzca sus credenciales de acceso')
     }
 
@@ -99,7 +100,7 @@ const HomeLogin = () => {
                                 <p className="text-muted small">Gestión de Trámites</p>
                             </div>
 
-                            <form>
+                            <form onSubmit={iniciarSesion} >
                                 {/* Campo Email */}
                                 <div className="mb-4">
                                     <InputUsuarioStandard
@@ -121,7 +122,7 @@ const HomeLogin = () => {
                                     <InputUsuarioStandard
                                         estado={password}
                                         cambiarEstado={setPassword}
-                                        tipo='text'
+                                        tipo='password'
                                         name='contraseña'
                                         msg={"Longitud permitida: 4 a 12 caracteres."}
                                         mayusculas={false}
@@ -142,7 +143,7 @@ const HomeLogin = () => {
                                     <a href="#" className="text-primary fw-bold">¿Olvidó su clave?</a>
                                 </div>
 
-                                <button type="submit" className="btn btn-dark-clinical w-100 py-3 shadow-sm" onClick={iniciarSesion}>
+                                <button type="submit" className="btn btn-dark-clinical w-100 py-3 shadow-sm" >
                                     Iniciar Sesión
                                 </button>
                             </form>

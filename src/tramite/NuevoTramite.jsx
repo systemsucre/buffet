@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { INPUT } from "./Auth/config";
-import { InputUsuarioStandard, Select1 } from './components/input/elementos';
+import {  useState } from 'react';
+import { INPUT } from "../Auth/config";
+import { InputUsuarioStandard, Select1 } from '../components/input/elementos';
 import { toast } from 'react-hot-toast';
 
 const NuevoTramite = () => {
