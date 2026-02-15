@@ -1,185 +1,175 @@
-import {  useState } from 'react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // Para capturar el ID de la URL
 import { INPUT } from "../Auth/config";
 import { InputUsuarioStandard, Select1 } from '../components/input/elementos';
-import { toast } from 'react-hot-toast';
+import { useTramites } from "../hooks/HookCustomTramites";
 
-const NuevoTramite = () => {
-    const [tipo, setTipo] = useState({ campo: null, valido: null });
-    const [codigo, setCodigo] = useState({ campo: '', valido: null });
-    const [cliente, setCliente] = useState({ campo: '', valido: null });
-    const [fecha, setFecha] = useState({ campo: new Date().toISOString().split('T')[0], valido: 'true' });
-    const [plazo, setPlazo] = useState({ campo: '', valido: null });
-    const [costo, setCosto] = useState({ campo: '', valido: null });
-    const [detalle, setDetalle] = useState({ campo: '', valido: null });
-    const [otros, setOtros] = useState({ campo: '', valido: null });
+const FormularioTramite = () => {
+    const { id } = useParams(); // Si existe 'id', estamos en modo EDICIÓN
+    const isEdit = Boolean(id);
 
+    const {
+        auxiliares,
+        estados,
+        setters,
+        guardarTramite,
+        cargarTramitePorId, // Debes añadir esta función a tu Hook
+        cargando
+    } = useTramites();
 
-    const tiposTramiteLista = [
-        { value: 1, label: 'JUDICIAL' },
-        { value: 2, label: 'ADMINISTRATIVO' },
-        { value: 3, label: 'LOTEAMIENTO' }
-    ]
-    // Esta función se ejecuta cuando Select1 valida el cambio
-    const handleCambioTipo = (idSeleccionado) => {
-        const encontrado = tiposTramiteLista.find(t => t.value === idSeleccionado);
-        if (encontrado) {
-            const prefijo = encontrado.label === 'JUDICIAL' ? 'JUD-' :
-                encontrado.label === 'LOTEAMIENTO' ? 'LOT-' : 'ADM-';
-            setCodigo({ campo: prefijo, valido: 'true' });
+    // Efecto para cargar datos si es edición
+    useEffect(() => {
+        if (isEdit) {
+            cargarTramitePorId(id);
         }
-    };
+    }, [id, isEdit]);
 
-    const guardarTramite = (e) => {
-        e.preventDefault();
-        if (tipo.valido === 'true' && codigo.valido === 'true' && cliente.valido === 'true') {
-            const data = {
-                tipoId: tipo.campo,
-                codigo: codigo.campo,
-                cliente: cliente.campo,
-                fecha: fecha.campo,
-                plazo: plazo.campo,
-                costo: costo.campo,
-                detalle: detalle.campo,
-                otros: otros.campo
-            };
-            console.log("Enviando trámite:", data);
-            toast.success('Trámite registrado con éxito');
-        } else {
-            toast.error('Por favor, complete los campos obligatorios (*) ');
-        }
-    };
+const handleCambioTipo = (idSeleccionado) => {
+    // 1. No autogenerar si estamos editando (para no sobrescribir el código real)
+    if (isEdit) return;
+
+    // 2. Buscar el objeto del trámite seleccionado en la lista que vino de la BD
+    const encontrado = auxiliares.listaTipos.find(t => t.value === parseInt(idSeleccionado));
+    
+    if (encontrado) {
+        // 3. Limpiar el nombre (quitar espacios al inicio/final)
+        const nombre = encontrado.label.trim().toUpperCase();
+        
+        // 4. Extraer las 3 primeras letras
+        // Si el nombre tiene menos de 3, tomará lo que haya
+        const iniciales = nombre.substring(0, 3);
+        
+        // 5. Formatear el prefijo (Ej: "JUD-", "ADM-", "PRO-")
+        const prefijo = `${iniciales}-`;
+        
+        // 6. Actualizar el estado del código
+        setters.setCodigo({ 
+            campo: prefijo, 
+            valido: 'true' 
+        });
+    }
+};
 
     return (
         <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh' }}>
             <section className="container">
                 <div className="row justify-content-center">
-                    {/* Explicación de clases:
-                col-12: Ocupa todo el ancho en móviles.
-                col-md-10: Un poco más estrecho en tablets.
-                col-lg-7: Ocupa casi la mitad en pantallas grandes.
-                col-xl-6: Se mantiene centrado y compacto en monitores muy grandes.
-            */}
-                    <div className="col-12 col-md-10 col-lg-7 col-xl-6 animate-fade-in">
+                    <div className="col-12 col-md-10 col-lg-8 col-xl-7 animate-fade-in">
                         <div className="login-card shadow-clinical p-4 p-md-5 bg-white" style={{ borderRadius: '15px' }}>
 
-                            {/* Encabezado */}
+                            {/* Encabezado Dinámico */}
                             <div className="text-center mb-5">
                                 <div className="icon-pulse mb-3">
-                                    <span className="fs-1">📑</span>
+                                    <span className="fs-1">{isEdit ? '📝' : '📑'}</span>
                                 </div>
-                                <h2 className="h3 fw-black text-primary text-uppercase m-0">Registro de Trámite</h2>
-                                <p className="text-muted small">Portal KR Estudios - Gestión Profesional</p>
+                                <h2 className="h3 fw-black text-primary text-uppercase m-0">
+                                    {isEdit ? 'Editar Trámite' : 'Apertura de Trámite'}
+                                </h2>
+                                <p className="text-muted small">
+                                    {isEdit ? `Modificando expediente: ${estados.codigo.campo}` : 'KR Estudios - Gestión de Expedientes'}
+                                </p>
                             </div>
 
-                            <form className="row g-3" onSubmit={guardarTramite}>
+                            <form className="row g-3" onSubmit={(e) => guardarTramite(e, id)}>
 
-                                {/* Tipo de Trámite */}
                                 <div className="col-md-6">
                                     <Select1
-                                        estado={tipo}
-                                        cambiarEstado={setTipo}
-                                        Name="tipo_tramite"
-                                        name="select_tipo"
-                                        lista={tiposTramiteLista}
-                                        etiqueta="Tipo de Trámite"
-                                        msg="Seleccione un tipo"
+                                        estado={estados.idTipoTramite}
+                                        cambiarEstado={setters.setIdTipoTramite}
+                                        Name="id_tipo_tramite"
+                                        lista={auxiliares.listaTipos}
+                                        etiqueta="Tipo de Trámite *"
+                                        msg="Seleccione el tipo de servicio"
                                         funcion={handleCambioTipo}
                                         ExpresionRegular={INPUT.ID}
                                     />
                                 </div>
 
-                                {/* Código */}
                                 <div className="col-md-6">
                                     <InputUsuarioStandard
-                                        estado={codigo}
-                                        cambiarEstado={setCodigo}
+                                        estado={estados.codigo}
+                                        cambiarEstado={setters.setCodigo}
                                         tipo='text'
                                         name='codigo'
-                                        etiqueta={'Código Trámite'}
+                                        etiqueta={'Código de Expediente *'}
                                         placeholder={"Prefijo-000"}
-                                        msg={'Ej. JUD-00022929'}
                                         ExpresionRegular={INPUT.CODIGO_TRAMITE}
-
+                                        readOnly={isEdit} // Opcional: Bloquear código en edición
                                     />
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-12">
                                     <Select1
-                                        estado={cliente}
-                                        cambiarEstado={setCliente}
-                                        Name="cliente"
-                                        lista={[
-                                            { value: 1, label: 'JUAN PEREZ' },
-                                            { value: 2, label: 'CAROS ARANCIBIA' },
-                                            { value: 3, label: 'ROLANDO CONDORI' }
-                                        ]}
-                                        etiqueta="Cliente"
-                                        msg="Seleccione un cliente"
+                                        estado={estados.idCliente}
+                                        cambiarEstado={setters.setIdCliente}
+                                        Name="id_cliente"
+                                        lista={auxiliares.listaClientes}
+                                        etiqueta="Cliente / Solicitante *"
+                                        msg="Busque y seleccione al cliente"
                                         ExpresionRegular={INPUT.ID}
                                     />
                                 </div>
 
-                                {/* Fila: Fecha, Plazo, Costo */}
                                 <div className="col-md-4">
                                     <InputUsuarioStandard
-                                        estado={fecha}
-                                        cambiarEstado={setFecha}
+                                        estado={estados.fechaIngreso}
+                                        cambiarEstado={setters.setFechaIngreso}
                                         tipo='date'
-                                        name='fecha'
-                                        etiqueta={'Fecha'}
-                                    />
-                                </div>
-                                <div className="col-md-4">
-                                    <InputUsuarioStandard
-                                        estado={plazo}
-                                        cambiarEstado={setPlazo}
-                                        tipo='number'
-                                        name='plazo'
-                                        etiqueta={'Plazo (Días)'}
-                                        ExpresionRegular={INPUT.NUMEROS_P}
-                                        msg={'Deve ser un valor entero positivo'}
-                                    />
-                                </div>
-                                <div className="col-md-4">
-                                    <InputUsuarioStandard
-                                        estado={costo}
-                                        cambiarEstado={setCosto}
-                                        tipo='number'
-                                        name='costo'
-                                        etiqueta={'Costo'}
-                                        ExpresionRegular={INPUT.NUMERO_REALES_POSITIVOS}
-                                        msg={'Deve ser un valor  positivo'}
+                                        name='fecha_ingreso'
+                                        etiqueta={'Fecha Ingreso *'}
                                     />
                                 </div>
 
-                                {/* Detalle */}
-                                <div className="col-12">
+                                <div className="col-md-4">
                                     <InputUsuarioStandard
-                                        estado={detalle}
-                                        cambiarEstado={setDetalle}
+                                        estado={estados.fechaFinalizacion}
+                                        cambiarEstado={setters.setFechaFinalizacion}
+                                        tipo='date'
+                                        name='fecha_finalizacion'
+                                        etiqueta={'Fecha Entrega *'}
+                                    />
+                                </div>
+
+                                <div className="col-md-4">
+                                    <InputUsuarioStandard
+                                        estado={estados.costo}
+                                        cambiarEstado={setters.setCosto}
+                                        tipo='number'
+                                        name='costo'
+                                        etiqueta={'Costo Total (Bs) *'}
+                                        ExpresionRegular={INPUT.NUMEROS_P}
+                                    />
+                                </div>
+
+                                <div className="col-12 mb-2">
+                                    <InputUsuarioStandard
+                                        estado={estados.detalle}
+                                        cambiarEstado={setters.setDetalle}
                                         tipo='textarea'
                                         name='detalle'
                                         etiqueta={'Detalle del Trámite'}
-                                        placeholder={"Describa el trámite..."}
+                                        placeholder={"Descripción del caso..."}
                                     />
                                 </div>
 
-                                {/* Observaciones */}
                                 <div className="col-12 mb-4">
                                     <InputUsuarioStandard
-                                        estado={otros}
-                                        cambiarEstado={setOtros}
-                                        tipo='text'
+                                        estado={estados.otros}
+                                        cambiarEstado={setters.setOtros}
+                                        tipo='textarea'
                                         name='otros'
-                                        etiqueta={'Otros / Observaciones'}
-                                        placeholder={"Información adicional"}
+                                        etiqueta={'Notas Adicionales'}
+                                        placeholder={"Observaciones..."}
+                                        importante={false}
                                     />
                                 </div>
-
-                                {/* Botón de Acción */}
-                                <div className="col-12 p-3">
-                                    <button type="submit" className="btn btn-success py-1 px-3 x-small">
-                                        REGISTRAR TRÁMITE
+                                <p></p>
+                                <div className="col-12 d-flex gap-2 justify-content-end border-top pt-4">
+                                    <button type="button" className="btn btn-light px-4" onClick={() => window.history.back()}>
+                                        CANCELAR
+                                    </button>
+                                    <button type="submit" className={`btn ${isEdit ? 'btn-info' : 'btn-success'} px-5 fw-bold`} disabled={cargando}>
+                                        {cargando ? 'PROCESANDO...' : isEdit ? 'GUARDAR CAMBIOS' : 'REGISTRAR'}
                                     </button>
                                 </div>
                             </form>
@@ -191,4 +181,4 @@ const NuevoTramite = () => {
     );
 };
 
-export default NuevoTramite;
+export default FormularioTramite;

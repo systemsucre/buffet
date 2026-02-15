@@ -45,7 +45,7 @@ const NavbarAdmin = () => {
 
             <ul className="submenu-list">
               <li><NavLink to={LOCAL_URL + "/admin/nuevo-tramite"} className="submenu-link">Nuevo Trámite</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/admin/tramites"} className="submenu-link">Lista Tramites</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/admin/lista-tramites"} className="submenu-link">Lista Tramites</NavLink></li>
             </ul>
           </div>
 
@@ -107,7 +107,7 @@ const NavbarAdmin = () => {
               </NavLink>
               <ul className="submenu-list">
                 <li><NavLink to={LOCAL_URL + "/admin/nuevo-tramite"} className="submenu-link">Nuevo Trámite</NavLink></li>
-                <li><NavLink to={LOCAL_URL + "/admin/tramites"} className="submenu-link">Lista Tramites</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/admin/lista-tramites"} className="submenu-link">Lista Tramites</NavLink></li>
               </ul>
             </div>
 

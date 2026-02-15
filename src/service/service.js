@@ -45,6 +45,7 @@ async function start(url, payload = null, msg = null) {
         // console.log(data, ' res bc service')
         // 2. Manejo de respuesta exitosa según tu estructura { ok, data, msg }
         if (data.ok) {
+            if(msg) toast.success(data.msg)
             return data.data || [];
         } else {
             toast.error(data.msg || "Error desconocido");

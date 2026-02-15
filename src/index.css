@@ -660,6 +660,8 @@ button:not(:disabled),
   --bs-btn-disabled-border-color: #dc3545;
 }
 
+
+
 .btn-info {
   --bs-btn-color: #000;
   --bs-btn-bg: #0dcaf0;
@@ -939,6 +941,11 @@ button:not(:disabled),
 .bg-success {
   --bs-bg-opacity: 1;
   background-color: var(--bs-success, var(--bs-bg-opacity)) !important;
+}
+
+.bg-warning {
+  --bs-bg-opacity: 1;
+  background-color: var(--bs-warning, var(--bs-bg-opacity)) !important;
 }
 .bg-danger {
   --bs-bg-opacity: 1;

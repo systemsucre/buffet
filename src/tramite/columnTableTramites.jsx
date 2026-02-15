@@ -1,94 +1,86 @@
 export const ColumnsTableTramites = [
-    { label: 'Codigo', field: 'codigo' },
-    { label: 'Cliente', field: 'cliente' },
-    { label: 'DNI/RUC', field: 'dni' },
     {
-        label: 'Estado Procesal',
-        field: 'estado',
+        label: 'Código',
+        field: 'codigo',
+        render: (row) => <span className="fw-bold text-primary">{row.codigo}</span>
+    },
+    {
+        label: 'Cliente',
+        field: 'cliente_nombre', // Viene del CONCAT en el backend
         render: (row) => (
-            <span className={`badge ${row.estado === 'Completado' ? 'bg-success' : 'bg-primary'}`}>
-                {row.estado.toUpperCase()}
+            <div>
+                <div className="fw-bold">{row.cliente_nombre}</div>
+                <small className="text-muted">ID CLIENTE: {row.id_cliente}</small>
+            </div>
+        )
+    },
+    {
+        label: 'Tipo de Trámite',
+        field: 'nombre_tipo_tramite',
+        render: (row) => (
+            <span className="badge bg-light text-dark border">
+                {row.nombre_tipo_tramite?.toUpperCase()}
             </span>
         )
     },
     {
-        label: 'Plazo',
-        field: 'fecha_limite',
+        label: 'Estado',
+        field: 'estado',
+        render: (row) => (<>
+            <span className={`badge ${row.estado === 1 ? 'bg-success' : 'bg-warning text-dark'}`}>
+                {row.estado === 1 ? 'EN CURSO' : 'PARALIZADO'}
+            </span> <br />
+            <span className={`badge ${row.eliminado === 0 ? 'bg-danger' : 'bg-warning text-dark'}`}>
+                {row.eliminado === 0 ? 'Eliminado' : ''}
+            </span>
+        </>
+        )
+    },
+    {
+        label: 'Plazo y Fechas',
+        field: 'fecha_finalizacion',
         render: (row) => {
             const hoy = new Date();
-            const vencimiento = new Date(row.fecha_limite);
+            const vencimiento = new Date(row.fecha_finalizacion);
             const diasRestantes = Math.ceil((vencimiento - hoy) / (1000 * 60 * 60 * 24));
 
             let color = 'text-success';
-            if (diasRestantes <= 7) color = 'text-warning fw-bold animate-pulse'; // ¡Urgente!
-            if (diasRestantes <= 4) color = 'text-danger';
+            if (diasRestantes <= 7) color = 'text-warning fw-bold';
+            if (diasRestantes <= 3) color = 'text-danger fw-bold animate-pulse';
 
-            return (<div>
-                {/* Gastos realizados en el trámite */}
-                <div className="small text-muted" title="Gastos de gestión/tasas">
-                    <i className="bi bi-arrow-down-circle me-1"></i>
-                    Fecha ingreso: {row.fecha_creacion}
+            return (
+                <div>
+                    <div className="small text-muted">
+                        <i className="bi bi-calendar-check me-1"></i>
+                        Ingreso: {new Date(row.fecha_ingreso).toLocaleDateString()}
+                    </div>
+                    <div className="small text-info">
+                        <i className="bi bi-calendar-x me-1"></i>
+                        Entrega: {vencimiento.toLocaleDateString()}
+                    </div>
+                    <div className={`${color} mt-1`} style={{ fontSize: '0.85rem' }}>
+                        <i className="bi bi-clock-history me-1"></i>
+                        {diasRestantes > 0 ? `${diasRestantes} días restantes` : 'Plazo vencido'}
+                    </div>
                 </div>
-
-
-               <div className="x-small text-info" title="Gastos de gestión/tasas">
-                    <i className="bi bi-arrow-down-circle me-1"></i>
-                    Fecha Entrega: {row.fecha_limite}
-                </div>
-                <span className={color}>
-                    <i className="bi bi-clock-history me-1"></i>
-                    Dias restantes:  ({diasRestantes} días)
-                </span>
-            </div>
-
             );
         }
     },
     {
-        label: 'Balance del Caso', field: 'total_contrato',
+        label: 'Costo de Gestión',
+        field: 'costo',
         render: (row) => {
-            // Cálculo rápido (opcional, si no vienen calculados del backend)
-            const total = row.total_contrato || 0;
-            const gastos = row.gastos_tramite || 0;
-            const saldo = row.saldo_pendiente || 0;
-
+            const costo = row.costo || 0;
             return (
                 <div className="text-end">
-                    {/* Monto total del contrato */}
-                    <div className="small text-muted" title="Total del contrato">
-                        Contrato: ${total.toLocaleString()}
+                    <div className="fw-bold text-dark">
+                        Bs. {costo.toLocaleString('es-BO', { minimumFractionDigits: 2 })}
                     </div>
-
-                    {/* Gastos realizados en el trámite */}
-                    <div className="x-small text-info" title="Gastos de gestión/tasas">
-                        <i className="bi bi-arrow-down-circle me-1"></i>
-                        Gastos: ${gastos.toLocaleString()}
-                    </div>
-
-                    {/* Saldo pendiente con lógica de colores */}
-                    <div className={`fw-bold mt-1 ${saldo > 0 ? 'text-danger' : 'text-success'}`}>
-                        {saldo > 0 ? `Pendiente: $${saldo.toLocaleString()}` : '¡Pagado!'}
-                    </div>
+                    <small className="text-muted italic" style={{ fontSize: '0.7rem' }}>
+                        {row.detalle?.substring(0, 30)}...
+                    </small>
                 </div>
-            );
-        }
-    },
-    {
-        label: 'Tipo de Caso',
-        field: 'rama',
-        render: (row) => {
-            const estilos = {
-                Penal: ' text-danger',
-                Laboral: ' text-dark',
-                Familia: ' text-primary',
-                Civil: ' text-success'
-            };
-            return (
-                <span className={`badge ${estilos[row.rama] || 'bg-light text-dark'}`}>
-                    {row.rama.toUpperCase()}
-                </span>
             );
         }
     }
-
-]
+];

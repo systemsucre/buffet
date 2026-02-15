@@ -20,7 +20,6 @@ import { Footer } from "../components/Footer";
 
 import NuevoTramite from "../tramite/NuevoTramite";
 import { ListaTramites } from "../tramite/ListaTramites";
-
 import NuevoUsuario from "../usuario/NuevoUsuario";
 import { ListaUsuarios } from "../usuario/ListaUsuario";
 import NuevoCliente from "../cliente/NuevoCliente";
