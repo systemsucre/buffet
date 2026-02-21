@@ -1,4 +1,5 @@
 import { useRouteError } from "react-router-dom";
+import { LOCAL_URL } from "../Auth/config";
 
 function E500() {
     const error = useRouteError();
@@ -13,7 +14,7 @@ function E500() {
                     <div className="error-content">
                         <p>
                             Trabajaremos para solucionarlo de inmediato. Mientras tanto, puede
-                            <a style={{ color: 'blue' }} href={'/'}> volver a la pagina de inicio</a>.
+                            <a style={{ color: 'blue' }} href={ LOCAL_URL+'/'}> volver a la pagina de inicio</a>.
                         </p>
 
                     </div>

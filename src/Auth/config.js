@@ -1,6 +1,6 @@
 // const URL = 'https://etvs.alwaysdata.net/server_chagas/'
-// const URL = 'https://sedeschuquisaca.gob.bo/server_chagas/'
-const URL = 'http://localhost:3005/'
+const URL = 'https://kr0001.vercel.app/'
+// const URL = 'http://localhost:3005/'
 const LOCAL_URL = '/kr'
 
 const TIEMPO_INACTIVO = 60 // MINUTOS DE TOLERANCIA ANTESDE QUE EL USUARIO VUELVA A INTERACTUAR CON EL SISTEMA YA SEA MEDIANTE MUOSE O TECLADO
@@ -33,6 +33,7 @@ const INPUT = {
     COORDENADAS: /^-?\d+([.]\d+)?(?:[Ee][-+]?\d+)?$/,   // /^[0-9]+([.][0-9]+)?$/,  //NUMEROS ENTEROS MAS NUMEROS REALES, negativos, mas notacion cientifica (ej: 1.2e+05)   /^-?\d+([.]\d+)?(?:[Ee][-+]?\d+)?$/ 
     NUMEROS_PN: /^-?\d*(\.\d+)?$/,   // /^[0-9]+([.][0-9]+)?$/,  //NUMEROS ENTEROS MAS NUMEROS REALES, negativos, mas notacion cientifica (ej: 1.2e+05)   /^-?\d+([.]\d+)?(?:[Ee][-+]?\d+)?$/ 
     NUMEROS_P: /^[0-9]{1,20}$/,   // números enteros positivos 
+    NUMEROS_MONEY: /^[0-9]{1,10}(\.[0-9]{1,2})?$/,   // MONEY
     CORREO: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
     IMG: /.jpg|.jpeg|.png/i,
     PDF: /.pdf/i,

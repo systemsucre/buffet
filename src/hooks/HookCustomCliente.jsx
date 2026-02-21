@@ -26,7 +26,7 @@ export const useClientes = () => {
         setCargando(true);
         const endpoint = `${URL}clientes/listar`;
         // Pasamos el ID del usuario actual si tu backend lo usa para filtrar logs
-        const res = await start(endpoint, { usuario: 1 }, "Cargando clientes...");
+        const res = await start(endpoint, { usuario: 1 }, );
 
         if (res) {
             setClientes(res);

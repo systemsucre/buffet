@@ -19,7 +19,7 @@ export function ListaUsuarios() {
 
     return (
         <>
-            <main className="container-xl mt-5">
+            <main className="container-xl mt-3">
                 <div className="d-flex justify-content-between align-items-center p-2">
                     <div>
                         <h3 className="text-dark fw-bold mb-0">Gestión de Usuarios</h3>

@@ -8,6 +8,12 @@
   text-transform: uppercase;
 }
 
+.opacity-50 {
+  opacity: 0.5 !important;
+}
+
+
+
 .carrito {
   background-color: transparent;
   border: none;
@@ -251,6 +257,15 @@ p {
   color: var(--bs-warning) !important;
 }
 
+.text-secondary {
+  color: var(--bs-secondary) !important;
+}
+
+@media (max-width: 600px) {
+  .text-titulos {
+    font-size: 22px;
+  }
+}
 
 a {
   color: var(--bs-link-color);
@@ -678,6 +693,7 @@ button:not(:disabled),
   --bs-btn-disabled-bg: #0dcaf0;
   --bs-btn-disabled-border-color: #0dcaf0;
 }
+
 .btn-success {
   --bs-btn-color: #fff;
   --bs-btn-bg: #198754;
@@ -947,6 +963,7 @@ button:not(:disabled),
   --bs-bg-opacity: 1;
   background-color: var(--bs-warning, var(--bs-bg-opacity)) !important;
 }
+
 .bg-danger {
   --bs-bg-opacity: 1;
   background-color: var(--bs-danger, var(--bs-bg-opacity)) !important;
@@ -984,6 +1001,7 @@ button:not(:disabled),
 .m-auto {
   margin: auto !important;
 }
+
 @media (min-width: 1200px) {
   .fs-1 {
     font-size: 4.4rem !important;
@@ -1330,7 +1348,7 @@ button:not(:disabled),
 
 /* Animación de la línea inferior */
 .nav-link-item::after {
-  content: '';
+  /* content: ''; */
   position: absolute;
   bottom: 0;
   left: 0;
@@ -1420,15 +1438,6 @@ button:not(:disabled),
   /* Efecto de desplazamiento */
 }
 
-/* Estilo activo dentro del submenú */
-.submenu-link.active {
-  color: #007bff;
-  background-color: #f0f7ff;
-  border-left: 3px solid #007bff;
-}
-
-
-
 
 
 
@@ -1484,7 +1493,7 @@ button:not(:disabled),
 }
 
 .btn-nav-profile:hover {
-  background: #007bff;
+  border: 1px solid #007bff;
   box-shadow: 0 8px 15px rgba(0, 123, 255, 0.25);
   transform: translateY(-2px);
 }

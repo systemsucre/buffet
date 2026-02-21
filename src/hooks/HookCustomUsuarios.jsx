@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import md5 from 'md5';
 import { toast } from "react-hot-toast";
 import { LOCAL_URL, URL } from '../Auth/config';
-import { start } from '../service/service';
+import { saveDB, start } from '../service/service';
 import { useNavigate } from "react-router-dom";
 
 export const useUsuarios = (usuarioEdit = null) => {
@@ -30,7 +30,7 @@ export const useUsuarios = (usuarioEdit = null) => {
 
     const listarRoles = useCallback(async () => {
         const endpoint = `${URL}usuarios/listar-roles`; // Ajusta a tu ruta de backend
-        const res = await start(endpoint, null, "Cargando roles...");
+        const res = await start(endpoint, null, );
         if (res) {
             setRoles(res);
         }
@@ -41,12 +41,12 @@ export const useUsuarios = (usuarioEdit = null) => {
         setCargando(true);
         const endpoint = `${URL}usuarios/listar`;
         // Enviamos un objeto vacío o un límite si tu backend lo requiere
-        const res = await start(endpoint, { usuario: 100 }, "Cargando lista...");
+        const res = await start(endpoint, { usuario: 100 });
 
         if (res) {
             setUsuarios(res);
             setUsuariosFiltrados(res);
-        }
+        }   
         setCargando(false);
     }, []);
 
@@ -78,10 +78,10 @@ export const useUsuarios = (usuarioEdit = null) => {
         // Si hay idParaEditar, lo incluimos en el cuerpo del envío
         const payload = idParaEditar ? { ...data, id: idParaEditar } : data;
 
-        const res = await start(endpoint, payload, "Procesando usuario...");
+        const res = await saveDB(endpoint, payload);
 
         if (res) {
-            toast.success(idParaEditar ? 'Usuario actualizado' : 'Usuario creado');
+            // toast.success(idParaEditar ? 'Usuario actualizado' : 'Usuario creado');
 
             listarUsuarios();
             // 4. Redirigir a la ruta de la tabla (ajusta la ruta según tu App.js)

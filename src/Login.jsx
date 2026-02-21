@@ -63,7 +63,7 @@ const HomeLogin = () => {
                     'pass': '7827huin3jnud3978EEy9uhn88839j8nld32d23d32dcdsvDFDEewrer',
                 }
             }).then(json => {
-                alert(json.data.ok)
+
 
                 if (json.data.ok) {
                     localStorage.setItem('tiempo', new Date().getMinutes())

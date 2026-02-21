@@ -20,12 +20,30 @@ import { Footer } from "../components/Footer";
 
 import NuevoTramite from "../tramite/NuevoTramite";
 import { ListaTramites } from "../tramite/ListaTramites";
+
 import NuevoUsuario from "../usuario/NuevoUsuario";
 import { ListaUsuarios } from "../usuario/ListaUsuario";
+
 import NuevoCliente from "../cliente/NuevoCliente";
 import { ListaClientes } from "../cliente/ListaClientes";
+
 import ListaTipoTramite from "../tipoTramite/ListaTipoTramites";
 import NuevoTipoTramite from "../tipoTramite/NuevoTipoTramite";
+
+
+import NavbarAuxiliar from "../components/etc/menuAuxiliar";
+import { ListaTramitesS } from "../salidas/ListaTramites";
+import { ListaSalidas } from "../salidas/ListaSalidas";
+import FormularioSalida from "../salidas/FormularioSalida";
+
+
+import NavbarGerente from "../components/etc/menuGerente";
+import { ListaTramitesGerente } from "../salidasGerente/ListaTramites";
+import { ListaSalidasGerente } from "../salidasGerente/ListaSalidas";
+
+import NavbarCajero from "../components/etc/menuCajero";
+import { ListaTramitesCajero } from "../salidasCajero/ListaTramites";
+import { ListaSalidasCajero } from "../salidasCajero/ListaSalidas";
 
 
 
@@ -158,6 +176,100 @@ export default function AppRouter() {
         },
       ],
     },
+
+
+    // RUTAS AUXILIAR
+    {
+      path: LOCAL_URL + '/auxiliar',
+      element: <>
+        <NavbarAuxiliar />
+        <main className="main-content">
+          {/* Outlet es donde se renderizarán las páginas (Pacientes, Login, etc.) */}
+          <Outlet />
+        </main>
+      </>, // El Layout siempre se muestra
+      errorElement: <E500 />,
+      children: [
+
+        {
+          path: 'lista-tramites',
+          element: <Check component={ListaTramitesS} />,
+        },
+
+        {
+          path: 'listar-salidas/:id',
+          element: <Check component={ListaSalidas} />,
+        },
+
+        {
+          path: 'salidas/crear/:id_tramite',
+          element: <Check component={FormularioSalida} />,
+        },
+
+        {
+          path: 'salidas/editar/:id',
+          element: <Check component={FormularioSalida} />,
+        },
+      ],
+    },
+
+
+    // RUTAS GERENTE
+    {
+      path: LOCAL_URL + '/gerente',
+      element: <>
+        <NavbarGerente />
+        <main className="main-content">
+          {/* Outlet es donde se renderizarán las páginas (Pacientes, Login, etc.) */}
+          <Outlet />
+        </main>
+      </>, // El Layout siempre se muestra
+      errorElement: <E500 />,
+      children: [
+
+        {
+          path: 'lista-tramites',
+          element: <Check component={ListaTramitesGerente} />,
+        },
+
+        {
+          path: 'listar-salidas/:id',
+          element: <Check component={ListaSalidasGerente} />,
+        },
+
+      ],
+    },
+
+
+    
+    // RUTAS CAJERO
+    {
+      path: LOCAL_URL + '/cajero',
+      element: <>
+        <NavbarCajero />
+        <main className="main-content">
+          {/* Outlet es donde se renderizarán las páginas (Pacientes, Login, etc.) */}
+          <Outlet />
+        </main>
+      </>, // El Layout siempre se muestra
+      errorElement: <E500 />,
+      children: [
+
+        {
+          path: 'lista-tramites',
+          element: <Check component={ListaTramitesCajero} />,
+        },
+
+        {
+          path: 'listar-salidas/:id',
+          element: <Check component={ListaSalidasCajero} />,
+        },
+
+      ],
+    },
+
+
+
   ]);
   return (
     <div onClick={handleClick} onKeyPress={handleKeyPress} >

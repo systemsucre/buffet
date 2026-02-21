@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import { LOCAL_URL, URL } from '../Auth/config';
 import { saveDB, start } from '../service/service';
 import { useNavigate } from "react-router-dom";
+import { datosAuditoriaExtra } from "./datosAuditoriaExtra";
 
 export const useTramites = () => {
     const navigate = useNavigate();
@@ -72,6 +73,9 @@ export const useTramites = () => {
     const guardarTramite = async (e, idParaEditar = null) => {
         if (e) e.preventDefault();
 
+
+
+
         // 2. Buscar el objeto del trámite seleccionado en la lista que vino de la BD
         const encontrado = listaTipos.find(t => t.value === parseInt(idTipoTramite.campo));
 
@@ -98,7 +102,8 @@ export const useTramites = () => {
             otros: otros.campo,
             estado: estado.campo,
             usuario: 1, // ID usuario sesión
-            fecha_: new Date().toISOString() // Para created_at o modified_at
+            fecha_: new Date().toISOString(), // Para created_at o modified_at,
+            datosAuditoriaExtra
         };
 
         const endpoint = `${URL}tramites/${idParaEditar ? 'editar' : 'crear'}`;
@@ -124,7 +129,7 @@ export const useTramites = () => {
         if (window.confirm(msgConfirm)) {
             const res = await start(`${URL}tramites/cambiar-estado`, {
                 id,
-                estado: estadoActual,
+                estado: estadoActual,datosAuditoriaExtra
             }, "Actualizando estado...");
 
             if (res) {
@@ -136,7 +141,7 @@ export const useTramites = () => {
 
     // Función para ELIMINACIÓN LÓGICA
     const eliminarTramite = async (id, estadoActual) => {
-        const msgConfirm = estadoActual === 1 ?'Restaurar Tramite'  : 'Eliminar Tramite?';
+        const msgConfirm = estadoActual === 1 ? 'Restaurar Tramite' : 'Eliminar Tramite?';
 
         // Usamos una confirmación clara para evitar accidentes
         if (window.confirm(msgConfirm)) {
@@ -145,8 +150,8 @@ export const useTramites = () => {
             // Usamos la misma lógica de enviar al endpoint de actualización de estado
             const res = await start(`${URL}tramites/eliminar-logica`, {
                 id,
-                estado: estadoActual // Estado de eliminación lógica
-            }, estadoActual === 1 ? 'Eliminando tramite ........' : 'Restaurando Tramite.....');
+                estado: estadoActual,datosAuditoriaExtra // Estado de eliminación lógica
+            }, estadoActual === 1 ? 'Restaurando Tramite.....': 'Eliminando tramite ........');
 
             if (res) {
                 // Si el backend responde correctamente, refrescamos la lista
@@ -172,7 +177,7 @@ export const useTramites = () => {
     };
 
     // 6. FILTROS RÁPIDOS
-    const filterByEstado = (est) => setTramitesFiltrados(tramites.filter(t => t.estado == est ));
+    const filterByEstado = (est) => setTramitesFiltrados(tramites.filter(t => t.estado == est));
     const filterByDelete = () => setTramitesFiltrados(tramites.filter(t => t.eliminado == 0));
     const allList = () => setTramitesFiltrados(tramites);
 
@@ -182,7 +187,7 @@ export const useTramites = () => {
     }, [listarTramites, cargarAuxiliares]);
 
     return {
-        tramitesFiltrados,tramites,
+        tramitesFiltrados, tramites,
         auxiliares: { listaClientes, listaTipos },
         handleSearch,
         cargando,

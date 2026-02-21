@@ -1,12 +1,17 @@
-import { URL } from "../Auth/config";
+import { LOCAL_URL, URL } from "../Auth/config";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 
-const token = localStorage.getItem("token");
+
 axios.interceptors.request.use(
     (config) => {
-        config.headers.authorization = `Bearer ${token}`;
+        const token = localStorage.getItem("token");
+
+        if (token) {
+
+            config.headers.Authorization = `Bearer ${token}`;
+        }
         return config;
     },
     (error) => {
@@ -17,7 +22,7 @@ axios.interceptors.request.use(
         localStorage.removeItem("numRol");
         axios.post(URL + "/logout", { token: token });
         // window.location.href = LOCAL_URL + "/";
-        window.location.href =  "/";
+        window.location.href = LOCAL_URL + "/";
         return Promise.reject(error);
     }
 );
@@ -28,6 +33,9 @@ axios.interceptors.request.use(
  */
 async function start(url, payload = null, msg = null) {
     let loadingToast = null;
+
+    // alert(token, '               LISTAR')
+
     try {
         if (msg) loadingToast = toast.loading(msg);
 
@@ -38,6 +46,7 @@ async function start(url, payload = null, msg = null) {
 
         // 1. Manejo centralizado de sesión expirada
         if (data.hasOwnProperty("sesion")) {
+            console.log(data, ' sesion desde el servidor')
             handleSessionError();
             return [];
         }
@@ -45,7 +54,7 @@ async function start(url, payload = null, msg = null) {
         // console.log(data, ' res bc service')
         // 2. Manejo de respuesta exitosa según tu estructura { ok, data, msg }
         if (data.ok) {
-            if(msg) toast.success(data.msg)
+            if (msg) toast.success(data.msg)
             return data.data || [];
         } else {
             toast.error(data.msg || "Error desconocido");
@@ -74,11 +83,11 @@ function handleSessionError() {
     const token = localStorage.getItem("token");
     // Limpieza masiva de datos locales
     ["token", "user", "tiempo", "numRol"].forEach(key => localStorage.removeItem(key));
-    
+
     // Notificamos al servidor del logout de forma silenciosa
-    axios.post(`${URL}/logout`, { token }).catch(() => {});
-    
-    window.location.href = "/";
+    axios.post(`${URL}logout`, { token }).catch(() => { });
+
+    window.location.href = LOCAL_URL + "/login/";
 }
 
 
@@ -160,15 +169,15 @@ async function saveDB(url, dato, onSuccess = null, setCargando = null) {
 
         if (res.ok) {
             toast.success(res.msg || "Guardado correctamente");
-            
+
             // Si pasamos una función de éxito (como navegar a la lista)
             if (onSuccess) onSuccess();
-            
+
             return true;
         } else {
             // Manejo de errores de validación del backend (tu middleware validaciones)
             toast.error(res.msg || "Error en los datos enviados");
-            
+
             // Si el backend nos dice qué campo falló, podemos enfocarlo o marcarlo
             if (res.data) {
                 console.warn(`Error en el campo: ${res.data}`);
@@ -184,10 +193,10 @@ async function saveDB(url, dato, onSuccess = null, setCargando = null) {
     } catch (error) {
         toast.dismiss();
         console.error('Error de conexión:', error);
-        
+
         const errorMsg = error.response?.data?.msg || "No se pudo conectar con el servidor";
         toast.error(errorMsg);
-        
+
         return false;
     } finally {
         if (setCargando) setCargando(false);

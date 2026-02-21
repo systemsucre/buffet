@@ -2,7 +2,12 @@ export const ColumnsTableTramites = [
     {
         label: 'Código',
         field: 'codigo',
-        render: (row) => <span className="fw-bold text-primary">{row.codigo}</span>
+        render: (row) => <>
+            <div> <span className="fw-bold text-primary">{row.codigo}</span></div>
+            <small className="text-muted italic" style={{ fontSize: '0.7rem' }}>
+                {row.detalle?.substring(0, 30)}...
+            </small>
+        </>
     },
     {
         label: 'Cliente',
@@ -74,11 +79,14 @@ export const ColumnsTableTramites = [
             return (
                 <div className="text-end">
                     <div className="fw-bold text-dark">
-                        Bs. {costo.toLocaleString('es-BO', { minimumFractionDigits: 2 })}
+                        GASTOS : Bs. {row.total_gastos}
                     </div>
-                    <small className="text-muted italic" style={{ fontSize: '0.7rem' }}>
-                        {row.detalle?.substring(0, 30)}...
+                    <small className=" fw-bold text-muted text-success italic" style={{ fontSize: '0.7rem' }}>
+                        COSTO TRAMITE  Bs. {row.costo}
                     </small>
+                    <div className={`fw-bold ${row.saldoDisponible > 2000 ? `text-dark` : row.saldoDisponible > 1000 ? `text-warning` : `text-danger`}`} style={{ fontSize: '0.7rem' }}>
+                        SALDO DISP.  BS. {row.saldoDisponible}
+                    </div>
                 </div>
             );
         }

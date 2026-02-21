@@ -49,7 +49,7 @@ const DataTable = ({ columns, data, funciones }) => {
                                                     key={index}
                                                     // Importante: pasar item.id y el estado (o el item completo) al hacer click
                                                     onClick={() => f.boton(item.id, item)}
-                                                    className={className}
+                                                    className={className}  
                                                 >
                                                     <FontAwesomeIcon icon={icono} /> {label}
                                                 </button>

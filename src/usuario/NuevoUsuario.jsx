@@ -84,6 +84,7 @@ const NuevoUsuario = () => {
                                         estado={estados.ap2} cambiarEstado={setters.setAp2}
                                         tipo='text' name='ap2' etiqueta='Segundo Apellido'
                                         placeholder="Ej. Gomez" ExpresionRegular={INPUT.NOMBRE}
+                                        importante = {false}
                                     />
                                 </div>
 
