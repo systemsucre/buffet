@@ -52,6 +52,7 @@ const NavbarCajero = () => {
         <ul className="nav-menu-desktop">
           <li><NavLink to="/" end className="nav-link-item">Dashboard</NavLink></li>
           <li><NavLink to={LOCAL_URL + "/cajero/lista-tramites"} className="nav-link-item">Salidas</NavLink></li>
+          <li><NavLink to={LOCAL_URL + "/cajero/lista-tramites-ingresos"} className="nav-link-item">Ingresos</NavLink></li>
 
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>

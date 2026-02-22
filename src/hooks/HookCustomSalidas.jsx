@@ -8,6 +8,7 @@ export const UseCustomSalidas = () => {
     const navigate = useNavigate();
 
     // ESTADOS DEL FORMULARIO
+    const [id, setId] = useState({ campo: '', valido: null });
     const [idTramite, setIdTramite] = useState({ campo: '', valido: null });
     const [monto, setMonto] = useState({ campo: '', valido: null });
     const [detalle, setDetalle] = useState({ campo: '', valido: null });
@@ -47,6 +48,7 @@ export const UseCustomSalidas = () => {
         setCargando(true);
         const res = await start(`${URL}salidas/obtener-salida`, { id });
         if (res) {
+            setId({ campo: res[0].id, valido: 'true' });
             setIdTramite({ campo: res[0].id_tramite, valido: 'true' });
             setMonto({ campo: res[0].monto, valido: 'true' });
             setDetalle({ campo: res[0].detalle, valido: 'true' });
@@ -79,7 +81,7 @@ export const UseCustomSalidas = () => {
         };
 
         const endpoint = `${URL}salidas/${idParaEditar ? 'editar' : 'crear'}`;
-        const payload = idParaEditar ? { ...data, id: idParaEditar } : data;
+        const payload = idParaEditar ? { ...data, id: id.campo } : data;
 
         return await saveDB(
             endpoint,

@@ -65,11 +65,20 @@ export function ListaTramitesCajero() {
                                 {
                                     boton: null,
                                     // Cambiamos a btn-success o btn-dark para diferenciarlo de "Editar"
-                                    className: 'btn btn-success py-1 px-3 x-small me-1',
+                                    className: 'btn btn-danger py-1 px-3 x-small me-1',
                                     icono: faFileInvoiceDollar, // Nuevo icono de factura/dinero
                                     // Cambiamos la ruta a la lista de salidas
                                     enlace: LOCAL_URL + '/cajero/listar-salidas',
                                     label: 'Ver Gastos'
+                                },
+                                  {
+                                    boton: null,
+                                    // Cambiamos a btn-success o btn-dark para diferenciarlo de "Editar"
+                                    className: 'btn btn-info py-1 px-3 x-small me-1 ml-2',
+                                    icono: faFileInvoiceDollar, // Nuevo icono de factura/dinero
+                                    // Cambiamos la ruta a la lista de salidas
+                                    enlace: LOCAL_URL + '/cajero/listar-ingresos',
+                                    label: 'Ver Ingresos'
                                 },
                                 {
                                     boton: (id_salida) => window.open(`${LOCAL_URL}/api/salidas/pdf/${id_salida}`, '_blank'),

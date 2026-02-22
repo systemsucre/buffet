@@ -45,7 +45,8 @@ import NavbarCajero from "../components/etc/menuCajero";
 import { ListaTramitesCajero } from "../salidasCajero/ListaTramites";
 import { ListaSalidasCajero } from "../salidasCajero/ListaSalidas";
 
-
+import { ListaIngresosTramite } from "../ingresosCajero/ListaIngresos";
+import FormularioIngreso from "../ingresosCajero/FormularioIngreso";
 
 
 export default function AppRouter() {
@@ -241,7 +242,7 @@ export default function AppRouter() {
     },
 
 
-    
+
     // RUTAS CAJERO
     {
       path: LOCAL_URL + '/cajero',
@@ -263,6 +264,22 @@ export default function AppRouter() {
         {
           path: 'listar-salidas/:id',
           element: <Check component={ListaSalidasCajero} />,
+        },
+
+        // OTRAS RUTAS
+
+        {
+          path: 'listar-ingresos/:id',
+          element: <Check component={ListaIngresosTramite} />,
+        },
+
+        {
+          path: 'crear/:id_tramite',
+          element: <Check component={FormularioIngreso} />,
+        },
+        {
+          path: 'editar/:id_tramite/:id',
+          element: <Check component={FormularioSalida} />,
         },
 
       ],

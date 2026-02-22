@@ -851,6 +851,9 @@ button:not(:disabled),
 .mt-3 {
   margin-top: 1rem !important;
 }
+.ml-2{
+  margin-right: 15px;
+}
 
 .mt-4 {
   margin-top: 1.5rem !important;

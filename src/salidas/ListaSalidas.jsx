@@ -99,7 +99,7 @@ export function ListaSalidas() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
                                 <div className="col">
                                     <span className="fw-bold text-dark">TRAMITE : </span>
                                     <strong className="text-primary">{tramites[0].codigo}</strong>
@@ -127,12 +127,12 @@ export function ListaSalidas() {
                                 {
                                     // 1. Bloqueo de funcionalidad: Si no es estado 1, la función es null
                                     boton: (tramites?.length > 0 && tramites[0].estado === 1)
-                                        ? (id_salida) => navigate(`/auxiliar/salidas/editar/${id_salida}`)
+                                        ? (id_salida, row) => { row.estado === 1? navigate(`${LOCAL_URL}/auxiliar/salidas/editar/${id_salida}`) : null}
                                         : () => alert(),
 
                                     // 2. Bloqueo Visual: 'disabled' desactiva el click, el icono y el label
                                     // 'opacity-50' hace que todo el conjunto (icono + texto) se vea gris
-                                    className: `btn btn-info py-1 px-3 x-small me-1 ${(tramites?.length > 0 && tramites[0].estado === 1) ? '' : 'disabled opacity-50'
+                                    className:  `btn btn-info py-1 px-3 x-small me-1 ${(tramites?.length > 0 && tramites[0].estado === 1) ? '' : 'disabled opacity-50'
                                         }`,
 
                                     icono: faEdit,

@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Añadido useNavigate para mejor control
+import { useParams, useNavigate } from 'react-router-dom';
 import { INPUT, LOCAL_URL } from "../Auth/config";
 import { InputUsuarioStandard } from '../components/input/elementos';
-import { UseCustomSalidas } from "../hooks/HookCustomSalidas";
+import { UseCustomIngresos } from "../hooks/HookCustomIngresosCajero"; // Asegúrate de que el nombre coincida
 
-const FormularioSalida = () => {
+const FormularioIngreso = () => {
     const { id_tramite, id } = useParams(); // id_tramite (nuevo) | id (editar)
     const isEdit = Boolean(id);
     const navigate = useNavigate();
-
 
     const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -16,57 +15,65 @@ const FormularioSalida = () => {
         tramites,
         estados,
         setters,
-        guardarSalida,
-        cargarSalidaPorId,
+        handleGuardar, // Nuestra función unificada del Hook
+        cargarIngresoPorId,
         obtenerTramite,
-        cargando
-    } = UseCustomSalidas();
+        cargando,
+        isLoading
+    } = UseCustomIngresos();
 
     // 1. Efecto para EDICIÓN
+
     useEffect(() => {
-        // Verificamos que exista el ID y que cumpla el formato antes de cargar
         if (isEdit && id && UUID_REGEX.test(id)) {
-            // alert(' edtar'+id)
-            cargarSalidaPorId(id);
-            if (obtenerTramite) obtenerTramite(id_tramite);
+            cargarIngresoPorId(id);
+            if (id_tramite && obtenerTramite) obtenerTramite(id_tramite);
         }
     }, [id, isEdit]);
 
-
-    // 2. Efecto para CREACIÓN
+    // 2. Efecto para NUEVO INGRESO (vincular trámite)
     useEffect(() => {
         if (!isEdit && id_tramite && UUID_REGEX.test(id_tramite)) {
-            // alert('guardar ')
-
             setters.setIdTramite({
-                campo: id_tramite, // Ahora guardará el UUID string
+                campo: id_tramite,
                 valido: 'true'
             });
 
             if (obtenerTramite) obtenerTramite(id_tramite);
-        }
+
+        } else navigate(LOCAL_URL + "/cajero/lista-tramites")
     }, [id_tramite, isEdit]);
 
+    // 3. Efecto secundario para manejar el error de carga o datos vacíos
+    useEffect(() => {
+        // Solo si NO está cargando Y el trámite sigue vacío, redirigimos
+        alert(isLoading)
+        if (!isLoading && tramites?.length === 0) {
+            alert("Trámite no encontrado");
+            navigate(LOCAL_URL + "/cajero/lista-tramites");
+        }
+    }, [tramites, isLoading, isEdit]);
     return (
-        <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh', background: '#f8f9fa' }}>
+        <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh', background: '#f0f2f5' }}>
             <section className="container">
                 <div className="row justify-content-center">
                     <div className="col-12 col-md-10 col-lg-8 col-xl-7 animate-fade-in">
-                        <div className="login-card shadow-sm p-4 p-md-5 bg-white" style={{ borderRadius: '15px', border: '1px solid #eee' }}>
+                        <div className="login-card shadow p-4 p-md-5 bg-white" style={{ borderRadius: '20px', border: 'none' }}>
 
                             {/* Encabezado dinámico */}
                             <div className="text-center mb-4">
                                 <div className="mb-3">
-                                    <span style={{ fontSize: '3rem' }}>{isEdit ? '📝' : '💰'}</span>
+                                    <span style={{ fontSize: '3.5rem' }}>{isEdit ? '📝' : '📥'}</span>
                                 </div>
-                                <h2 className="h3 fw-bold text-primary text-uppercase">
-                                    {isEdit ? 'Editar Registro de Gasto' : 'Nuevo Gasto de Trámite'}
+                                <h2 className="h3 fw-bold text-success text-uppercase">
+                                    {isEdit ? 'Editar Registro de Ingreso' : 'Nuevo Ingreso / Abono'}
                                 </h2>
+                                <p className="text-muted small">Registro de dinero percibido para trámites</p>
                             </div>
 
                             {/* Info del Trámite Contextual */}
-                            {tramites.length > 0 ? 
-                                <div className="alert alert-success border-0 shadow-sm mb-4" style={{ backgroundColor: '#e8f5e9', padding:'10px' }}>
+                            {tramites.length > 0 && (
+                                <div className="alert alert-success border-0 shadow-sm mb-4" style={{ backgroundColor: '#e8f5e9', padding: '10px' }}>
                                     <div className="row g-2 small">
                                         <div className="col-md-7 col-12">
                                             <div>
@@ -91,31 +98,30 @@ const FormularioSalida = () => {
                                         </div>
                                     </div>
                                 </div>
-                            :null}
+                            )}
 
-                            <br />
-                            <form className="row g-3" onSubmit={(e) => guardarSalida(e, isEdit)} >
-                                {/* MONTO */}
+                            <form className="row g-3" onSubmit={(e) => handleGuardar(e, isEdit)}>
+                                {/* MONTO (Si lo incluiste en tu tabla) */}
                                 <div className="col-md-6">
                                     <InputUsuarioStandard
                                         estado={estados.monto}
                                         cambiarEstado={setters.setMonto}
                                         tipo='number'
                                         name='monto'
-                                        etiqueta={'Monto (Bs) *'}
+                                        etiqueta={'Monto Recibido (Bs) *'}
                                         placeholder="0.00"
                                         ExpresionRegular={INPUT.NUMEROS_MONEY}
                                     />
                                 </div>
 
-                                {/* FECHA SOLICITUD */}
+                                {/* FECHA INGRESO */}
                                 <div className="col-md-6">
                                     <InputUsuarioStandard
-                                        estado={estados.fechaSolicitud}
-                                        cambiarEstado={setters.setFechaSolicitud}
+                                        estado={estados.fechaIngreso}
+                                        cambiarEstado={setters.setFechaIngreso}
                                         tipo='date'
-                                        name='fecha_solicitud'
-                                        etiqueta={'Fecha de Solicitud *'}
+                                        name='fecha_ingreso'
+                                        etiqueta={'Fecha de Cobro *'}
                                     />
                                 </div>
 
@@ -126,31 +132,30 @@ const FormularioSalida = () => {
                                         cambiarEstado={setters.setDetalle}
                                         tipo='textarea'
                                         name='detalle'
-                                        etiqueta={'Concepto / Detalle del Gasto *'}
-                                        placeholder="Describa el motivo del gasto..."
+                                        etiqueta={'Concepto del Pago / Observaciones *'}
+                                        placeholder="Ej: Pago inicial, Cancelación de trámite, etc."
                                     />
                                 </div>
 
                                 {/* ACCIONES */}
-                                <div className="col-12 d-flex gap-2 justify-content-end mt-4 pt-3 border-top ">
+                                <div className="col-12 d-flex gap-2 justify-content-end mt-4 pt-3 border-top">
                                     <button
                                         type="button"
-                                        className="btn btn-dark px-4"
-                                        style={{ marginRight: '4px' }}
-                                        onClick={() => navigate(`${LOCAL_URL}/auxiliar/listar-salidas/${id_tramite}`)} // Retorno más seguro
+                                        className="btn btn-outline-secondary px-4"
+                                        onClick={() => navigate(-1)}
                                     >
-                                        VOLVER
+                                        CANCELAR
                                     </button>
 
                                     <button
                                         type="submit"
-                                        className={`btn ${isEdit ? 'btn-info' : 'btn-success'} px-5 fw-bold`}
+                                        className={`btn ${isEdit ? 'btn-primary' : 'btn-success'} px-5 fw-bold`}
                                         disabled={cargando}
                                     >
                                         {cargando ? (
                                             <><span className="spinner-border spinner-border-sm me-2"></span>PROCESANDO...</>
                                         ) : (
-                                            isEdit ? 'ACTUALIZAR GASTO' : 'SOLICITAR GASTO'
+                                            isEdit ? 'GUARDAR CAMBIOS' : 'REGISTRAR INGRESO'
                                         )}
                                     </button>
                                 </div>
@@ -163,4 +168,4 @@ const FormularioSalida = () => {
     );
 };
 
-export default FormularioSalida;
+export default FormularioIngreso;

@@ -104,7 +104,7 @@ const handleCambioTipo = (idSeleccionado) => {
                                         cambiarEstado={setters.setIdCliente}
                                         Name="id_cliente"
                                         lista={auxiliares.listaClientes}
-                                        etiqueta="Cliente / Solicitante *"
+                                        etiqueta="Cliente / Empleador *"
                                         msg="Busque y seleccione al cliente"
                                         ExpresionRegular={INPUT.ID}
                                     />
@@ -135,7 +135,7 @@ const handleCambioTipo = (idSeleccionado) => {
                                         estado={estados.costo}
                                         cambiarEstado={setters.setCosto}
                                         tipo='number'
-                                        name='costo'
+                                        name='Ingreso Estimado'
                                         etiqueta={'Costo Total (Bs) *'}
                                         ExpresionRegular={INPUT.NUMEROS_P}
                                     />
