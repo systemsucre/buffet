@@ -1,13 +1,15 @@
 import { faVirusSlash } from '@fortawesome/free-solid-svg-icons';
 import pdfMake from 'pdfmake/build/pdfmake';
-
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-
 import printjs from 'print-js';
-// pdfMake.vfs = pdfFonts.vfs;
 
-// 1. Asignar el sistema de archivos virtual
-pdfMake.vfs = pdfFonts.pdfMake ? pdfFonts.pdfMake.vfs : (pdfFonts.vfs || pdfFonts);
+
+
+// import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
+// pdfMake.vfs = pdfFonts.pdfMake ? pdfFonts.pdfMake.vfs : (pdfFonts.vfs || pdfFonts);
+
+const pdfFonts = await import('pdfmake/build/vfs_fonts');
+pdfMake.vfs = pdfFonts.pdfMake?.vfs || pdfFonts.default?.pdfMake?.vfs;
 
 const createPdf = async (props, output = 'print') => {
   return new Promise((resolve, reject) => {
