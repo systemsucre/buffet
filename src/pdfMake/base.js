@@ -8,10 +8,28 @@ import printjs from 'print-js';
 
 // pdfMake.vfs = pdfFonts.pdfMake ? pdfFonts.pdfMake.vfs : (pdfFonts.vfs || pdfFonts);
 
-const pdfFonts = await import('pdfmake/build/vfs_fonts');
-pdfMake.vfs = pdfFonts.pdfMake?.vfs || pdfFonts.default?.pdfMake?.vfs;
+// const pdfFonts = await import('pdfmake/build/vfs_fonts');
+// pdfMake.vfs = pdfFonts.pdfMake?.vfs || pdfFonts.default?.pdfMake?.vfs;
 
 const createPdf = async (props, output = 'print') => {
+  // 1. Cargamos las fuentes dinámicamente SOLO cuando se necesita generar un PDF
+  try {
+    const pdfFonts = await import('pdfmake/build/vfs_fonts');
+    // Asignación robusta para v0.3.x
+    pdfMake.vfs = pdfFonts.pdfMake?.vfs || pdfFonts.default?.pdfMake?.vfs || pdfFonts.vfs;
+
+    // Configuración de fuentes fallback para evitar el error de "Roboto-Medium"
+    pdfMake.fonts = {
+      Roboto: {
+        normal: 'Roboto-Regular.ttf',
+        bold: 'Roboto-Regular.ttf',
+        italics: 'Roboto-Italic.ttf',
+        bolditalics: 'Roboto-Italic.ttf'
+      }
+    };
+  } catch (e) {
+    console.error("Error cargando vfs_fonts:", e);
+  }
   return new Promise((resolve, reject) => {
     try {
       const {
@@ -19,13 +37,13 @@ const createPdf = async (props, output = 'print') => {
           width: 595.28,
           height: 790.995
         },
-        
+
         pageMargins = [40.66, 30.66, 35.66, 30.66],
         info = {
           title: 'hictoria clinica',
           author: 'System sucre',
           subject: 'cONSULTORIA DE SOWFARE Z/EX-ESTACION PARQUE-BOLIVAR',
-          keywords: 'DESARROLLO DE S.I.',   
+          keywords: 'DESARROLLO DE S.I.',
         },
         styles = {
           header: {
@@ -60,7 +78,7 @@ const createPdf = async (props, output = 'print') => {
           line: {
             margin: [0, 0, 0, 0],
             fontSize: 14,
-            color:'#4E5AFE',
+            color: '#4E5AFE',
             bold: true,
             alignment: 'center',
           },
@@ -85,7 +103,7 @@ const createPdf = async (props, output = 'print') => {
           },
         },
         content,
-        
+
 
       } = props;
 
