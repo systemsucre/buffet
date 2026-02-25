@@ -6,14 +6,11 @@ export default defineConfig({
   plugins: [react()],
   // base: './', // Cambia a '/app/' si va en subcarpeta
 
-  // optimizeDeps: {
-  //   include: ['pdfmake/build/pdfmake', 'pdfmake/build/vfs_fonts'],
-  // },
-  // build: {
-  //   commonjsOptions: {
-  //     include: [/node_modules/],
-  //   },
-  // },
+  define: {
+    // Esto ayuda a que algunas librerías antiguas no rompan en modo módulo
+    'process.env': {},
+    'global': 'window',
+  },
 },
 
 

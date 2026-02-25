@@ -11,45 +11,49 @@ import printjs from 'print-js';
 // const pdfFonts = await import('pdfmake/build/vfs_fonts');
 // pdfMake.vfs = pdfFonts.pdfMake?.vfs || pdfFonts.default?.pdfMake?.vfs;
 
-const createPdf = async (props, output = 'print') => {
-  try {
-    // 1. PARCHE CRÍTICO PARA NETLIFY/VITE:
-    // vfs_fonts.js busca la variable global 'pdfMake' para registrar las fuentes.
-    // Al asignarla a window, evitamos el error "reading 'pdfMake' of undefined".
-    if (typeof window !== 'undefined') {
-      window.pdfMake = pdfMake;
-    }
 
-    // 2. Importación dinámica de fuentes
-    const pdfFonts = await import('pdfmake/build/vfs_fonts');
 
-    // 3. Extracción del VFS según cómo lo empaquete Rollup
-    const vfs = pdfFonts.default?.pdfMake?.vfs ||
-      pdfFonts.pdfMake?.vfs ||
-      pdfFonts.default?.vfs ||
-      pdfFonts.vfs;
+// Esta función carga el script de fuentes solo cuando se necesita
+const loadFonts = () => {
+  return new Promise((resolve) => {
+    if (pdfMake.vfs) return resolve(); // Ya cargadas
 
-    if (vfs) {
-      pdfMake.vfs = vfs;
-    } else {
-      console.warn("VFS no encontrado en el módulo importado");
-    }
-
-    // 4. MAPEO DE FUENTES (Evita error 'Roboto-Medium.ttf' not found)
-    // Forzamos
-    // garantizado en el vfs_fonts estándar de pdfmake ^0.2.0.
-    pdfMake.fonts = {
-      Roboto: {
-        normal: 'Roboto-Regular.ttf',
-        bold: 'Roboto-Regular.ttf',
-        italics: 'Roboto-Regular.ttf',
-        bolditalics: 'Roboto-Regular.ttf'
+    const script = document.createElement('script');
+    script.src = '/vfs_fonts.js'; // Ruta al archivo en la carpeta public
+    script.onload = () => {
+      // pdfMake v0.2.x registra automáticamente el vfs en el objeto global pdfMake
+      // si el script de arriba se cargó correctamente.
+      if (window.pdfMake && window.pdfMake.vfs) {
+        pdfMake.vfs = window.pdfMake.vfs;
       }
+      resolve();
     };
+    document.head.appendChild(script);
+  });
+};
 
-  } catch (e) {
-    console.error("Error crítico cargando vfs_fonts en Netlify:", e);
-  }
+
+
+const createPdf = async (props, output = 'print') => {
+ try {
+        // Asignamos pdfMake al objeto global para que vfs_fonts lo encuentre
+        window.pdfMake = pdfMake;
+        
+        // Cargamos las fuentes desde la carpeta public
+        await loadFonts();
+
+        // Configuración de fuentes fallback
+        pdfMake.fonts = {
+            Roboto: {
+                normal: 'Roboto-Regular.ttf',
+                bold: 'Roboto-Regular.ttf',
+                italics: 'Roboto-Italic.ttf',
+                bolditalics: 'Roboto-Italic.ttf'
+            }
+        };
+    } catch (e) {
+        console.error("Error cargando vfs_fonts:", e);
+    }
   return new Promise((resolve, reject) => {
     try {
       const {
