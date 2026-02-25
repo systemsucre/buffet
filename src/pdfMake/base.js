@@ -12,23 +12,36 @@ import printjs from 'print-js';
 // pdfMake.vfs = pdfFonts.pdfMake?.vfs || pdfFonts.default?.pdfMake?.vfs;
 
 const createPdf = async (props, output = 'print') => {
-  // 1. Cargamos las fuentes dinámicamente SOLO cuando se necesita generar un PDF
-  try {
+ try {
+    // 1. Importación dinámica adaptada a bundles de producción
     const pdfFonts = await import('pdfmake/build/vfs_fonts');
-    // Asignación robusta para v0.3.x
-    pdfMake.vfs = pdfFonts.pdfMake?.vfs || pdfFonts.default?.pdfMake?.vfs || pdfFonts.vfs;
+    
+    // 2. Extracción segura del VFS:
+    // En Netlify/Vite, pdfFonts suele venir como un módulo con una propiedad default o directamente pdfMake
+    const vfs = pdfFonts.default?.pdfMake?.vfs || 
+                pdfFonts.pdfMake?.vfs || 
+                pdfFonts.default?.vfs || 
+                pdfFonts.vfs;
 
-    // Configuración de fuentes fallback para evitar el error de "Roboto-Medium"
+    if (!vfs) {
+      throw new Error("No se pudo localizar el VFS en vfs_fonts");
+    }
+
+    // 3. Asignación al objeto pdfMake
+    pdfMake.vfs = vfs;
+
+    // 4. Mapeo de fuentes para evitar el error 'Roboto-Medium.ttf' not found
+    // Obligamos a que todas las variantes usen los archivos que SÍ están en el VFS básico
     pdfMake.fonts = {
       Roboto: {
         normal: 'Roboto-Regular.ttf',
-        bold: 'Roboto-Regular.ttf',
+        bold: 'Roboto-Regular.ttf', 
         italics: 'Roboto-Italic.ttf',
         bolditalics: 'Roboto-Italic.ttf'
       }
     };
   } catch (e) {
-    console.error("Error cargando vfs_fonts:", e);
+    console.error("Error crítico cargando vfs_fonts en Netlify:", e);
   }
   return new Promise((resolve, reject) => {
     try {
