@@ -6,14 +6,14 @@ export default defineConfig({
   plugins: [react()],
   // base: './', // Cambia a '/app/' si va en subcarpeta
 
-  optimizeDeps: {
-    include: ['pdfmake/build/pdfmake', 'pdfmake/build/vfs_fonts'],
-  },
-  build: {
-    commonjsOptions: {
-      include: [/node_modules/],
-    },
-  },
+  // optimizeDeps: {
+  //   include: ['pdfmake/build/pdfmake', 'pdfmake/build/vfs_fonts'],
+  // },
+  // build: {
+  //   commonjsOptions: {
+  //     include: [/node_modules/],
+  //   },
+  // },
 },
 
 
