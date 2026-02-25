@@ -1,6 +1,7 @@
 import { faVirusSlash } from '@fortawesome/free-solid-svg-icons';
 import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 import printjs from 'print-js';
 // pdfMake.vfs = pdfFonts.vfs;
