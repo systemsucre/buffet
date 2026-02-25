@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'; // Añadido useNavigate para mejor control
 import { INPUT, LOCAL_URL } from "../Auth/config";
-import { InputUsuarioStandard } from '../components/input/elementos';
+import { InputUsuarioStandard, Select1 } from '../components/input/elementos';
 import { UseCustomSalidas } from "../hooks/HookCustomSalidas";
+import CabeceraTramite from '../components/cabeceraTramite';
+import { useTramites } from "../hooks/HookCustomTramites"; // Hook adaptado previamente
 
 const FormularioSalida = () => {
     const { id_tramite, id } = useParams(); // id_tramite (nuevo) | id (editar)
@@ -13,14 +15,16 @@ const FormularioSalida = () => {
     const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
     const {
-        tramites,
         estados,
         setters,
         guardarSalida,
         cargarSalidaPorId,
-        obtenerTramite,
         cargando
     } = UseCustomSalidas();
+
+    const {
+        cargarTramitePorId,
+    } = useTramites();
 
     // 1. Efecto para EDICIÓN
     useEffect(() => {
@@ -28,7 +32,7 @@ const FormularioSalida = () => {
         if (isEdit && id && UUID_REGEX.test(id)) {
             // alert(' edtar'+id)
             cargarSalidaPorId(id);
-            if (obtenerTramite) obtenerTramite(id_tramite);
+            if (cargarTramitePorId) cargarTramitePorId(id_tramite);
         }
     }, [id, isEdit]);
 
@@ -43,7 +47,7 @@ const FormularioSalida = () => {
                 valido: 'true'
             });
 
-            if (obtenerTramite) obtenerTramite(id_tramite);
+            if (cargarTramitePorId) cargarTramitePorId(id_tramite);
         }
     }, [id_tramite, isEdit]);
 
@@ -65,37 +69,13 @@ const FormularioSalida = () => {
                             </div>
 
                             {/* Info del Trámite Contextual */}
-                            {tramites.length > 0 ? 
-                                <div className="alert alert-success border-0 shadow-sm mb-4" style={{ backgroundColor: '#e8f5e9', padding:'10px' }}>
-                                    <div className="row g-2 small">
-                                        <div className="col-md-7 col-12">
-                                            <div>
-                                                <span className="fw-bold text-dark">CLIENTE: </span>
-                                                <strong className="text-success">{tramites[0].cliente_nombre}</strong>
-                                            </div>
-                                            <div>
-                                                <span className="fw-bold text-dark">TRÁMITE: </span>
-                                                <strong className="text-success">{tramites[0].codigo}</strong>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-5 col-12 text-md-end">
-                                            <div className="fw-bold text-dark">
-                                                TOTAL GASTADO: Bs. {tramites[0].montoAcumulado || 0}
-                                            </div>
-                                            <div className="text-muted" style={{ fontSize: '0.75rem' }}>
-                                                COSTO TOTAL: Bs. {tramites[0].costo}
-                                            </div>
-                                            <div className={`fw-bold ${tramites[0].saldoDisponible > 2000 ? `text-dark` : tramites[0].saldoDisponible > 1000 ? `text-warning` : `text-danger`}`} >
-                                                SALDO DISP.  BS. {tramites[0].saldoDisponible}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            :null}
+                            <CabeceraTramite id={id_tramite} />
+
 
                             <br />
                             <form className="row g-3" onSubmit={(e) => guardarSalida(e, isEdit)} >
                                 {/* MONTO */}
+
                                 <div className="col-md-6">
                                     <InputUsuarioStandard
                                         estado={estados.monto}
@@ -139,7 +119,7 @@ const FormularioSalida = () => {
                                         style={{ marginRight: '4px' }}
                                         onClick={() => navigate(`${LOCAL_URL}/auxiliar/listar-salidas/${id_tramite}`)} // Retorno más seguro
                                     >
-                                        VOLVER
+                                        CANCELAR
                                     </button>
 
                                     <button

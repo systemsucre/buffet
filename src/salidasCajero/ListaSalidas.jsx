@@ -1,20 +1,19 @@
 import {
     faFilePdf,
-    faArrowLeft,
-    faTimes,
     faCheck,
-    faListUl,
-    faClock,
-    faBan
+    faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import DataTable from "../components/DataTable";
 import { InputUsuarioSearch } from "../components/input/elementos";
 import { UseCustomSalidasCajero } from "../hooks/HookCustomSalidasCajero";
+import { UseCustomSalidas } from "../hooks/HookCustomSalidas";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ColumnsTableSalidas } from "./columnTableSalidas";
 import { LOCAL_URL } from "../Auth/config";
+import CabeceraTramite from "../components/cabeceraTramite";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -25,12 +24,15 @@ export function ListaSalidasCajero() {
 
     const {
         salidasFiltradas,
-        tramites,
         cargando,
         handleSearch,
         listarSalidas,
         despacharSalida,
     } = UseCustomSalidasCajero();
+
+    const {
+        exportPDf
+    } = UseCustomSalidas();
 
     useEffect(() => {
         if (id) {
@@ -66,26 +68,18 @@ export function ListaSalidasCajero() {
                     </div>
                 </div>
 
+                <div className=" d-flex justify-content-end gap-2 " style={{ marginRight: '10px' }}>
+                    <button className=" btn btn-dark" style={{ marginLeft: '4px' }} onClick={() => {
+                        const path = parseInt(localStorage.getItem('numRol')) === 2 ? 'gerente' : 'cajero'
+                        navigate(LOCAL_URL + "/" + path + "/movimientos")
+                    }
+                    }>
+                        <FontAwesomeIcon icon={faArrowLeft} className="me-2" /> VOLVER
+                    </button>
+                </div>
+
                 {/* Cabecera de información del Trámite */}
-                {tramites.length > 0 && (
-                    <div className="card shadow-sm border-0 mb-4 bg-light mx-2">
-                        <div className="card-body p-3">
-                            <div className="row align-items-center">
-                                <div className="col text-end">
-                                    <span className="fw-bold text-dark">TRÁMITE: </span>
-                                    <strong className="text-primary">{tramites[0].codigo}</strong>
-                                </div>
-                                <div className="col text-end">
-                                    <div className="fw-bold text-dark" style={{ fontSize: '0.8rem' }}>MONTO CONTRATO: Bs. {tramites[0].costo}</div>
-                                    <div className="fw-bold text-dark" style={{ fontSize: '0.8rem' }}>ACUMULADO: Bs. {tramites[0].montoAcumulado}</div>
-                                    <div className={`fw-bold ${tramites[0].saldoDisponible > 1000 ? 'text-success' : 'text-danger'}`} style={{ fontSize: '0.8rem' }}>
-                                        SALDO DISPONIBLE: Bs. {tramites[0].saldoDisponible}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                <CabeceraTramite id={id} />
 
                 {/* --- SECCIÓN DE FILTROS GERENCIALES --- */}
                 <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">
@@ -125,7 +119,7 @@ export function ListaSalidasCajero() {
                                     label: 'Despachar'
                                 },
                                 {
-                                    boton: (id_salida) => window.open(`${LOCAL_URL}/api/salidas/pdf/${id_salida}`, '_blank'),
+                                    boton: (id_salida, row) => { exportPDf(window.innerWidth < 1100 ? 'b64' : "print", row) },
                                     className: 'btn btn-secondary py-1 px-3 x-small',
                                     icono: faFilePdf,
                                     label: 'PDF'

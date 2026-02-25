@@ -1,9 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
-import { toast } from "react-hot-toast";
+import toast from 'react-hot-toast';
+
 import { LOCAL_URL, URL } from '../Auth/config';
 import { saveDB, start } from '../service/service';
 import { useNavigate } from "react-router-dom";
 import { datosAuditoriaExtra } from "./datosAuditoriaExtra";
+import reporteConsolidoTramite from "../pdfMake/tramite";
+import reporteConsolidoTramiteAuxiliar from "../pdfMake/tramiteAuxiliar";
 
 export const useTramites = () => {
     const navigate = useNavigate();
@@ -32,7 +35,8 @@ export const useTramites = () => {
     // 1. LISTAR TRÁMITES (Principal)
     const listarTramites = useCallback(async () => {
         setCargando(true);
-        const res = await start(`${URL}tramites/listar`, { usuario: 1 });
+        const res = await start(`${URL}comuun/listar-tramites`,);
+        // alert()
         if (res) {
             setTramites(res);
 
@@ -53,11 +57,24 @@ export const useTramites = () => {
     }, []);
 
 
+    // cargamos la informacion del tramite. (costo, etc), 
+    const cargarTramiteInfo = async (id) => {
+        // alert('tramite ' + id)
+        setCargando(true);
+        const res = await start(`${URL}comuun/listar-tramites`, { id }); // Debes crear este endpoint
+        if (res) {
+            // console.log(res,' codigo', id)
+            setTramites(res)
+        }
+        setCargando(false);
+    };
     // Cargar Tramite por Id desde la BD, para garantizar la veracidad de la informacion
     const cargarTramitePorId = async (id) => {
         setCargando(true);
-        const res = await start(`${URL}tramites/obtener`, { id }); // Debes crear este endpoint
+        const res = await start(`${URL}comuun/obtener-tramite`, { id }); // Debes crear este endpoint
         if (res) {
+            // console.log(res,' codigo', id)
+            setTramites(res)
             setCodigo({ campo: res.codigo, valido: 'true' });
             setIdCliente({ campo: res.id_cliente, valido: 'true' });
             setIdTipoTramite({ campo: res.id_tipo_tramite, valido: 'true' });
@@ -129,7 +146,7 @@ export const useTramites = () => {
         if (window.confirm(msgConfirm)) {
             const res = await start(`${URL}tramites/cambiar-estado`, {
                 id,
-                estado: estadoActual,datosAuditoriaExtra
+                estado: estadoActual, datosAuditoriaExtra
             }, "Actualizando estado...");
 
             if (res) {
@@ -150,14 +167,84 @@ export const useTramites = () => {
             // Usamos la misma lógica de enviar al endpoint de actualización de estado
             const res = await start(`${URL}tramites/eliminar-logica`, {
                 id,
-                estado: estadoActual,datosAuditoriaExtra // Estado de eliminación lógica
-            }, estadoActual === 1 ? 'Restaurando Tramite.....': 'Eliminando tramite ........');
+                estado: estadoActual, datosAuditoriaExtra // Estado de eliminación lógica
+            }, estadoActual === 1 ? 'Restaurando Tramite.....' : 'Eliminando tramite ........');
 
             if (res) {
                 // Si el backend responde correctamente, refrescamos la lista
                 listarTramites();
             }
         }
+    };
+
+    // EXPORTAR PDF
+
+    const exportPDfTramites = async (output, row) => {
+        // Definimos la lógica dentro de una función interna para pasarla al toast
+        const generarProceso = async () => {
+            // 1. Obtener ingresos
+            const ingresos = await start(`${URL}comuun/ingresos`, { id: row.id });
+
+            // 2. Obtener salidas
+            const salidas = await start(`${URL}comuun/salidas`, { id: row.id });
+
+            // 2.1. Obtener datos del tramite
+            const tramite = await start(`${URL}comuun/listar-tramites`, { id: row.id });
+
+            if (!tramite || tramite.length === 0) {
+                throw new Error("No se encontraron datos del trámite.");
+            }
+
+            // 3. Generar el PDF (Pasamos el output dinámico)
+
+            let response = null
+            if (parseInt(localStorage.getItem('numRol')) === 4)
+                response = await reporteConsolidoTramiteAuxiliar(output, {
+                    tramite: tramite[0],
+                    ingresos,
+                    salidas
+                });
+            else
+                response = await reporteConsolidoTramite(output, {
+                    tramite: tramite[0],
+                    ingresos,
+                    salidas
+                });
+
+            if (!response?.success) {
+                throw new Error(response?.message || "Error al generar PDF");
+            }
+
+            // 4. Si es descarga (b64), procesar el archivo
+            if (output === "b64") {
+                const byteCharacters = atob(response.content);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: "application/pdf" });
+
+                const nombreArchivo = `Reporte_Tramite_${row.codigo || row.id}.pdf`;
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = nombreArchivo;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+            }
+
+            return "PDF generado con éxito";
+        };
+
+        // Ejecutamos el toast que envuelve toda la promesa
+        toast.promise(generarProceso(), {
+            loading: 'Obteniendo datos y generando PDF...',
+            success: (msg) => <b>{msg}</b>,
+            error: (err) => <b>{err.message.toString()}</b>,
+        });
     };
 
     // 5. BÚSQUEDA FILTRADA
@@ -183,7 +270,8 @@ export const useTramites = () => {
 
     useEffect(() => {
         listarTramites();
-        cargarAuxiliares();
+        if (localStorage.getItem('numRol') != 4)
+            cargarAuxiliares();
     }, [listarTramites, cargarAuxiliares]);
 
     return {
@@ -204,7 +292,9 @@ export const useTramites = () => {
         filterByEstado,
         allList,
         cargarTramitePorId,
+        cargarTramiteInfo,
         eliminarTramite,
-        filterByDelete
+        filterByDelete,
+        exportPDfTramites
     };
 };

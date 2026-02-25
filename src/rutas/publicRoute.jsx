@@ -15,7 +15,7 @@ export default function PublicRoute({ component: Component, ...rest }) {
         url = "/cajero/lista-tramites"
     }
     if (parseInt(localStorage.getItem('numRol')) === 2) {
-        url = "/gerente/lista-tramites"
+        url = "/gerente/movimientos"
     }
     if (parseInt(localStorage.getItem('numRol')) === 1) {
         url = "/admin/lista-tramites"

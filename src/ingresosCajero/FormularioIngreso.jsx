@@ -1,8 +1,12 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Select from 'react-select';
 import { INPUT, LOCAL_URL } from "../Auth/config";
-import { InputUsuarioStandard } from '../components/input/elementos';
+import { InputUsuarioStandard, Select1 } from '../components/input/elementos';
 import { UseCustomIngresos } from "../hooks/HookCustomIngresosCajero"; // Asegúrate de que el nombre coincida
+import CabeceraTramite from '../components/cabeceraTramite';
+import { useTramites } from "../hooks/HookCustomTramites"; // Hook adaptado previamente
+
 
 const FormularioIngreso = () => {
     const { id_tramite, id } = useParams(); // id_tramite (nuevo) | id (editar)
@@ -12,22 +16,23 @@ const FormularioIngreso = () => {
     const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
     const {
-        tramites,
         estados,
         setters,
         handleGuardar, // Nuestra función unificada del Hook
         cargarIngresoPorId,
-        obtenerTramite,
         cargando,
-        isLoading
     } = UseCustomIngresos();
+
+        const {
+            cargarTramitePorId,
+        } = useTramites();
 
     // 1. Efecto para EDICIÓN
 
     useEffect(() => {
         if (isEdit && id && UUID_REGEX.test(id)) {
             cargarIngresoPorId(id);
-            if (id_tramite && obtenerTramite) obtenerTramite(id_tramite);
+            if (id_tramite && cargarTramitePorId) cargarTramitePorId(id_tramite);
         }
     }, [id, isEdit]);
 
@@ -39,20 +44,11 @@ const FormularioIngreso = () => {
                 valido: 'true'
             });
 
-            if (obtenerTramite) obtenerTramite(id_tramite);
 
-        } else navigate(LOCAL_URL + "/cajero/lista-tramites")
+        }
     }, [id_tramite, isEdit]);
 
-    // 3. Efecto secundario para manejar el error de carga o datos vacíos
-    useEffect(() => {
-        // Solo si NO está cargando Y el trámite sigue vacío, redirigimos
-        alert(isLoading)
-        if (!isLoading && tramites?.length === 0) {
-            alert("Trámite no encontrado");
-            navigate(LOCAL_URL + "/cajero/lista-tramites");
-        }
-    }, [tramites, isLoading, isEdit]);
+    const lista = [{ value: 'EFECTIVO', label: 'EFECTIVO' }, { value: 'TRANFERENCIA', label: 'TRANFERENCIA' }, { value: 'CHEQUE', label: 'CHEQUE' },]
     return (
         <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh', background: '#f0f2f5' }}>
             <section className="container">
@@ -72,37 +68,12 @@ const FormularioIngreso = () => {
                             </div>
 
                             {/* Info del Trámite Contextual */}
-                            {tramites.length > 0 && (
-                                <div className="alert alert-success border-0 shadow-sm mb-4" style={{ backgroundColor: '#e8f5e9', padding: '10px' }}>
-                                    <div className="row g-2 small">
-                                        <div className="col-md-7 col-12">
-                                            <div>
-                                                <span className="fw-bold text-dark">CLIENTE: </span>
-                                                <strong className="text-success">{tramites[0].cliente_nombre}</strong>
-                                            </div>
-                                            <div>
-                                                <span className="fw-bold text-dark">TRÁMITE: </span>
-                                                <strong className="text-success">{tramites[0].codigo}</strong>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-5 col-12 text-md-end">
-                                            <div className="fw-bold text-dark">
-                                                TOTAL GASTADO: Bs. {tramites[0].montoAcumulado || 0}
-                                            </div>
-                                            <div className="text-muted" style={{ fontSize: '0.75rem' }}>
-                                                COSTO TOTAL: Bs. {tramites[0].costo}
-                                            </div>
-                                            <div className={`fw-bold ${tramites[0].saldoDisponible > 2000 ? `text-dark` : tramites[0].saldoDisponible > 1000 ? `text-warning` : `text-danger`}`} >
-                                                SALDO DISP.  BS. {tramites[0].saldoDisponible}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
+                            <CabeceraTramite id = {id_tramite}/>
+
 
                             <form className="row g-3" onSubmit={(e) => handleGuardar(e, isEdit)}>
                                 {/* MONTO (Si lo incluiste en tu tabla) */}
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <InputUsuarioStandard
                                         estado={estados.monto}
                                         cambiarEstado={setters.setMonto}
@@ -113,6 +84,40 @@ const FormularioIngreso = () => {
                                         ExpresionRegular={INPUT.NUMEROS_MONEY}
                                     />
                                 </div>
+
+                                <div className="col-md-3">
+                                    <label className="hospital-label w-100 mb-2">
+                                        Tipo Pago<span style={{ color: 'red' }}>*</span>
+                                    </label>
+                                    <Select
+                                        name='tipo'
+                                        id='tipo'
+                                        placeholder={'Seleccione...'}
+                                        onChange={(e) => {
+                                            const valor = e.value;
+                                            setters.setTipo({ campo: valor, valido: 'true' });
+                                        }}
+                                        options={lista}
+                                        // react-select necesita el objeto completo, lo buscamos en la lista por su ID
+                                        value={lista.find(opt => opt.value === estados.tipo.campo) || null}
+                                        isSearchable={true}
+                                        isClearable={true}
+                                        styles={{
+                                            control: (base) => ({
+                                                ...base,
+                                                borderRadius: '8px',
+                                                minHeight: '45px',
+                                                borderColor: estados.tipo.valido === 'true' ? '#1ed12d' : estados.tipo.valido === 'false' ? '#dc3545' : '#dee2e6',
+                                                boxShadow: 'none',
+                                                '&:hover': {
+                                                    borderColor: estados.tipo.valido === 'true' ? '#1ed12d' : estados.tipo.valido === 'false' ? '#dc3545' : '#86b7fe'
+                                                }
+                                            })
+                                        }}
+                                    />
+                                </div>
+
+
 
                                 {/* FECHA INGRESO */}
                                 <div className="col-md-6">
@@ -149,7 +154,7 @@ const FormularioIngreso = () => {
 
                                     <button
                                         type="submit"
-                                        className={`btn ${isEdit ? 'btn-primary' : 'btn-success'} px-5 fw-bold`}
+                                        className={`btn ${isEdit ? 'btn-info' : 'btn-success'} px-5 fw-bold`}
                                         disabled={cargando}
                                     >
                                         {cargando ? (

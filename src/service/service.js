@@ -45,6 +45,7 @@ async function start(url, payload = null, msg = null) {
 
 
         // 1. Manejo centralizado de sesión expirada
+        // console.log(data)
         if (data.hasOwnProperty("sesion")) {
             console.log(data, ' sesion desde el servidor')
             handleSessionError();

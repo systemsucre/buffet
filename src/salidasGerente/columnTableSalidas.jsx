@@ -58,7 +58,7 @@ export const ColumnsTableSalidas =  [
         field: 'estado',
         render: (row) => {
             const estados = {
-                1: { badge: 'bg-warning text-dark', texto: 'SOLICITADO', icon: 'bi-hourglass-split' },
+                1: { badge: 'bg-secondary text-dark', texto: 'SOLICITADO', icon: 'bi-hourglass-split' },
                 2: { badge: 'bg-info text-white', texto: 'APROBADO', icon: 'bi-check-circle' },
                 3: { badge: 'bg-success text-white', texto: 'DESPACHADO', icon: 'bi-cash-stack' },
                 4: { badge: 'bg-danger text-white', texto: 'RECHAZADO', icon: 'bi-x-circle' }

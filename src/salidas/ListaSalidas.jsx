@@ -13,6 +13,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { ColumnsTableSalidas } from "./columnTableSalidas";
 import { LOCAL_URL } from "../Auth/config";
+import CabeceraTramite from "../components/cabeceraTramite";
+import { useTramites } from "../hooks/HookCustomTramites"; // Hook adaptado previamente
+
 
 // Expresión regular para validar UUID (v1 a v5)
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -23,12 +26,17 @@ export function ListaSalidas() {
 
     const {
         salidasFiltradas,
-        tramites,
         cargando,
         handleSearch,
         listarSalidas,
         eliminarSalida,
+        exportPDf
     } = UseCustomSalidas();
+
+    const {
+        tramites,
+    } = useTramites();
+
 
     useEffect(() => {
         // Validación de seguridad: Si el ID no es un UUID válido, redirigimos
@@ -81,33 +89,7 @@ export function ListaSalidas() {
                 </div>
 
                 {/* Renderizado de la Cabecera del Trámite */}
-                {tramites.length > 0 ?
-                    <div className="card shadow-sm border-0 mb-4 bg-light">
-                        <div className="card-body p-3">
-                            <div className="row align-items-center">
-                                <div className=" text-end">
-                                    <div className="row align-items-center">
-                                        <div className="text-end">
-                                            <div className="fw-bold text-dark">
-                                                GASTOS : Bs. {tramites[0].montoAcumulado}
-                                            </div>
-                                            <small className=" fw-bold text-muted text-success italic" style={{ fontSize: '0.7rem' }}>
-                                                COSTO TRAMITE  Bs. {tramites[0].costo}
-                                            </small>
-                                            <div className={`fw-bold ${tramites[0].saldoDisponible > 2000 ? `text-dark` : tramites[0].saldoDisponible > 1000 ? `text-warning` : `text-danger`}`} style={{ fontSize: '0.7rem' }}>
-                                                SALDO DISP.  BS. {tramites[0].saldoDisponible}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col">
-                                    <span className="fw-bold text-dark">TRAMITE : </span>
-                                    <strong className="text-primary">{tramites[0].codigo}</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div> : null
-                }
+                <CabeceraTramite id={id} />
 
                 <div className="panel-custom bg-white rounded shadow-sm p-2">
                     <div style={{ width: '100%', maxWidth: '300px', paddingLeft: '5px' }}>
@@ -127,27 +109,27 @@ export function ListaSalidas() {
                                 {
                                     // 1. Bloqueo de funcionalidad: Si no es estado 1, la función es null
                                     boton: (tramites?.length > 0 && tramites[0].estado === 1)
-                                        ? (id_salida, row) => { row.estado === 1? navigate(`${LOCAL_URL}/auxiliar/salidas/editar/${id_salida}`) : null}
+                                        ? (id_salida, row) => { row.estado === 1 ? navigate(`${LOCAL_URL}/auxiliar/salidas/editar/${row.id_tramite}/${id_salida}`) : alert('ya esta despachado') }
                                         : () => alert(),
 
                                     // 2. Bloqueo Visual: 'disabled' desactiva el click, el icono y el label
                                     // 'opacity-50' hace que todo el conjunto (icono + texto) se vea gris
-                                    className:  `btn btn-info py-1 px-3 x-small me-1 ${(tramites?.length > 0 && tramites[0].estado === 1) ? '' : 'disabled opacity-50'
+                                    className: `btn btn-info py-1 px-3 x-small me-1 ${(tramites?.length > 0 && tramites[0].estado === 1) ? '' : 'disabled opacity-50'
                                         }`,
 
                                     icono: faEdit,
                                     label: 'Editar'
                                 },
                                 {
-                                    boton: (tramites?.length > 0 && tramites[0].estado === 1) ? (id_salida) => {
-                                        eliminarSalida(id_salida, id);
+                                    boton: (tramites?.length > 0 && tramites[0].estado === 1) ? (id_salida, row) => {
+                                        row.estado === 1 ? eliminarSalida(id_salida, id) : alert('ya esta despachado');
                                     } : null,
                                     className: `btn btn-danger py-1 px-3 x-small me-1 ${(tramites?.length > 0 && tramites[0].estado === 1) ? '' : 'disabled opacity-50'}`,
                                     icono: faTrashAlt,
                                     label: 'Eliminar'
                                 },
                                 {
-                                    boton: (id_salida) => window.open(`${LOCAL_URL}/api/salidas/pdf/${id_salida}`, '_blank'),
+                                    boton: (id_salida, row) => { exportPDf(window.innerWidth < 1100 ? 'b64' : "print", row) },
                                     className: 'btn btn-secondary py-1 px-3 x-small',
                                     icono: faFilePdf,
                                     label: 'PDF'

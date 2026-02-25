@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
-import {  URL } from "./config";
+import {  LOCAL_URL, URL } from "./config";
 import { Navigate } from "react-router-dom";
 
 export const AuthContext = createContext();
@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
       localStorage.removeItem("id-municipio");
       localStorage.removeItem("id-comunidad");
       axios.post(URL + "/logout", { token: token });
-      return <Navigate to = '/login' />
+      return <Navigate to = {LOCAL_URL+'/login'} />
 
       // window.location.href = LOCAL_URL+"/";
     },

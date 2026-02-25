@@ -51,9 +51,16 @@ const NavbarCajero = () => {
         {/* Desktop Menu */}
         <ul className="nav-menu-desktop">
           <li><NavLink to="/" end className="nav-link-item">Dashboard</NavLink></li>
-          <li><NavLink to={LOCAL_URL + "/cajero/lista-tramites"} className="nav-link-item">Salidas</NavLink></li>
-          <li><NavLink to={LOCAL_URL + "/cajero/lista-tramites-ingresos"} className="nav-link-item">Ingresos</NavLink></li>
-
+          <li><NavLink to={LOCAL_URL + "/cajero/movimientos"} end className="nav-link-item">Movimientos</NavLink></li>
+          <div className="nav-item-container has-submenu">
+            <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+              Clientes <span className="arrow">▼</span>
+            </NavLink>
+            <ul className="submenu-list">
+              <li><NavLink to={LOCAL_URL + "/cajero/nuevo-cliente"} className="submenu-link">Nuevo Cliente</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/cajero/lista-clientes"} className="submenu-link">Lista Clientes</NavLink></li>
+            </ul>
+          </div>
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
               Tramites <span className="arrow">▼</span>
@@ -64,18 +71,13 @@ const NavbarCajero = () => {
             </ul>
           </div>
 
-          <li><NavLink to="/citas" className="nav-link-item">Ingresos</NavLink></li>
           <li><NavLink to="/reportes" className="nav-link-item">Reportes</NavLink></li>
-          {/* <li className="nav-action">
-            <NavLink to="/perfil" className="btn-nav-profile">Mi Perfil</NavLink>
-          </li>
-           */}
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item btn-nav-profile" onClick={(e) => e.preventDefault()}>
               Mi Perfil
             </NavLink>
             <ul className="submenu-list mt-4">
-              <li><NavLink to={ "#"} className="submenu-link" onClick={() => auth.logout()}>Cerrar sesion <FontAwesomeIcon icon={faPowerOff} /></NavLink></li>
+              <li><NavLink to={"#"} className="submenu-link" onClick={() => auth.logout()}>Cerrar sesion <FontAwesomeIcon icon={faPowerOff} /></NavLink></li>
               <li><NavLink to={LOCAL_URL + "/perfil"} className="submenu-link">Perfil</NavLink></li>
             </ul>
           </div>
@@ -98,15 +100,15 @@ const NavbarCajero = () => {
           <div className={`nav-menu-mobile ${isMobileMenuOpen ? 'open' : ''}`}>
 
             <NavLink to="#" end className="mobile-link">Dashboard</NavLink>
-            <NavLink to={LOCAL_URL + "/gerente/lista-tramites"} className="mobile-link">Salidas</NavLink>
+            <NavLink to={LOCAL_URL + "/cajero/movimientos"} end className="mobile-link">Movimientos</NavLink>
 
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
                 Clientes <span className="arrow">▼</span>
               </NavLink>
               <ul className="submenu-list">
-                <li><NavLink to={LOCAL_URL + "/gerente/nuevo-cliente"} className="submenu-link">Nuevo Cliente</NavLink></li>
-                <li><NavLink to={LOCAL_URL + "/gerente/clientes"} className="submenu-link">Lista Clientes</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/cajero/nuevo-cliente"} className="submenu-link">Nuevo Cliente</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/cajero/lista-clientes"} className="submenu-link">Lista Clientes</NavLink></li>
               </ul>
             </div>
             <div className="nav-item-container has-submenu">
@@ -114,14 +116,12 @@ const NavbarCajero = () => {
                 Tramites <span className="arrow">▼</span>
               </NavLink>
               <ul className="submenu-list">
-                <li><NavLink to={LOCAL_URL + "/gerente/nuevo-tramite"} className="submenu-link">Nuevo Trámite</NavLink></li>
-                <li><NavLink to={LOCAL_URL + "/gerente/lista-tramites"} className="submenu-link">Lista Tramites</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/cajero/nuevo-tramite"} className="submenu-link">Nuevo Trámite</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/cajero/lista-tramites"} className="submenu-link">Lista Tramites</NavLink></li>
               </ul>
             </div>
 
-            <NavLink to="/citas" className="mobile-link">Ingresos</NavLink>
             <NavLink to="/citas" className="mobile-link">Reportes</NavLink>
-
             <div className="nav-item-container has-submenu mt-4" >
               <NavLink to={'#'} className="mobile-link profile" onClick={(e) => e.preventDefault()} >Mi Perfil</NavLink>
               <ul className="submenu-list mt-4">

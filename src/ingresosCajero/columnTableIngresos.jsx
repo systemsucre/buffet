@@ -5,7 +5,7 @@ export const ColumnsTableIngresos = [
         render: (row) => (
             <div className="text-center">
                 <div className="fw-bold text-dark small" style={{ fontSize: '0.7rem' }}>
-                    {row.id ? row.id.substring(0, 8).toUpperCase() : '---'}
+                    {row.id ? row.numero : '---'}
                 </div>
                 <small className="badge bg-light text-secondary border">INGRESO</small>
             </div>
@@ -17,13 +17,14 @@ export const ColumnsTableIngresos = [
         field: 'detalle',
         render: (row) => (
             <div style={{ minWidth: '220px' }}>
-                <div className="fw-bold text-dark">{row.detalle}</div>
-                <div className="d-flex align-items-center mt-1">
-                    <small className="text-muted" style={{ fontSize: '0.75rem' }}>
-                        <i className="bi bi-person-badge me-1"></i>
-                        Recibido por: {row.usuario_nombre || `ID: ${row.usuario}`}
-                    </small>
-                </div>
+                {row.detalle?.length < 20 ?
+                    <div className="fw-bold text-dark">{row.detalle}</div> :
+                    <div className="d-flex align-items-center mt-1">
+                        <small className="text-muted" style={{ fontSize: '0.75rem' }}>
+                            {row.detalle}
+                        </small>
+                    </div>
+                }
             </div>
         )
     },
@@ -64,21 +65,28 @@ export const ColumnsTableIngresos = [
             </div>
         )
     },
+
     {
-        label: 'Comprobante',
-        field: 'acciones', // Campo ficticio para el estado visual
-        render: (row) => {
-            return (
-                <div className="d-flex flex-column align-items-center">
-                    <span className="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1 mb-1">
-                        <i className="bi bi-shield-check me-1"></i>
-                        CONSOLIDADO
-                    </span>
-                    <small className="text-muted italic" style={{ fontSize: '0.6rem' }}>
-                        Listo para arqueo
-                    </small>
+        label: 'TIPO PAGO',
+        field: 'TIPO',
+        render: (row) => (
+            <div className="text-end pe-3">
+                <div className="fw-bold text-dark">
+                    {row.tipo}
                 </div>
-            );
-        }
-    }
+            </div>
+        )
+    },
+    {
+        label: 'RECIBIDO POR',
+        field: 'username',
+        render: (row) => (
+            <div style={{ minWidth: '200px' }}>
+                <div className="fw-bold text-dark">{row.usuario_nombre}</div>
+                <small className="text-muted" style={{ fontSize: '0.7rem' }}>
+                    Usuario : {row.username + ` ID: ${row.id_usuario}`}
+                </small>
+            </div>
+        )
+    },
 ];

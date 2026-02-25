@@ -50,7 +50,7 @@ const NavbarGerente = () => {
         {/* Desktop Menu */}
         <ul className="nav-menu-desktop">
           <li><NavLink to="/" end className="nav-link-item">Dashboard</NavLink></li>
-          <li><NavLink to={LOCAL_URL + "/gerente/lista-tramites"} className="nav-link-item">Salidas</NavLink></li>
+          <li><NavLink to={LOCAL_URL + "/gerente/movimientos"} className="nav-link-item">Movimientos</NavLink></li>
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
               Clientes <span className="arrow">▼</span>
@@ -71,7 +71,6 @@ const NavbarGerente = () => {
             </ul>
           </div>
 
-          <li><NavLink to="/citas" className="nav-link-item">Ingresos</NavLink></li>
           <li><NavLink to="/reportes" className="nav-link-item">Reportes</NavLink></li>
           <li className="nav-action">
             <div className="nav-item-container has-submenu">
@@ -104,7 +103,7 @@ const NavbarGerente = () => {
           <div className={`nav-menu-mobile ${isMobileMenuOpen ? 'open' : ''}`}>
 
             <NavLink to="#" end className="mobile-link">Dashboard</NavLink>
-            <NavLink to={LOCAL_URL + "/gerente/lista-tramites"} className="mobile-link">Salidas</NavLink>
+            <NavLink to={LOCAL_URL + "/gerente/movimientos"} className="mobile-link">Movimientos</NavLink>
 
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>

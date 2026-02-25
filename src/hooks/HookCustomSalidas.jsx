@@ -1,5 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, } from "react";
 import { useNavigate } from "react-router-dom";
+import ticketSalidaIndividual from "../pdfMake/salida";
+import fileDownload from "js-file-download";
 import { LOCAL_URL, URL } from '../Auth/config';
 import { saveDB, start } from '../service/service';
 import { datosAuditoriaExtra } from "./datosAuditoriaExtra";
@@ -15,22 +17,10 @@ export const UseCustomSalidas = () => {
     const [fechaSolicitud, setFechaSolicitud] = useState({ campo: '', valido: null });
 
     // ESTADOS DE DATOS
-    const [tramites, setTramites] = useState([]);
-    const [tramitesFiltrados, setTramitesFiltrados] = useState([]);
+
     const [salidas, setSalidas] = useState([]);
     const [salidasFiltradas, setSalidasFiltradas] = useState([]);
     const [cargando, setCargando] = useState(false);
-
-    // 1. LISTAR TRÁMITES
-    const listarTramites = useCallback(async () => {
-        setCargando(true);
-        const res = await start(`${URL}salidas/listar-tramites`);
-        if (res) {
-            setTramites(res);
-            setTramitesFiltrados(res.filter(t => t.eliminado === 1)); // t.eliminado === 0 suelen ser los activos
-        }
-        setCargando(false);
-    }, []);
 
     // 2. LISTAR SALIDAS (Corregido para usar el estado correcto)
     const listarSalidas = async (id) => {
@@ -39,7 +29,6 @@ export const UseCustomSalidas = () => {
         if (res) {
             setSalidas(res);
             setSalidasFiltradas(res);
-            obtenerTramite(id)
         }
     };
 
@@ -60,13 +49,6 @@ export const UseCustomSalidas = () => {
         setCargando(false);
     };
 
-    // 3.1. CARGAR TRAMITE
-    const obtenerTramite = async (id) => {
-        const res = await start(`${URL}salidas/obtener-tramite`, { id });
-        if (res) {
-            setTramites(res);
-        }
-    };
 
     // 4. GUARDAR (CREAR / EDITAR)
     const guardarSalida = async (e, idParaEditar = null) => {
@@ -124,6 +106,45 @@ export const UseCustomSalidas = () => {
     const eliminarSalida = (id, id_tramite) =>
         ejecutarAccion(id, id_tramite, 'eliminar', "¿Eliminar solicitud de gasto?", "Eliminando...");
 
+
+    // EXPORTAR PDF
+    const exportPDf = async (output, row) => {
+        // Generamos el PDF con el objeto 'row'}
+        console.log("Iniciando exportación...", { output, row });
+
+        const response = await ticketSalidaIndividual(output, { salida: row });
+        console.log(response, ' reponse')
+        if (!response?.success) {
+            alert(response?.message);
+            return;
+        }
+
+        if (output === "b64") {
+            const byteCharacters = atob(response.content);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: "application/pdf" });
+
+            const nombreArchivo = `Salida_${row.numero + ' Tramite ' + row.codigo_tramite || 'sin-numero'}.pdf`;
+
+            // MÉTODO DE DESCARGA NATIVO (A prueba de fallos)
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = nombreArchivo;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+
+            console.log("3. Descarga iniciada");
+        }
+
+    };
+
     // 6. BUSCADORES
     const handleSearch = (e) => {
         const busqueda = e.target.value.toLowerCase();
@@ -134,22 +155,9 @@ export const UseCustomSalidas = () => {
         setSalidasFiltradas(filtrados);
     };
 
-    const handleSearchTramite = (e) => {
-        const busqueda = e.target.value.toLowerCase();
-        const filtrados = tramites.filter((t) => (
-            t.codigo.toLowerCase().includes(busqueda) ||
-            t.cliente_nombre.toLowerCase().includes(busqueda) ||
-            t.nombre_tipo_tramite.toLowerCase().includes(busqueda)
-        ));
-        setTramitesFiltrados(filtrados);
-    };
-
-    useEffect(() => {
-        listarTramites();
-    }, [listarTramites]);
 
     return {
-        tramites, tramitesFiltrados, salidas, salidasFiltradas, cargando,
+        salidas, salidasFiltradas, cargando,
         estados: { idTramite, monto, detalle, fechaSolicitud },
         setters: { setIdTramite, setMonto, setDetalle, setFechaSolicitud },
         listarSalidas,
@@ -158,10 +166,10 @@ export const UseCustomSalidas = () => {
         rechazarSalida,
         despacharSalida,
         eliminarSalida,
+        exportPDf,
         handleSearch,
-        handleSearchTramite,
         cargarSalidaPorId,
         allList: () => setSalidasFiltradas(salidas),
-        allListTramite: () => setTramitesFiltrados(tramites), obtenerTramite
     };
+
 };

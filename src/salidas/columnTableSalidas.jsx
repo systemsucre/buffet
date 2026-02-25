@@ -5,7 +5,9 @@ export const ColumnsTableSalidas = [
         render: (row) => (
             <div style={{ minWidth: '10px' }}>
                 <div className="fw-bold text-dark text-center">{row.numero}</div>
-
+                <small className="text-muted" style={{ fontSize: '0.7rem' }}>
+                    Registrado por: {row.usuario_nombre}
+                </small>
             </div>
         ),
         sortable: true,
@@ -15,10 +17,12 @@ export const ColumnsTableSalidas = [
         field: 'detalle',
         render: (row) => (
             <div style={{ minWidth: '200px' }}>
-                <div className="fw-bold text-dark">{row.detalle}</div>
-                <small className="text-muted" style={{ fontSize: '0.7rem' }}>
-                    Registrado por: {row.usuario_nombre || `ID: ${row.usuario}`}
-                </small>
+                {row.detalle?.length < 20 ?
+                    <div className="fw-bold text-dark">{row.detalle}</div> :
+                    <small className="text-muted" style={{ fontSize: '0.7rem' }}>
+                        {row.detalle}
+                    </small>
+                }
             </div>
         )
     },
@@ -58,7 +62,7 @@ export const ColumnsTableSalidas = [
         field: 'estado',
         render: (row) => {
             const estados = {
-                1: { badge: 'bg-warning text-dark', texto: 'SOLICITADO', icon: 'bi-hourglass-split' },
+                1: { badge: 'bgss-secondary text-dark', texto: 'SOLICITADO', icon: 'bi-hourglass-split' },
                 2: { badge: 'bg-info text-white', texto: 'APROBADO', icon: 'bi-check-circle' },
                 3: { badge: 'bg-success text-white', texto: 'DESPACHADO', icon: 'bi-cash-stack' },
                 4: { badge: 'bg-danger text-white', texto: 'RECHAZADO', icon: 'bi-x-circle' }

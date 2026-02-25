@@ -1,11 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { LOCAL_URL, URL } from '../Auth/config';
-import { saveDB, start } from '../service/service';
+import { useState,  } from "react";
+import { URL } from '../Auth/config';
+import {  start } from '../service/service';
 import { datosAuditoriaExtra } from "./datosAuditoriaExtra";
 
 export const UseCustomSalidasGerente = () => {
-    const navigate = useNavigate();
 
     // ESTADOS DEL FORMULARIO
     const [idTramite, setIdTramite] = useState({ campo: '', valido: null });
@@ -14,22 +12,12 @@ export const UseCustomSalidasGerente = () => {
     const [fechaSolicitud, setFechaSolicitud] = useState({ campo: '', valido: null });
 
     // ESTADOS DE DATOS
-    const [tramites, setTramites] = useState([]);
-    const [tramitesFiltrados, setTramitesFiltrados] = useState([]);
+
     const [salidas, setSalidas] = useState([]);
     const [salidasFiltradas, setSalidasFiltradas] = useState([]);
     const [cargando, setCargando] = useState(false);
 
-    // 1. LISTAR TRÁMITES
-    const listarTramites = useCallback(async () => {
-        setCargando(true);
-        const res = await start(`${URL}salidas-gerente/listar-tramites`);
-        if (res) {
-            setTramites(res);
-            setTramitesFiltrados(res.filter(t => t.eliminado === 1)); // t.eliminado === 0 suelen ser los activos
-        }
-        setCargando(false);
-    }, []);
+
 
     // 2. LISTAR SALIDAS (Corregido para usar el estado correcto)
     const listarSalidas = async (id) => {
@@ -39,7 +27,6 @@ export const UseCustomSalidasGerente = () => {
         if (res) {
             setSalidas(res);
             setSalidasFiltradas(res);
-            obtenerTramite(id)
         }
     };
 
@@ -58,15 +45,6 @@ export const UseCustomSalidasGerente = () => {
         }
         setCargando(false);
     };
-
-    // 3.1. CARGAR TRAMITE
-    const obtenerTramite = async (id) => {
-        const res = await start(`${URL}salidas-gerente/obtener-tramite`, { id });
-        if (res) {
-            setTramites(res);
-        }
-    };
-
 
 
     // 5. ACCIONES DE ESTADO (Centralizadas para refrescar la lista correctamente)
@@ -87,6 +65,9 @@ export const UseCustomSalidasGerente = () => {
     const rechazarSalida = (id, id_tramite) =>
         ejecutarAccion(id, id_tramite, 'rechazar', "¿Rechazar solicitud?", "Rechazando...");
 
+     const habilitarEdicion = (id, id_tramite) =>
+        ejecutarAccion(id, id_tramite, 'habilitar-edicion', "¿ Habilitar edición?", "Habilitando...");
+
 
     // 6. BUSCADORES
     const handleSearch = (e) => {
@@ -98,31 +79,19 @@ export const UseCustomSalidasGerente = () => {
         setSalidasFiltradas(filtrados);
     };
 
-    const handleSearchTramite = (e) => {
-        const busqueda = e.target.value.toLowerCase();
-        const filtrados = tramites.filter((t) => (
-            t.codigo.toLowerCase().includes(busqueda) ||
-            t.cliente_nombre.toLowerCase().includes(busqueda) ||
-            t.nombre_tipo_tramite.toLowerCase().includes(busqueda)
-        ));
-        setTramitesFiltrados(filtrados);
-    };
 
-    useEffect(() => {
-        listarTramites();
-    }, [listarTramites]);
+
 
     return {
-        tramites, tramitesFiltrados, salidas, salidasFiltradas, cargando,
+         salidas, salidasFiltradas, cargando,
         estados: { idTramite, monto, detalle, fechaSolicitud },
         setters: { setIdTramite, setMonto, setDetalle, setFechaSolicitud },
         listarSalidas,
         aprobarSalida,
         rechazarSalida,
+        habilitarEdicion,
         handleSearch,
-        handleSearchTramite,
         cargarSalidaPorId,
         allList: () => setSalidasFiltradas(salidas),
-        allListTramite: () => setTramitesFiltrados(tramites), obtenerTramite
     };
 };

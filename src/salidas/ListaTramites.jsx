@@ -2,19 +2,22 @@ import { faFileInvoiceDollar, faFilePdf } from "@fortawesome/free-solid-svg-icon
 import DataTable from "../components/DataTable";
 import { InputUsuarioSearch } from "../components/input/elementos";
 import { ColumnsTableTramites } from "../tramite/columnTableTramites";
-import { UseCustomSalidas } from "../hooks/HookCustomSalidas";
+import { useTramites } from "../hooks/HookCustomTramites"; // Hook adaptado previamente
+
 import { LOCAL_URL } from '../Auth/config';
 
 export function ListaTramitesS() {
     const {
-        handleSearchTramite,
+        handleSearch,
         tramites,
         tramitesFiltrados,
         allListTramite,
-        filterByEstadoTramite,
+        filterByEstado,
         cargando,
-        filterByDeleteTramite
-    } = UseCustomSalidas();
+        filterByDeleteTramite,
+        exportPDfTramites
+    } = useTramites();
+
 
     const enCurso = tramites.filter(t => t.estado === 1).length;
     const paralizados = tramites.filter(t => t.estado === 0).length;
@@ -36,8 +39,8 @@ export function ListaTramitesS() {
                         <div className="col-md-6">
                             <div className="d-flex gap-2">
                                 <button className="btn btn-light btn-sm border text-success fw-bold" onClick={allListTramite}>TODOS <span className="fw-bold mb-0 text-success">{tramites.length}</span></button>
-                                <button className="btn btn-primary btn-sm border text-primary fw-bold" onClick={() => filterByEstadoTramite(1)}>EN CURSO <span className="fw-bold mb-0 text-primary">{enCurso}</span></button>
-                                <button className="btn btn-warning btn-sm border text-warning fw-bold" onClick={() => filterByEstadoTramite(0)}>PARALIZADOS <span className="fw-bold mb-0 text-warning">{paralizados}</span></button>
+                                <button className="btn btn-primary btn-sm border text-primary fw-bold" onClick={() => filterByEstado(1)}>EN CURSO <span className="fw-bold mb-0 text-primary">{enCurso}</span></button>
+                                <button className="btn btn-warning btn-sm border text-warning fw-bold" onClick={() => filterByEstado(4)}>PARALIZADOS <span className="fw-bold mb-0 text-warning">{paralizados}</span></button>
                                 {tramites.filter(t => t.eliminado == 0).length > 0 && (
                                     <button className="btn btn-warning btn-sm border text-danger fw-bold" onClick={() => filterByDeleteTramite(0)}>
                                         RECICLAJE <span className="fw-bold mb-0 text-danger">{tramites.filter(t => t.eliminado == 0).length}</span>
@@ -50,7 +53,7 @@ export function ListaTramitesS() {
                                 <InputUsuarioSearch
                                     name="input-search-tramite"
                                     placeholder='Buscar por código, cliente o tipo...'
-                                    onChange={handleSearchTramite}
+                                    onChange={handleSearch}
                                 />
                             </div>
                         </div>
@@ -73,7 +76,7 @@ export function ListaTramitesS() {
                                 },
 
                                 {
-                                    boton: (id_salida) => window.open(`${LOCAL_URL}/api/salidas/pdf/${id_salida}`, '_blank'),
+                                    boton: (id_salida, row) => {  exportPDfTramites(window.innerWidth < 1100 ? 'b64' : "print", row) },
                                     className: 'btn btn-secondary py-1 px-3 x-small',
                                     icono: faFilePdf,
                                     label: 'PDF'

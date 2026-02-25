@@ -9,10 +9,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DataTable from "../components/DataTable";
 import { InputUsuarioSearch } from "../components/input/elementos";
 import { UseCustomIngresos } from "../hooks/HookCustomIngresosCajero"; // Hook adaptado previamente
+import { useTramites } from "../hooks/HookCustomTramites"; // Hook adaptado previamente
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { ColumnsTableIngresos } from "./columnTableIngresos"; // Columnas adaptadas previamente
 import { LOCAL_URL } from "../Auth/config";
+import CabeceraTramite from "../components/cabeceraTramite";
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -22,13 +24,19 @@ export function ListaIngresosTramite() {
 
     const {
         ingresosFiltrados,
-        tramites,
         cargando,
         handleSearch,
         listarIngresos, // Cambiado de listarSalidas
         eliminarIngreso,
-        obtenerTramite,
+        exportPDfIngresos,
     } = UseCustomIngresos();
+
+    const {
+        tramites,
+    } = useTramites();
+
+
+
 
     useEffect(() => {
         if (id) {
@@ -37,12 +45,43 @@ export function ListaIngresosTramite() {
                 return;
             }
             listarIngresos(id);
-            obtenerTramite(id)
         }
     }, [id]);
 
     // Cálculo de totales para el resumen
     const totalRecaudado = ingresosFiltrados.reduce((acc, curr) => acc + Number(curr.monto || 0), 0);
+
+    const funciones = parseInt(localStorage.getItem('numRol')) === 3 ? [
+        {
+            boton: (id_ingreso) => {
+                // alert(`${LOCAL_URL}/cajero/editar-ingreso/${id}/${id_ingreso}`);
+                navigate(`${LOCAL_URL}/cajero/editar-ingreso/${id}/${id_ingreso}`);
+            },
+            className: 'btn btn-info py-1 px-3 x-small me-1',
+            icono: faEdit,
+            label: 'Editar'
+        },
+        {
+            boton: (id_salida, row) => { exportPDfIngresos(window.innerWidth < 1100 ? 'b64' : "print", row) },
+            className: 'btn btn-pdf py-1 px-3 x-small me-1',
+            icono: faFilePdf,
+            label: 'Recibo'
+        },
+        {
+            boton: (id_ingreso) => eliminarIngreso(id_ingreso),
+            className: 'btn btn-danger py-1 px-3 x-small',
+            icono: faTrash,
+            label: 'Eliminar'
+        }
+    ] :
+        [
+            {
+                boton: (id_salida, row) => { exportPDfIngresos(window.innerWidth < 1100 ? 'b64' : "print", row) },
+                className: 'btn btn-pdf py-1 px-3 x-small me-1',
+                icono: faFilePdf,
+                label: 'Recibo'
+            },
+        ]
 
     return (
         <>
@@ -58,12 +97,12 @@ export function ListaIngresosTramite() {
 
                 <div className=" d-flex justify-content-end gap-2 " style={{ marginRight: '10px' }}>
                     {/* El botón nuevo gasto hereda el UUID correctamente */}
-                    {tramites.length > 0 ?
+                    {tramites.length > 0 && parseInt(localStorage.getItem('numRol')) === 3 ?
 
                         tramites[0].estado === 1 ?
                             < button
                                 className="btn btn-success  fw-bold"
-                                onClick={() => navigate(LOCAL_URL + `/cajero/crear/${id}`)}
+                                onClick={() => navigate(LOCAL_URL + `/cajero/crear-ingreso/${id}`)}
                                 disabled={!id || !UUID_REGEX.test(id)}
                             >
                                 <FontAwesomeIcon icon={faPlus} className="me-2" /> REGISTRAR PAGO
@@ -74,39 +113,16 @@ export function ListaIngresosTramite() {
                                 <FontAwesomeIcon icon={faPlus} className="me-2" /> NO DISPONIBLE
                             </button> : null
                     }
-                    <button className=" btn btn-dark" style={{ marginLeft: '4px' }} onClick={() => navigate(LOCAL_URL + "/cajero/lista-tramites")}>
+                    <button className=" btn btn-dark" style={{ marginLeft: '4px' }} onClick={() => {
+                        const path = parseInt(localStorage.getItem('numRol')) === 2 ? 'gerente' : 'cajero'
+                        navigate(LOCAL_URL + "/" + path + "/movimientos")
+                    }
+                    }>
                         <FontAwesomeIcon icon={faArrowLeft} className="me-2" /> VOLVER
                     </button>
                 </div>
 
-                {/* Cabecera de Resumen Financiero del Trámite */}
-                {tramites.length > 0 && (
-                    <div className="alert alert-success border-0 shadow-sm mb-4 " style={{ backgroundColor: '#e8f5e9', marginBottom:'15px', marginTop:'15px', padding:'10px' }}>
-                        <div className="row g-2 small">
-                            <div className="col-md-7 col-12">
-                                <div>
-                                    <span className="fw-bold text-dark">CLIENTE: </span>
-                                    <strong className="text-success">{tramites[0].cliente_nombre}</strong>
-                                </div>
-                                <div>
-                                    <span className="fw-bold text-dark">TRÁMITE: </span>
-                                    <strong className="text-success">{tramites[0].codigo}</strong>
-                                </div>
-                            </div>
-                            <div className="col-md-5 col-12 text-md-end">
-                                <div className="fw-bold text-dark">
-                                    TOTAL GASTADO: Bs. {tramites[0].montoAcumulado || 0}
-                                </div>
-                                <div className="text-muted" style={{ fontSize: '0.75rem' }}>
-                                    COSTO TOTAL: Bs. {tramites[0].costo}
-                                </div>
-                                <div className={`fw-bold ${tramites[0].saldoDisponible > 2000 ? `text-dark` : tramites[0].saldoDisponible > 1000 ? `text-warning` : `text-danger`}`} >
-                                    SALDO DISP.  BS. {tramites[0].saldoDisponible}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                <CabeceraTramite id={id} />
 
                 <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">
                     <div className="row align-items-center mb-3 g-3">
@@ -136,26 +152,7 @@ export function ListaIngresosTramite() {
                             columns={ColumnsTableIngresos}
                             data={ingresosFiltrados}
                             cargando={cargando}
-                            funciones={[
-                                {
-                                    boton: (id_ingreso) => navigate(`${LOCAL_URL}/ingresos/editar/${id}/${id_ingreso}`),
-                                    className: 'btn btn-outline-primary py-1 px-3 x-small me-1',
-                                    icono: faEdit,
-                                    label: 'Editar'
-                                },
-                                {
-                                    boton: (id_ingreso) => window.open(`${LOCAL_URL}/api/ingresos/comprobante/${id_ingreso}`, '_blank'),
-                                    className: 'btn btn-outline-secondary py-1 px-3 x-small me-1',
-                                    icono: faFilePdf,
-                                    label: 'Recibo'
-                                },
-                                {
-                                    boton: (id_ingreso) => eliminarIngreso(id_ingreso, id, 1), // 1 es el ID usuario prueba
-                                    className: 'btn btn-outline-danger py-1 px-3 x-small',
-                                    icono: faTrash,
-                                    label: 'Anular'
-                                }
-                            ]}
+                            funciones={funciones}
                         />
                     </div>
                 </div>

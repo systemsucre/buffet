@@ -116,7 +116,9 @@ export default function AppRouter() {
         <NavbarAdmin />
         <main className="main-content">
           {/* Outlet es donde se renderizarán las páginas (Pacientes, Login, etc.) */}
+
           <Outlet />
+
         </main>
       </>, // El Layout siempre se muestra
       errorElement: <E500 />,
@@ -124,56 +126,56 @@ export default function AppRouter() {
 
         {
           path: 'lista-clientes',
-          element: <Check component={ListaClientes} />,
+          element: <Check component={ListaClientes} roleRequired="admin" />,
         },
         {
           path: 'nuevo-cliente',
-          element: <Check component={NuevoCliente} />,
+          element: <Check component={NuevoCliente} roleRequired="admin" />,
         },
         {
           path: 'editar-cliente/:id',
-          element: <Check component={NuevoCliente} />,
+          element: <Check component={NuevoCliente} roleRequired="admin" />,
         },
 
 
         {
           path: 'lista-usuarios',
-          element: <Check component={ListaUsuarios} />,
+          element: <Check component={ListaUsuarios} roleRequired="admin" />,
         },
         {
           path: 'nuevo-usuario',
-          element: <Check component={NuevoUsuario} />,
+          element: <Check component={NuevoUsuario} roleRequired="admin" />,
         },
         {
           path: 'editar-usuario/:id',
-          element: <Check component={NuevoUsuario} />,
+          element: <Check component={NuevoUsuario} roleRequired="admin" />,
         },
 
 
         {
           path: 'lista-tramites',
-          element: <Check component={ListaTramites} />,
+          element: <Check component={ListaTramites} roleRequired="admin" />,
         },
         {
           path: 'nuevo-tramite',
-          element: <Check component={NuevoTramite} />,
+          element: <Check component={NuevoTramite} roleRequired="admin" />,
         },
         {
           path: 'editar-tramite/:id',
-          element: <Check component={NuevoTramite} />,
+          element: <Check component={NuevoTramite} roleRequired="admin" />,
         },
 
         {
           path: 'lista-tipo-tramites',
-          element: <Check component={ListaTipoTramite} />,
+          element: <Check component={ListaTipoTramite} roleRequired="admin" />,
         },
         {
           path: 'nuevo-tipo-tramite',
-          element: <Check component={NuevoTipoTramite} />,
+          element: <Check component={NuevoTipoTramite} roleRequired="admin" />,
         },
         {
           path: 'editar-tipo-tramite/:id',
-          element: <Check component={NuevoTipoTramite} />,
+          element: <Check component={NuevoTipoTramite} roleRequired="admin" />,
         },
       ],
     },
@@ -194,22 +196,22 @@ export default function AppRouter() {
 
         {
           path: 'lista-tramites',
-          element: <Check component={ListaTramitesS} />,
+          element: <Check component={ListaTramitesS} roleRequired="auxiliar" />,
         },
 
         {
           path: 'listar-salidas/:id',
-          element: <Check component={ListaSalidas} />,
+          element: <Check component={ListaSalidas} roleRequired="auxiliar" />,
         },
 
         {
           path: 'salidas/crear/:id_tramite',
-          element: <Check component={FormularioSalida} />,
+          element: <Check component={FormularioSalida} roleRequired="auxiliar" />,
         },
 
         {
-          path: 'salidas/editar/:id',
-          element: <Check component={FormularioSalida} />,
+          path: 'salidas/editar/:id_tramite/:id',
+          element: <Check component={FormularioSalida} roleRequired="auxiliar" />,
         },
       ],
     },
@@ -229,14 +231,48 @@ export default function AppRouter() {
       children: [
 
         {
-          path: 'lista-tramites',
-          element: <Check component={ListaTramitesGerente} />,
+          path: 'movimientos',
+          element: <Check component={ListaTramitesGerente} roleRequired="gerente" />,
         },
 
         {
           path: 'listar-salidas/:id',
-          element: <Check component={ListaSalidasGerente} />,
+          element: <Check component={ListaSalidasGerente} roleRequired="gerente" />,
         },
+        {
+          path: 'listar-ingresos/:id',
+          element: <Check component={ListaIngresosTramite} roleRequired="gerente" />,
+        },
+
+
+        {
+          path: 'lista-tramites',
+          element: <Check component={ListaTramites} roleRequired="gerente" />,
+        },
+        {
+          path: 'nuevo-tramite',
+          element: <Check component={NuevoTramite} roleRequired="gerente" />,
+        },
+        {
+          path: 'editar-tramite/:id',
+          element: <Check component={NuevoTramite} roleRequired="gerente" />,
+        },
+
+
+        {
+          path: 'lista-clientes',
+          element: <Check component={ListaClientes} roleRequired="gerente" />,
+        },
+        {
+          path: 'nuevo-cliente',
+          element: <Check component={NuevoCliente} roleRequired="gerente" />,
+        },
+
+        {
+          path: 'editar-cliente/:id',
+          element: <Check component={NuevoCliente} roleRequired="gerente" />,
+        },
+
 
       ],
     },
@@ -257,29 +293,59 @@ export default function AppRouter() {
       children: [
 
         {
-          path: 'lista-tramites',
-          element: <Check component={ListaTramitesCajero} />,
+          path: 'lista-clientes',
+          element: <Check component={ListaClientes} roleRequired="cajero" />,
         },
+        {
+          path: 'nuevo-cliente',
+          element: <Check component={NuevoCliente} roleRequired="cajero" />,
+        },
+        {
+          path: 'editar-cliente/:id',
+          element: <Check component={NuevoCliente} roleRequired="cajero" />,
+        },
+
+
+
+        {
+          path: 'movimientos',
+          element: <Check component={ListaTramitesCajero} roleRequired="cajero" />,
+        }, {
+          path: 'lista-tramites',
+          element: <Check component={ListaTramites} roleRequired="cajero" />,
+        },
+        {
+          path: 'nuevo-tramite',
+          element: <Check component={NuevoTramite} roleRequired="cajero" />,
+        },
+        {
+          path: 'editar-tramite/:id',
+          element: <Check component={NuevoTramite} roleRequired="cajero" />,
+        },
+
+
 
         {
           path: 'listar-salidas/:id',
-          element: <Check component={ListaSalidasCajero} />,
+          element: <Check component={ListaSalidasCajero} roleRequired="cajero" />,
         },
+
+
 
         // OTRAS RUTAS
 
         {
           path: 'listar-ingresos/:id',
-          element: <Check component={ListaIngresosTramite} />,
+          element: <Check component={ListaIngresosTramite} roleRequired="cajero" />,
         },
 
         {
-          path: 'crear/:id_tramite',
-          element: <Check component={FormularioIngreso} />,
+          path: 'crear-ingreso/:id_tramite',
+          element: <Check component={FormularioIngreso} roleRequired="cajero" />,
         },
         {
-          path: 'editar/:id_tramite/:id',
-          element: <Check component={FormularioSalida} />,
+          path: 'editar-ingreso/:id_tramite/:id',
+          element: <Check component={FormularioIngreso} roleRequired="cajero" />,
         },
 
       ],

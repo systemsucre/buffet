@@ -15,7 +15,8 @@ export function ListaTramites() {
         cargando,
         toggleEstadoTramite,
         eliminarTramite,
-        filterByDelete
+        filterByDelete,
+        exportPDfTramites
     } = UseTramites();
 
     // Cálculos para las estadísticas (Cards)
@@ -87,7 +88,8 @@ export function ListaTramites() {
                                 },
 
                                 {
-                                    boton: (id_salida) => window.open(`${LOCAL_URL}/api/salidas/pdf/${id_salida}`, '_blank'),
+                                    boton: (id_salida, row) => {  exportPDfTramites(window.innerWidth < 1100 ? 'b64' : "print", row) },
+
                                     className: 'btn btn-secondary py-1 px-3 x-small',
                                     icono: faFilePdf,
                                     label: 'PDF'
