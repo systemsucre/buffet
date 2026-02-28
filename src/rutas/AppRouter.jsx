@@ -47,6 +47,8 @@ import { ListaSalidasCajero } from "../salidasCajero/ListaSalidas";
 
 import { ListaIngresosTramite } from "../ingresosCajero/ListaIngresos";
 import FormularioIngreso from "../ingresosCajero/FormularioIngreso";
+import { ReportesAdministracionPorTramite } from "../reportes/reportesAdministracionPorTramite";
+import { ReportesAdministracionConsolidado } from "../reportes/reportesAdministracionConsolidado";
 
 
 export default function AppRouter() {
@@ -177,6 +179,15 @@ export default function AppRouter() {
           path: 'editar-tipo-tramite/:id',
           element: <Check component={NuevoTipoTramite} roleRequired="admin" />,
         },
+
+        {
+          path: 'reportes-por-tramite',
+          element: <Check component={ReportesAdministracionPorTramite} roleRequired="admin" />,
+        },
+        {
+          path: 'reportes-consolidado',
+          element: <Check component={ReportesAdministracionConsolidado} roleRequired="admin" />,
+        },
       ],
     },
 
@@ -212,6 +223,16 @@ export default function AppRouter() {
         {
           path: 'salidas/editar/:id_tramite/:id',
           element: <Check component={FormularioSalida} roleRequired="auxiliar" />,
+        },
+
+
+        {
+          path: 'reportes-por-tramite',
+          element: <Check component={ReportesAdministracionPorTramite} roleRequired="auxiliar" />,
+        },
+        {
+          path: 'reportes-consolidado',
+          element: <Check component={ReportesAdministracionConsolidado} roleRequired="auxiliar" />,
         },
       ],
     },
@@ -273,6 +294,15 @@ export default function AppRouter() {
           element: <Check component={NuevoCliente} roleRequired="gerente" />,
         },
 
+        {
+          path: 'reportes-por-tramite',
+          element: <Check component={ReportesAdministracionPorTramite} roleRequired="gerente" />,
+        },
+        {
+          path: 'reportes-consolidado',
+          element: <Check component={ReportesAdministracionConsolidado} roleRequired="gerente" />,
+        },
+
 
       ],
     },
@@ -305,12 +335,11 @@ export default function AppRouter() {
           element: <Check component={NuevoCliente} roleRequired="cajero" />,
         },
 
-
-
         {
           path: 'movimientos',
           element: <Check component={ListaTramitesCajero} roleRequired="cajero" />,
-        }, {
+        },
+        {
           path: 'lista-tramites',
           element: <Check component={ListaTramites} roleRequired="cajero" />,
         },
@@ -346,6 +375,15 @@ export default function AppRouter() {
         {
           path: 'editar-ingreso/:id_tramite/:id',
           element: <Check component={FormularioIngreso} roleRequired="cajero" />,
+        },
+
+        {
+          path: 'reportes-por-tramite',
+          element: <Check component={ReportesAdministracionPorTramite} roleRequired="cajero" />,
+        },
+        {
+          path: 'reportes-consolidado',
+          element: <Check component={ReportesAdministracionConsolidado} roleRequired="cajero" />,
         },
 
       ],

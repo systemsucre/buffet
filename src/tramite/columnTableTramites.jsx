@@ -33,7 +33,7 @@ export const ColumnsTableTramites = [
         field: 'estado',
         render: (row) => (<>
             <span className={`badge ${row.estado === 1 ? 'bg-success' : 'bg-warning text-dark'}`}>
-                {row.estado === 1 ? 'EN CURSO' : 'PARALIZADO'}
+                {row.estado === 1 ? 'EN CURSO' : row.estado ===2? 'PARALIZADO':'FINALIZADO'}
             </span> <br />
             <span className={`badge ${row.eliminado === 0 ? 'bg-danger' : 'bg-warning text-dark'}`}>
                 {row.eliminado === 0 ? 'Eliminado' : ''}

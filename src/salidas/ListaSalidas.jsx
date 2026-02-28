@@ -30,12 +30,14 @@ export function ListaSalidas() {
         handleSearch,
         listarSalidas,
         eliminarSalida,
-        exportPDf
+        exportPDf,
     } = UseCustomSalidas();
 
     const {
         tramites,
-    } = useTramites();
+        cargarTramiteInfo
+
+    } = useTramites(); 
 
 
     useEffect(() => {
@@ -47,6 +49,7 @@ export function ListaSalidas() {
                 return;
             }
             listarSalidas(id);
+        cargarTramiteInfo(id)
 
         }
     }, [id, navigate]);
@@ -79,7 +82,7 @@ export function ListaSalidas() {
                                     className="btn btn-success  fw-bold"
                                     disabled
                                 >
-                                    <FontAwesomeIcon icon={faPlus} className="me-2" /> NO DISPONIBLE
+                                    <FontAwesomeIcon icon={faPlus} className="me-2" /> NO DISPONIBLE{tramites[0].estado}
                                 </button> : null
                         }
                         <button className=" btn btn-dark" style={{ marginLeft: '4px' }} onClick={() => navigate(LOCAL_URL + "/auxiliar/lista-tramites")}>

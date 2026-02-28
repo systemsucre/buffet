@@ -20,7 +20,7 @@ const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-
 export function ListaSalidasCajero() {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [filtroEstado, setFiltroEstado] = useState('TODOS'); // Estado local para el filtro gerencial
+    const [filtroEstado, setFiltroEstado] = useState(2); // Estado local para el filtro gerencial
 
     const {
         salidasFiltradas,

@@ -52,11 +52,15 @@ const NavbarAuxiliar = () => {
           <li><NavLink to={LOCAL_URL + "/auxiliar/salidas"} className="nav-link-item">Salidas</NavLink></li>
 
 
-
-          <li><NavLink to="/reportes" className="nav-link-item">Reportes</NavLink></li>
-
-
-
+          <div className="nav-item-container has-submenu">
+            <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+              Reportes <span className="arrow">▼</span>
+            </NavLink>
+            <ul className="submenu-list">
+              <li><NavLink to={LOCAL_URL + "/auxiliar/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/auxiliar/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+            </ul>
+          </div>
 
           <li className="nav-action">
             <div className="nav-item-container has-submenu">
@@ -91,17 +95,14 @@ const NavbarAuxiliar = () => {
             <NavLink to={LOCAL_URL + "/auxiliar/salidas"} className="mobile-link">Salidas</NavLink>
 
             <div className="nav-item-container has-submenu">
-
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-                Tramites <span className="arrow">▼</span>
+                Reportes <span className="arrow">▼</span>
               </NavLink>
               <ul className="submenu-list">
-                <li><NavLink to={LOCAL_URL + "/admin/nuevo-tramite"} className="submenu-link">Nuevo Trámite</NavLink></li>
-                <li><NavLink to={LOCAL_URL + "/admin/lista-tramites"} className="submenu-link">Lista Tramites</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/auxiliar/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/auxiliar/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
               </ul>
             </div>
-
-            <NavLink to="/citas" className="mobile-link">Reportes</NavLink>
 
             <div className="nav-item-container has-submenu mt-4" >
               <NavLink to={'#'} className="mobile-link profile" onClick={(e) => e.preventDefault()} >Mi Perfil</NavLink>

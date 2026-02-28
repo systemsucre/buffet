@@ -1,4 +1,4 @@
-import { faCheck, faEdit, faTrashAlt, faFolder, faClock, faExclamationCircle, faRecycle, faX, faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import {  faEdit, faTrashAlt,  faRecycle, faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "../components/DataTable";
 import { InputUsuarioSearch } from "../components/input/elementos";
 import { ColumnsTableTramites } from "./columnTableTramites";
@@ -13,7 +13,6 @@ export function ListaTramites() {
         allList,
         filterByEstado,
         cargando,
-        toggleEstadoTramite,
         eliminarTramite,
         filterByDelete,
         exportPDfTramites
@@ -21,7 +20,8 @@ export function ListaTramites() {
 
     // Cálculos para las estadísticas (Cards)
     const enCurso = tramites.filter(t => t.estado === 1).length;
-    const paralizados = tramitesFiltrados.filter(t => t.estado === 0).length;
+    const paralizados = tramitesFiltrados.filter(t => t.estado === 2).length;
+    const finalizados = tramitesFiltrados.filter(t => t.estado === 3).length;
 
     return (
         <>
@@ -44,7 +44,8 @@ export function ListaTramites() {
                             <div className="d-flex gap-2">
                                 <button className="btn btn-light btn-sm border text-success fw-bold" onClick={allList}>TODOS <span className="fw-bold mb-0 text-success">{tramites.length}</span></button>
                                 <button className="btn btn-primary btn-sm border text-primary fw-bold" onClick={() => filterByEstado(1)}>EN CURSO <span className="fw-bold mb-0 text-primary">{enCurso}</span></button>
-                                <button className="btn btn-warning btn-sm border text-warning fw-bold" onClick={() => filterByEstado(0)}>PARALIZADOS <span className="fw-bold mb-0 text-warning">{paralizados}</span></button>
+                                <button className="btn btn-warning btn-sm border text-warning fw-bold" onClick={() => filterByEstado(2)}>PARALIZADOS <span className="fw-bold mb-0 text-warning">{paralizados}</span></button>
+                                <button className="btn btn-warning btn-sm border text-warning fw-bold" onClick={() => filterByEstado(3)}>FINALIZADOS <span className="fw-bold mb-0 text-warning">{finalizados}</span></button>
                                 {tramites.filter(t => t.eliminado == 0).length > 0 ? <button className="btn btn-warning btn-sm border text-danger fw-bold" onClick={() => filterByDelete(0)}>RECICLAJE <span className="fw-bold mb-0 text-danger">{tramites.filter(t => t.eliminado == 0).length}</span></button> : null}
                             </div>
                         </div>
@@ -70,15 +71,18 @@ export function ListaTramites() {
                                     boton: null,
                                     className: 'btn btn-info py-1 px-3 x-small me-1',
                                     icono: faEdit,
-                                    enlace: LOCAL_URL + '/admin/editar-tramite',
+                                    enlace: (() => {
+                                        const rol = parseInt(localStorage.getItem('numRol'));
+                                        let base = '';
+                                        if (rol === 1) base = '/admin';
+                                        else if (rol === 2) base = '/gerente';
+                                        else if (rol === 3) base = '/cajero';
+
+                                        return `${LOCAL_URL}${base}/editar-tramite`;
+                                    })(),
                                     label: 'Editar'
                                 },
-                                {
-                                    boton: (id, row) => toggleEstadoTramite(id, row.estado === 1 ? 0 : 1), // Ejemplo para paralizar/activar
-                                    className: 'btn btn-dark-clinical py-1 px-3 x-small me-1',
-                                    icono: (id, row) => row.estado === 1 ? faCheck : faX,
-                                    label: (id, row) => row.estado === 1 ? 'Desactivar' : 'Activar'
-                                },
+                       
                                 {
                                     boton: (id, row) => eliminarTramite(id, row.eliminado === 1 ? 0 : 1), // Ejemplo para paralizar/activar 
                                     className: (id, row) => row.eliminado === 1 ? 'btn btn-danger py-1 px-3 x-small' : 'btn btn-warning py-1 px-3 x-small',
@@ -88,7 +92,7 @@ export function ListaTramites() {
                                 },
 
                                 {
-                                    boton: (id_salida, row) => {  exportPDfTramites(window.innerWidth < 1100 ? 'b64' : "print", row) },
+                                    boton: (id_salida, row) => { exportPDfTramites(window.innerWidth < 1100 ? 'b64' : "print", row) },
 
                                     className: 'btn btn-secondary py-1 px-3 x-small',
                                     icono: faFilePdf,

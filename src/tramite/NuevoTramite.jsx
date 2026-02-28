@@ -24,31 +24,31 @@ const FormularioTramite = () => {
         }
     }, [id, isEdit]);
 
-const handleCambioTipo = (idSeleccionado) => {
-    // 1. No autogenerar si estamos editando (para no sobrescribir el código real)
-    if (isEdit) return;
+    const handleCambioTipo = (idSeleccionado) => {
+        // 1. No autogenerar si estamos editando (para no sobrescribir el código real)
+        if (isEdit) return;
 
-    // 2. Buscar el objeto del trámite seleccionado en la lista que vino de la BD
-    const encontrado = auxiliares.listaTipos.find(t => t.value === parseInt(idSeleccionado));
-    
-    if (encontrado) {
-        // 3. Limpiar el nombre (quitar espacios al inicio/final)
-        const nombre = encontrado.label.trim().toUpperCase();
-        
-        // 4. Extraer las 3 primeras letras
-        // Si el nombre tiene menos de 3, tomará lo que haya
-        const iniciales = nombre.substring(0, 3);
-        
-        // 5. Formatear el prefijo (Ej: "JUD-", "ADM-", "PRO-")
-        const prefijo = `${iniciales}-`;
-        
-        // 6. Actualizar el estado del código
-        setters.setCodigo({ 
-            campo: prefijo, 
-            valido: 'true' 
-        });
-    }
-};
+        // 2. Buscar el objeto del trámite seleccionado en la lista que vino de la BD
+        const encontrado = auxiliares.listaTipos.find(t => t.value === parseInt(idSeleccionado));
+
+        if (encontrado) {
+            // 3. Limpiar el nombre (quitar espacios al inicio/final)
+            const nombre = encontrado.label.trim().toUpperCase();
+
+            // 4. Extraer las 3 primeras letras
+            // Si el nombre tiene menos de 3, tomará lo que haya
+            const iniciales = nombre.substring(0, 3);
+
+            // 5. Formatear el prefijo (Ej: "JUD-", "ADM-", "PRO-")
+            const prefijo = `${iniciales}-`;
+
+            // 6. Actualizar el estado del código
+            setters.setCodigo({
+                campo: prefijo,
+                valido: 'true'
+            });
+        }
+    };
 
     return (
         <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh' }}>
@@ -72,7 +72,7 @@ const handleCambioTipo = (idSeleccionado) => {
 
                             <form className="row g-3" onSubmit={(e) => guardarTramite(e, id)}>
 
-                                <div className="col-md-6">
+                                <div className="col-md-4">
                                     <Select1
                                         estado={estados.idTipoTramite}
                                         cambiarEstado={setters.setIdTipoTramite}
@@ -85,7 +85,7 @@ const handleCambioTipo = (idSeleccionado) => {
                                     />
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-4">
                                     <InputUsuarioStandard
                                         estado={estados.codigo}
                                         cambiarEstado={setters.setCodigo}
@@ -97,7 +97,17 @@ const handleCambioTipo = (idSeleccionado) => {
                                         readOnly={isEdit} // Opcional: Bloquear código en edición
                                     />
                                 </div>
-
+                                <div className="col-md-4">
+                                    <Select1
+                                        estado={estados.estado}
+                                        cambiarEstado={setters.setEstado}
+                                        Name="estado"
+                                        lista={[ {value:1, label: 'En curso'}, {value:2, label: 'Paralizado'}, {value:3, label: 'Finalizado'}, ]}
+                                        etiqueta="Estado Tramite *"
+                                        msg="Cambiar Estado"
+                                        ExpresionRegular={INPUT.ID}
+                                    />  
+                                </div>
                                 <div className="col-md-12">
                                     <Select1
                                         estado={estados.idCliente}

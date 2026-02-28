@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const NavbarAdmin = () => {
-    const auth = useAuth()
-  
+  const auth = useAuth()
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -26,7 +26,7 @@ const NavbarAdmin = () => {
   return (
     <nav className={` nav-main ${isScrolled ? 'nav-scrolled' : ''}`}>
       <div className="nav-container">
-        <NavLink to={LOCAL_URL+"/"}  className="nav-brand d-flex align-items-center">
+        <NavLink to={LOCAL_URL + "/"} className="nav-brand d-flex align-items-center">
           {/* Logo Principal */}
           {/* <span style={{ fontSize: '24px', marginRight: '8px' }}>👔</span> */}
 
@@ -70,9 +70,15 @@ const NavbarAdmin = () => {
             </ul>
           </div>
 
-          <li><NavLink to="/citas" className="nav-link-item">Ingresos</NavLink></li>
-          <li><NavLink to="/reportes" className="nav-link-item">Salidas</NavLink></li>
-          <li><NavLink to="/reportes" className="nav-link-item">Reportes</NavLink></li>
+          <div className="nav-item-container has-submenu">
+            <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+              Reportes <span className="arrow">▼</span>
+            </NavLink>
+            <ul className="submenu-list">
+              <li><NavLink to={LOCAL_URL + "/admin/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/admin/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+            </ul>
+          </div>
 
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
@@ -89,7 +95,7 @@ const NavbarAdmin = () => {
 
 
           <li className="nav-action">
-           <div className="nav-item-container has-submenu">
+            <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item btn-nav-profile" onClick={(e) => e.preventDefault()}>
                 Mi Perfil
               </NavLink>
@@ -139,10 +145,16 @@ const NavbarAdmin = () => {
               </ul>
             </div>
 
+            <div className="nav-item-container has-submenu">
+              <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+                Reportes <span className="arrow">▼</span>
+              </NavLink>
+              <ul className="submenu-list">
+                <li><NavLink to={LOCAL_URL + "/admin/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/admin/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+              </ul>
+            </div>
 
-            <NavLink to="/citas" className="mobile-link">Ingresos</NavLink>
-            <NavLink to="/citas" className="mobile-link">Salidas</NavLink>
-            <NavLink to="/citas" className="mobile-link">Reportes</NavLink>
 
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>

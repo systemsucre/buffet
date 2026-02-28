@@ -39,9 +39,7 @@ export const useTramites = () => {
         // alert()
         if (res) {
             setTramites(res);
-
             const activos = res.filter(t => t.eliminado > 0);
-
             // setTramites(activos);
             setTramitesFiltrados(activos);
         }
@@ -80,6 +78,7 @@ export const useTramites = () => {
             setIdTipoTramite({ campo: res.id_tipo_tramite, valido: 'true' });
             setFechaIngreso({ campo: res.fecha_ingreso.split('T')[0], valido: 'true' });
             setFechaFinalizacion({ campo: res.fecha_finalizacion.split('T')[0], valido: 'true' });
+            setEstado({ campo: res.estado, valido: 'true' });
             setCosto({ campo: res.costo, valido: 'true' });
             setDetalle({ campo: res.detalle || '', valido: 'true' });
             setOtros({ campo: res.otros || '', valido: 'true' });
@@ -131,29 +130,18 @@ export const useTramites = () => {
             payload,
             () => {
                 listarTramites();
-                setTimeout(() => navigate(LOCAL_URL + '/admin/lista-tramites'), 1000);
+                const rol = parseInt(localStorage.getItem('numRol'));
+                let base = '';
+                if (rol === 1) base = '/admin';
+                else if (rol === 2) base = '/gerente';
+                else if (rol === 3) base = '/cajero';
+
+
+                setTimeout(() => navigate(`${LOCAL_URL}${base}/lista-tramites`), 1000);
             },
             setCargando
         );
         return res;
-    };
-
-    // 4. CAMBIAR ESTADO (EN CURSO / PARALIZADO)
-    const toggleEstadoTramite = async (id, estadoActual) => {
-        const msgConfirm = estadoActual === 1 ? '¿Poner en curso?' : '¿Paralizar trámite?';
-
-
-        if (window.confirm(msgConfirm)) {
-            const res = await start(`${URL}tramites/cambiar-estado`, {
-                id,
-                estado: estadoActual, datosAuditoriaExtra
-            }, "Actualizando estado...");
-
-            if (res) {
-                // toast.success(res.msg);
-                listarTramites();
-            }
-        }
     };
 
     // Función para ELIMINACIÓN LÓGICA
@@ -264,7 +252,7 @@ export const useTramites = () => {
     };
 
     // 6. FILTROS RÁPIDOS
-    const filterByEstado = (est) => setTramitesFiltrados(tramites.filter(t => t.estado == est));
+    const filterByEstado = (est) =>{  setTramitesFiltrados(tramites.filter(t => t.estado == est))};
     const filterByDelete = () => setTramitesFiltrados(tramites.filter(t => t.eliminado == 0));
     const allList = () => setTramitesFiltrados(tramites);
 
@@ -288,7 +276,6 @@ export const useTramites = () => {
             setFechaFinalizacion, setPlazo, setDetalle, setCosto, setOtros, setEstado
         },
         guardarTramite,
-        toggleEstadoTramite,
         filterByEstado,
         allList,
         cargarTramitePorId,

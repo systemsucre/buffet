@@ -71,6 +71,17 @@ const NavbarGerente = () => {
             </ul>
           </div>
 
+          <div className="nav-item-container has-submenu">
+            <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+              Reportes <span className="arrow">▼</span>
+            </NavLink>
+            <ul className="submenu-list">
+              <li><NavLink to={LOCAL_URL + "/gerente/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/gerente/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+            </ul>
+          </div>
+
+
           <li><NavLink to="/reportes" className="nav-link-item">Reportes</NavLink></li>
           <li className="nav-action">
             <div className="nav-item-container has-submenu">
@@ -124,8 +135,15 @@ const NavbarGerente = () => {
               </ul>
             </div>
 
-            <NavLink to="/citas" className="mobile-link">Ingresos</NavLink>
-            <NavLink to="/citas" className="mobile-link">Reportes</NavLink>
+            <div className="nav-item-container has-submenu">
+              <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+                Reportes <span className="arrow">▼</span>
+              </NavLink>
+              <ul className="submenu-list">
+                <li><NavLink to={LOCAL_URL + "/gerente/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/gerente/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+              </ul>
+            </div>
             <div className="nav-item-container has-submenu mt-4" >
               <NavLink to={'#'} className="mobile-link profile" onClick={(e) => e.preventDefault()} >Mi Perfil</NavLink>
               <ul className="submenu-list mt-4">
