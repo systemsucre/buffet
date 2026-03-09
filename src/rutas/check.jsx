@@ -34,6 +34,8 @@ export default function Check({ component: Component, roleRequired, ...rest }) {
         // Redirigir a una página permitida para el Gerente o al Home
         return <Component />;
     }
+    
+    if(roleRequired==='all') return <Component />
 
     alert('Alerta, Ruta Prohibida ..')
     auth.logout()

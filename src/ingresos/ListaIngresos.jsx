@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DataTable from "../components/DataTable";
 import { InputUsuarioSearch } from "../components/input/elementos";
-import { UseCustomIngresos } from "../hooks/HookCustomIngresosCajero"; // Hook adaptado previamente
+import { UseCustomIngresos } from "../hooks/HookCustomIngresos"; // Hook adaptado previamente
 import { useTramites } from "../hooks/HookCustomTramites"; // Hook adaptado previamente
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
@@ -102,7 +102,7 @@ export function ListaIngresosTramite() {
                         tramites[0].estado === 1 ?
                             < button
                                 className="btn btn-success  fw-bold"
-                                onClick={() => navigate(LOCAL_URL + `/cajero/crear-ingreso/${id}`)}
+                                onClick={() => navigate(LOCAL_URL + `/crear-ingreso/${id}`)}
                                 disabled={!id || !UUID_REGEX.test(id)}
                             >
                                 <FontAwesomeIcon icon={faPlus} className="me-2" /> REGISTRAR PAGO
@@ -114,8 +114,7 @@ export function ListaIngresosTramite() {
                             </button> : null
                     }
                     <button className=" btn btn-dark" style={{ marginLeft: '4px' }} onClick={() => {
-                        const path = parseInt(localStorage.getItem('numRol')) === 2 ? 'gerente' : 'cajero'
-                        navigate(LOCAL_URL + "/" + path + "/movimientos")
+                        navigate(LOCAL_URL +  "/movimientos")
                     }
                     }>
                         <FontAwesomeIcon icon={faArrowLeft} className="me-2" /> VOLVER

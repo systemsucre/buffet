@@ -72,7 +72,7 @@ const HomeLogin = () => {
                     localStorage.setItem('nombre', json.data.nombre)
                     localStorage.setItem('rol', json.data.rol_des)
                     localStorage.setItem('numRol', json.data.numRol)
-                    localStorage.setItem('id_', json.data.id_)
+                    localStorage.setItem('id', json.data.id)
                     auth.login('ok')
                 }
                 else
@@ -126,7 +126,7 @@ const HomeLogin = () => {
                                         name='contraseña'
                                         msg={"Longitud permitida: 4 a 12 caracteres."}
                                         mayusculas={false}
-                                        ExpresionRegular={INPUT.INPUT_USUARIO}
+                                        ExpresionRegular={INPUT.PASSWORD}
                                         etiqueta={'contraseña'}
                                         placeholder={"*******"}
                                         logo={false}

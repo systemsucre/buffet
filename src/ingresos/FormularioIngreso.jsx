@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { INPUT, LOCAL_URL } from "../Auth/config";
 import { InputUsuarioStandard, Select1 } from '../components/input/elementos';
-import { UseCustomIngresos } from "../hooks/HookCustomIngresosCajero"; // Asegúrate de que el nombre coincida
+import { UseCustomIngresos } from "../hooks/HookCustomIngresos"; // Asegúrate de que el nombre coincida
 import CabeceraTramite from '../components/cabeceraTramite';
 import { useTramites } from "../hooks/HookCustomTramites"; // Hook adaptado previamente
 

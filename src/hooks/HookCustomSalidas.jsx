@@ -27,6 +27,7 @@ export const UseCustomSalidas = () => {
         if (!id) return;
         const res = await start(`${URL}salidas/listar`, { id });
         if (res) {
+            // console.log(res)
             setSalidas(res);
             setSalidasFiltradas(res);
         }
@@ -50,70 +51,15 @@ export const UseCustomSalidas = () => {
     };
 
 
-    // 4. GUARDAR (CREAR / EDITAR)
-    const guardarSalida = async (e, idParaEditar = null) => {
-        if (e) e.preventDefault();
-
-        const data = {
-            id_tramite: idTramite.campo,
-            monto: monto.campo,
-            detalle: detalle.campo,
-            fecha_solicitud: fechaSolicitud.campo,
-            datosAuditoriaExtra
-        };
-
-        const endpoint = `${URL}salidas/${idParaEditar ? 'editar' : 'crear'}`;
-        const payload = idParaEditar ? { ...data, id: id.campo } : data;
-
-        return await saveDB(
-            endpoint,
-            payload,
-            () => {
-                // Si estamos editando, refrescamos la lista de ese trámite antes de irnos
-                listarSalidas(idTramite.campo);
-                const rutaDestino = LOCAL_URL + '/auxiliar/listar-salidas/' + idTramite.campo;
-
-                // console.log(rutaDestino, '   ruta destino')
-                setTimeout(() => {
-                    navigate(rutaDestino);
-                }, 1000);
-            },
-            setCargando
-        );
-    };
-
-    // 5. ACCIONES DE ESTADO (Centralizadas para refrescar la lista correctamente)
-    const ejecutarAccion = async (id, id_tramite, endpoint, msgConfirm, msgCarga) => {
-        if (!window.confirm(msgConfirm)) return;
-
-        const res = await start(`${URL}salidas/${endpoint}`, {
-            id,
-            datosAuditoriaExtra
-        }, msgCarga);
-
-        if (res) listarSalidas(id_tramite); // Refrescamos usando el ID del trámite padre
-    };
-
-    const aprobarSalida = (id, id_tramite) =>
-        ejecutarAccion(id, id_tramite, 'aprobar', "¿Aprobar solicitud?", "Aprobando...");
-
-    const rechazarSalida = (id, id_tramite) =>
-        ejecutarAccion(id, id_tramite, 'rechazar', "¿Rechazar solicitud?", "Rechazando...");
-
-    const despacharSalida = (id, id_tramite) =>
-        ejecutarAccion(id, id_tramite, 'despachar', "¿Despachar salida?", "Despachando...");
-
-    const eliminarSalida = (id, id_tramite) =>
-        ejecutarAccion(id, id_tramite, 'eliminar', "¿Eliminar solicitud de gasto?", "Eliminando...");
 
 
     // EXPORTAR PDF
     const exportPDf = async (output, row) => {
         // Generamos el PDF con el objeto 'row'}
-        console.log("Iniciando exportación...", { output, row });
+        // console.log("Iniciando exportación...", { output, row });
 
         const response = await ticketSalidaIndividual(output, { salida: row });
-        console.log(response, ' reponse')
+        // console.log(response, ' reponse')
         if (!response?.success) {
             alert(response?.message);
             return;
@@ -161,11 +107,7 @@ export const UseCustomSalidas = () => {
         estados: { idTramite, monto, detalle, fechaSolicitud },
         setters: { setIdTramite, setMonto, setDetalle, setFechaSolicitud },
         listarSalidas,
-        guardarSalida,
-        aprobarSalida,
-        rechazarSalida,
-        despacharSalida,
-        eliminarSalida,
+    
         exportPDf,
         handleSearch,
         cargarSalidaPorId,

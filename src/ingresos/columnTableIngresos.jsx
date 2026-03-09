@@ -5,7 +5,7 @@ export const ColumnsTableIngresos = [
         render: (row) => (
             <div className="text-center">
                 <div className="fw-bold text-dark small" style={{ fontSize: '0.7rem' }}>
-                    {row.id ? row.numero : '---'}
+                    { row.numero }
                 </div>
                 <small className="badge bg-light text-secondary border">INGRESO</small>
             </div>
@@ -19,11 +19,9 @@ export const ColumnsTableIngresos = [
             <div style={{ minWidth: '220px' }}>
                 {row.detalle?.length < 20 ?
                     <div className="fw-bold text-dark">{row.detalle}</div> :
-                    <div className="d-flex align-items-center mt-1">
-                        <small className="text-muted" style={{ fontSize: '0.75rem' }}>
-                            {row.detalle}
-                        </small>
-                    </div>
+                    <small className="text-muted" style={{ fontSize: '0.7rem' }}>
+                        {row.detalle?.substring(0, 40)}...
+                    </small>
                 }
             </div>
         )
@@ -59,9 +57,6 @@ export const ColumnsTableIngresos = [
                         maximumFractionDigits: 2
                     })}
                 </span>
-                <div style={{ fontSize: '0.65rem' }} className="text-muted text-uppercase fw-bold">
-                    Efectivo / Transferencia
-                </div>
             </div>
         )
     },

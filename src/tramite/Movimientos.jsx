@@ -1,12 +1,11 @@
 import { faFileInvoiceDollar, faFilePdf } from "@fortawesome/free-solid-svg-icons"; // Icono más acorde a gastos/salidas
 import DataTable from "../components/DataTable";
 import { InputUsuarioSearch } from "../components/input/elementos";
-import { ColumnsTableTramites } from "../tramite/columnTableTramites";
-import { useTramites } from "../hooks/HookCustomTramites"; // Hook adaptado previamente
-
+import { ColumnsTableTramites } from "./columnTableTramites";
+import { useTramites } from "../hooks/HookCustomTramites";
 import { LOCAL_URL } from '../Auth/config';
 
-export function ListaTramitesS() {
+export function Movimientos() { 
     const {
         handleSearch,
         tramites,
@@ -17,8 +16,6 @@ export function ListaTramitesS() {
         filterByDeleteTramite,
         exportPDfTramites
     } = useTramites();
-
-
     const enCurso = tramites.filter(t => t.estado === 1).length;
     const paralizados = tramites.filter(t => t.estado === 0).length;
 
@@ -27,9 +24,9 @@ export function ListaTramitesS() {
             <main className="container-xl mt-5" style={{ maxWidth: "100%" }}>
                 <div className="d-flex justify-content-between align-items-end mb-4">
                     <div>
-                        <h3 className="text-dark fw-bold mb-0 p-2">Gestión de Expedientes</h3>
+                        <h3 className="text-dark fw-bold mb-0 p-2">Gestión de Movimientos</h3>
                         <p className="text-muted mb-0 small text-uppercase p-2" style={{ letterSpacing: '1px', fontSize: '0.7rem' }}>
-                            Panel de control de procesos - KR Estudios
+                            Panel de control de movimientos - KR Estudios
                         </p>
                     </div>
                 </div>
@@ -40,7 +37,7 @@ export function ListaTramitesS() {
                             <div className="d-flex gap-2">
                                 <button className="btn btn-light btn-sm border text-success fw-bold" onClick={allListTramite}>TODOS <span className="fw-bold mb-0 text-success">{tramites.length}</span></button>
                                 <button className="btn btn-primary btn-sm border text-primary fw-bold" onClick={() => filterByEstado(1)}>EN CURSO <span className="fw-bold mb-0 text-primary">{enCurso}</span></button>
-                                <button className="btn btn-warning btn-sm border text-warning fw-bold" onClick={() => filterByEstado(4)}>PARALIZADOS <span className="fw-bold mb-0 text-warning">{paralizados}</span></button>
+                                <button className="btn btn-warningd btn-sm border text-warning fw-bold" onClick={() => filterByEstado(0)}>PARALIZADOS <span className="fw-bold mb-0 text-warning">{paralizados}</span></button>
                                 {tramites.filter(t => t.eliminado == 0).length > 0 && (
                                     <button className="btn btn-warning btn-sm border text-danger fw-bold" onClick={() => filterByDeleteTramite(0)}>
                                         RECICLAJE <span className="fw-bold mb-0 text-danger">{tramites.filter(t => t.eliminado == 0).length}</span>
@@ -71,10 +68,18 @@ export function ListaTramitesS() {
                                     className: 'btn btn-success py-1 px-3 x-small me-1',
                                     icono: faFileInvoiceDollar, // Nuevo icono de factura/dinero
                                     // Cambiamos la ruta a la lista de salidas
-                                    enlace: LOCAL_URL + '/auxiliar/listar-salidas',
+                                    enlace: LOCAL_URL + '/listar-salidas',
                                     label: 'Ver Gastos'
                                 },
-
+                                {
+                                    boton: null,
+                                    // Cambiamos a btn-success o btn-dark para diferenciarlo de "Editar"
+                                    className: 'btn btn-info py-1 px-3 x-small me-1 ml-2',
+                                    icono: faFileInvoiceDollar, // Nuevo icono de factura/dinero
+                                    // Cambiamos la ruta a la lista de salidas
+                                    enlace: LOCAL_URL + '/listar-ingresos',
+                                    label: 'Ver ingresos'
+                                },
                                 {
                                     boton: (id_salida, row) => {  exportPDfTramites(window.innerWidth < 1100 ? 'b64' : "print", row) },
                                     className: 'btn btn-secondary py-1 px-3 x-small',
@@ -90,4 +95,4 @@ export function ListaTramitesS() {
     );
 }
 
-export default ListaTramitesS;
+export default Movimientos;

@@ -1,4 +1,3 @@
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom'
 
@@ -13,7 +12,7 @@ const DataTable = ({ columns, data, funciones }) => {
                             {columns.map((col) => (
                                 <th key={col.field}>{col.label}</th>
                             ))}
-                            <th className="text-center">Acciones</th>
+                            {funciones.length>0 ? <th className="text-center">Acciones</th> : null}
                         </tr>
                     </thead>
                     <tbody>
@@ -49,7 +48,7 @@ const DataTable = ({ columns, data, funciones }) => {
                                                     key={index}
                                                     // Importante: pasar item.id y el estado (o el item completo) al hacer click
                                                     onClick={() => f.boton(item.id, item)}
-                                                    className={className}  
+                                                    className={className}
                                                 >
                                                     <FontAwesomeIcon icon={icono} /> {label}
                                                 </button>

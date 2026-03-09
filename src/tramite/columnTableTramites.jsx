@@ -2,12 +2,16 @@ export const ColumnsTableTramites = [
     {
         label: 'Código',
         field: 'codigo',
-        render: (row) => <>
+        render: (row) =>
             <div> <span className="fw-bold text-primary">{row.codigo}</span></div>
+    },
+    {
+        label: 'Detalle',
+        field: 'detalle',
+        render: (row) =>
             <small className="text-muted italic" style={{ fontSize: '0.7rem' }}>
                 {row.detalle?.substring(0, 30)}...
             </small>
-        </>
     },
     {
         label: 'Cliente',
@@ -33,7 +37,7 @@ export const ColumnsTableTramites = [
         field: 'estado',
         render: (row) => (<>
             <span className={`badge ${row.estado === 1 ? 'bg-success' : 'bg-warning text-dark'}`}>
-                {row.estado === 1 ? 'EN CURSO' : row.estado ===2? 'PARALIZADO':'FINALIZADO'}
+                {row.estado === 1 ? 'EN CURSO' : row.estado === 2 ? 'PARALIZADO' : 'FINALIZADO'}
             </span> <br />
             <span className={`badge ${row.eliminado === 0 ? 'bg-danger' : 'bg-warning text-dark'}`}>
                 {row.eliminado === 0 ? 'Eliminado' : ''}

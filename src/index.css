@@ -189,6 +189,16 @@ body {
 
 }
 
+/* @media (max-width: 800px) {
+  body {
+    transform: scale(0.95);
+  }
+} */
+
+.border-status-ok {
+  border: 1px solid var(--bs-info)
+}
+
 h3,
 .h3,
 h2,
@@ -264,6 +274,7 @@ p {
 @media (max-width: 600px) {
   .text-titulos {
     font-size: 22px;
+    padding: 5px;
   }
 }
 
@@ -484,6 +495,11 @@ button:not(:disabled),
     flex: 0 0 auto;
     width: 50%;
   }
+
+  .col-sm-12 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
 }
 
 @media (min-width: 768px) {
@@ -506,6 +522,11 @@ button:not(:disabled),
     flex: 0 0 auto;
     width: 83.33333%;
   }
+
+  .col-md-12 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
 }
 
 @media (min-width: 992px) {
@@ -517,6 +538,11 @@ button:not(:disabled),
   .col-lg-7 {
     flex: 0 0 auto;
     width: 58.33333%;
+  }
+
+  .col-lg-12 {
+    flex: 0 0 auto;
+    width: 100%;
   }
 }
 
@@ -541,6 +567,16 @@ button:not(:disabled),
     width: 50%;
   }
 
+  /* 
+  .col-xl-4 {
+    flex: 0 0 auto;
+    width: 33.3333333%;
+  } */
+
+  .col-xl-8 {
+    flex: 0 0 auto;
+    width: 66.66666667%;
+  }
 
 }
 
@@ -617,10 +653,25 @@ button:not(:disabled),
   }
 }
 
-@media (max-width: 500px) {
-  .btn {
+@media (max-width: 700px) {
+  .d-flex1 .btn {
     padding: 5px;
-    font-size: 12px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .d-flex1 .btn {
+    padding: 3px;
+    font-size: 8px;
+  }
+}
+
+
+@media (max-width: 400px) {
+  .d-flex1 .btn {
+    padding: 3px;
+    font-size: 7px;
   }
 }
 
@@ -675,6 +726,64 @@ button:not(:disabled),
   --bs-btn-disabled-border-color: #dc3545;
 }
 
+.btn-warning {
+  --bs-btn-color: #000;
+  /* El texto en warning debe ser negro para contraste */
+  --bs-btn-bg: #ffc107;
+  /* Amarillo estándar */
+  --bs-btn-border-color: #ffc107;
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #ffca2c;
+  /* Un amarillo un poco más claro o vibrante */
+  --bs-btn-hover-border-color: #ffc720;
+  --bs-btn-focus-shadow-rgb: 217, 164, 6;
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #ffcd39;
+  --bs-btn-active-border-color: #ffc720;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #000;
+  --bs-btn-disabled-bg: #ffc107;
+  --bs-btn-disabled-border-color: #ffc107;
+}
+
+.btn-secondary {
+  --bs-btn-color: #FFF;
+  --bs-btn-bg: #6c757d;
+  --bs-btn-border-color: #6c757d;
+  --bs-btn-hover-color: #FFF;
+  --bs-btn-hover-bg: #5c636a;
+  --bs-btn-hover-border-color: #565e64;
+  --bs-btn-focus-shadow-rgb: 130, 138, 145;
+  --bs-btn-active-color: #FFF;
+  --bs-btn-active-bg: #565e64;
+  --bs-btn-active-border-color: #51585e;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #FFF;
+  --bs-btn-disabled-bg: #6c757d;
+  --bs-btn-disabled-border-color: #6c757d;
+}
+
+.btn-blue-facebook {
+  --bs-btn-color: #fff;
+  /* Texto blanco para mejor contraste */
+  --bs-btn-bg: #1877f2;
+  /* Azul oficial de Facebook */
+  --bs-btn-border-color: #1877f2;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #166fe5;
+  /* Un tono más oscuro para el hover */
+  --bs-btn-hover-border-color: #1565d8;
+  --bs-btn-focus-shadow-rgb: 60, 138, 248;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #1464cc;
+  --bs-btn-active-border-color: #135cb0;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #1877f2;
+  --bs-btn-disabled-border-color: #1877f2;
+  font-weight: 600;
+  /* Estilo típico de los botones de FB */
+}
 
 
 .btn-info {
@@ -870,7 +979,8 @@ button:not(:disabled),
 .mt-3 {
   margin-top: 1rem !important;
 }
-.ml-2{
+
+.ml-2 {
   margin-right: 15px;
 }
 
@@ -1151,16 +1261,18 @@ button:not(:disabled),
   /* Ocupa toda la altura de la ventana */
 }
 
+
+
 .login-card {
   background: #ffffff;
   padding: 40px;
-  border-radius: 28px;
+  border-radius: 0px;
   box-shadow: 0 25px 50px -12px rgba(0, 86, 179, 0.15);
-  /* Sombra azulada sutil */
   border: 1px solid rgba(0, 123, 255, 0.1);
   width: 100%;
+  transition: transform 0.3s ease;
+  /* Añadí esto para que el hover sea suave */
 }
-
 
 .login-card:hover {
   transform: translateY(-5px);
@@ -1169,9 +1281,26 @@ button:not(:disabled),
 
 @media (max-width: 992px) {
   .login-card {
-    padding: 10px;
+    /* CLAVE: Cambiar height de 1000px a auto */
+    height: auto;
+    padding: 15px;
+    /* Un padding más equilibrado para móviles */
+    border-radius: 0px;
+    /* Bordes un poco menos pronunciados en móvil */
+    margin-bottom: 20px;
+    /* Espacio extra abajo para que no pegue al borde del navegador */
   }
+}
 
+@media (max-width: 600px) {
+  .login-card {
+    /* CLAVE: Cambiar height de 1000px a auto */
+    height: auto;
+    padding: 4px;
+    /* Un padding más equilibrado para móviles */
+    border-radius: 0px;
+
+  }
 }
 
 /* --- ANIMACIÓN DE ENTRADA --- */
@@ -1248,6 +1377,11 @@ button:not(:disabled),
   font-size: 0.75rem;
 }
 
+.text-small {
+  font-size: 0.65rem;
+
+}
+
 .text-muted-light {
   color: #94a3b8;
 }
@@ -1297,40 +1431,6 @@ button:not(:disabled),
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 123, 255, 0.1);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1545,7 +1645,7 @@ button:not(:disabled),
 }
 
 /* --- RESPONSIVE --- */
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
   .nav-menu-desktop {
     display: none;
   }
@@ -1659,7 +1759,7 @@ button:not(:disabled),
 /* --- ESTILOS DE TABLA RESPONSIVA --- */
 .table-container {
   background: white;
-  border-radius: 15px;
+  /* border-radius: 15px; */
   padding: 10px;
   box-shadow: var(--bs-shadow-md);
   margin-top: 0.5rem;
@@ -1719,6 +1819,10 @@ button:not(:disabled),
   /* Mantiene la tabla ancha para forzar el scroll */
 }
 
+thead {
+  border-radius: 0;
+}
+
 /* --- MAGIA PARA MÓVILES (Celulares y Tablets pequeñas) --- */
 @media (max-width: 878px) {
   .table-responsive-custom {
@@ -1732,9 +1836,10 @@ button:not(:disabled),
 
   .table-responsive-custom tr {
     display: block;
+    margin-top: 5px;
     margin-bottom: 1.5rem;
     border: 1px solid var(--hospital-blue);
-    border-radius: 12px;
+    /* border-radius: 12px; */
     padding: 3px;
     background: #fff;
   }
@@ -1762,7 +1867,7 @@ button:not(:disabled),
     border-bottom: none;
     justify-content: center;
     background: var(--clinical-bg);
-    border-radius: 8px;
+    /* border-radius: 8px; */
     margin-top: 10px;
   }
 }
@@ -1775,13 +1880,14 @@ button:not(:disabled),
   position: relative;
   display: flex;
   align-items: center;
+  padding: 5px;
 }
 
 /* El input propiamente dicho */
 .input-buscador {
   padding: 8px 12px 8px 35px;
   /* Espacio para el icono a la izquierda */
-  border-radius: 8px;
+  /* border-radius: 8px; */
   border: 1px solid #e0e0e0;
   font-size: 0.9rem;
   outline: none;
@@ -1822,7 +1928,7 @@ button:not(:disabled),
 /* Reemplazo profesional para .card */
 .panel-custom {
   background: #ffffff;
-  border-radius: 12px;
+  /* border-radius: 0px; */
   border: 1px solid #edf2f7;
   /* Un borde muy sutil */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -1898,6 +2004,7 @@ button:not(:disabled),
   min-width: max-content;
   /* OBLIGA al contenedor a expandirse según sus hijos */
   align-content: center;
+
 }
 
 /* Opcional: Para que los botones no se deformen */

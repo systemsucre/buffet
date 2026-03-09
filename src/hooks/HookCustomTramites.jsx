@@ -46,6 +46,20 @@ export const useTramites = () => {
         setCargando(false);
     }, []);
 
+    // 1.1 LISTAR TRÁMITES (Activos)
+    const listarTramitesActivos = async () => {
+        setCargando(true);
+        const res = await start(`${URL}comuun/listar-tramites`,);
+        // alert()
+        if (res) {
+            setTramites(res);
+            const activos = res.filter(t => t.eliminado > 0 && t.estado === 1);
+            // setTramites(activos);
+            setTramitesFiltrados(activos);
+        }
+        setCargando(false);
+    };
+
     // 2. CARGAR AUXILIARES (Para los combobox del formulario)
     const cargarAuxiliares = useCallback(async () => {
         const resClientes = await start(`${URL}tramites/listar-clientes`);
@@ -252,7 +266,7 @@ export const useTramites = () => {
     };
 
     // 6. FILTROS RÁPIDOS
-    const filterByEstado = (est) =>{  setTramitesFiltrados(tramites.filter(t => t.estado == est))};
+    const filterByEstado = (est) => { setTramitesFiltrados(tramites.filter(t => t.estado == est)) };
     const filterByDelete = () => setTramitesFiltrados(tramites.filter(t => t.eliminado == 0));
     const allList = () => setTramitesFiltrados(tramites);
 
@@ -276,6 +290,7 @@ export const useTramites = () => {
             setFechaFinalizacion, setPlazo, setDetalle, setCosto, setOtros, setEstado
         },
         guardarTramite,
+        listarTramitesActivos,
         filterByEstado,
         allList,
         cargarTramitePorId,
