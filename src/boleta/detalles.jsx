@@ -72,8 +72,10 @@ export const DetallesBoleta = () => {
                         <div className="card-body  px-4">
                             <div className="card-header  border-bottom py-4 px-4 mt-3 ">
                                 <div className="align-items-center">
-                                    <div className="d-flex align-items-center gap-3 mb-2">
-                                        <h4 className="fw-bold mb-0 text-dark ">BOLETA: <span className="text-primary">{codigo}</span></h4>
+                                    <div className="d-flex align-items-center gap-3 mb-3">
+                                        <h4 className="fw-bold mb-0 text-dark text-titulos">
+                                            BOLETA <span className="codigo-boleta text-primary ms-2">{codigo}</span>
+                                        </h4>
                                     </div>
                                     <span style={{ ...styles.badgeStatus, background: infoCabecera?.estado === 3 ? '#dcfce7' : '#fef9c3', fontSize: '16px', color: infoCabecera?.estado === 3 ? '#166534' : '#854d0e' }}>
                                         <FontAwesomeIcon icon={infoCabecera?.estado === 3 ? faCircleCheck : faClock} className="me-2" />
@@ -81,11 +83,30 @@ export const DetallesBoleta = () => {
                                     </span>
                                 </div>
                             </div>
+
+                            {/* PANEL DE INFORMACIÓN DE FIRMAS/USUARIOS */}
+                            <div className="card-body bg-light border-bottom py-4 px-4 mt-3">
+                                <div className="row g-4 text-md-start">
+                                    {[
+                                        { label: 'Solicitante', user: infoCabecera?.solicitado_por, date: infoCabecera?.fecha_solicitud?.split('T')[0], icon: faUserTie, status: infoCabecera?.estado },
+                                        { label: 'Autorización', user: infoCabecera?.autorizado_por, date: infoCabecera?.fecha_aprobacion?.split('T')[0], icon: faCircleCheck, status: infoCabecera?.estado },
+                                        { label: 'Despacho', user: infoCabecera?.despachado_por, date: infoCabecera?.fecha_despacho?.split('T')[0], icon: faClock, status: infoCabecera?.estado }
+                                    ].map((step, i) => (
+                                        <div className={"col-md-4"} key={i}>
+                                            <div className="p-3 bg-white rounded shadow-sm h-100 border-top border-primary border-3">
+                                                <small className="text-muted fw-bold d-block mb-1"><FontAwesomeIcon icon={step.icon} className="me-1" /> {step.label}</small>
+                                                <div className="fw-bold text-dark mb-1">{step.user || '---'}</div>
+                                                <small className="text-muted d-block" style={{ fontSize: '0.7rem' }}>{step.date || 'Pendiente'}</small>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                             <div className="card-body bg-light border-bottom py-4 px-4 mt-3">
                                 <button className="btn btn-pdf btn-lg px-4 shadow-sm" onClick={() => exportarBoletaPDF('print', infoCabecera)}>
                                     <FontAwesomeIcon icon={faFilePdf} className="me-2" />
                                 </button>
-                                {infoCabecera?.estado < 2 && parseInt(localStorage.getItem('id')) === infoCabecera?.usuario ?
+                                {infoCabecera?.estado === 1 && parseInt(localStorage.getItem('id')) === infoCabecera?.usuario ?
                                     <>
                                         <button className="btn btn-info btn-lg px-4 shadow-sm" onClick={() => navigate(`${LOCAL_URL}/modificar-boleta/${codigo}`)}>
                                             <FontAwesomeIcon icon={faEdit} className="me-2" />
@@ -120,24 +141,7 @@ export const DetallesBoleta = () => {
                                 </button>
 
                             </div>
-                            {/* PANEL DE INFORMACIÓN DE FIRMAS/USUARIOS */}
-                            <div className="card-body bg-light border-bottom py-4 px-4 mt-3">
-                                <div className="row g-4 text-md-start">
-                                    {[
-                                        { label: 'Solicitante', user: infoCabecera?.solicitado_por, date: infoCabecera?.fecha_solicitud?.split('T')[0], icon: faUserTie, status: infoCabecera?.estado },
-                                        { label: 'Autorización', user: infoCabecera?.autorizado_por, date: infoCabecera?.fecha_aprobacion?.split('T')[0], icon: faCircleCheck, status: infoCabecera?.estado },
-                                        { label: 'Despacho', user: infoCabecera?.despachado_por, date: infoCabecera?.fecha_despacho?.split('T')[0], icon: faClock, status: infoCabecera?.estado }
-                                    ].map((step, i) => (
-                                        <div className={"col-md-4"} key={i}>
-                                            <div className="p-3 bg-white rounded shadow-sm h-100 border-top border-primary border-3">
-                                                <small className="text-muted fw-bold d-block mb-1"><FontAwesomeIcon icon={step.icon} className="me-1" /> {step.label}</small>
-                                                <div className="fw-bold text-dark mb-1">{step.user || '---'}</div>
-                                                <small className="text-muted d-block" style={{ fontSize: '0.7rem' }}>{step.date || 'Pendiente'}</small>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+
                             <div className="table-responsive">
                                 <DataTable
                                     columns={ColumnsTableDetalle}

@@ -1,7 +1,6 @@
 import {
 
     faEye,
-    faTrash,
     faPlus
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,8 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function ListaBoleta() {
     const navigate = useNavigate();
-    const [filtroEstado, setFiltroEstado] = useState('TODOS');
-
+    const [filtroEstado, setFiltroEstado] = useState('MIOS');
 
 
     const {
@@ -26,12 +24,6 @@ export function ListaBoleta() {
         cargando,
         handleSearchBoleta, // Actualizado
         listarBoletas, // Actualizado
-        aprobarBoleta,
-        rechazarBoleta,
-        despacharBoleta,
-        eliminarBoleta,
-        exportarBoletaPDF, // Actualizado
-
     } = UseCustomBoletas();
 
     useEffect(() => {
@@ -39,10 +31,16 @@ export function ListaBoleta() {
     }, []);
 
 
-
-    // Lógica de filtrado: 1: Solicitado, 2: Aprobado, 3: Despachado, 4: Rechazado
+    const idUsuarioActual = parseInt(localStorage.getItem('id'));
     const dataFiltrada = boletasFiltradas.filter(b => {
+        // Si el filtro es 'MIOS', filtramos por el ID del usuario
+        if (filtroEstado === 'MIOS') {
+            return b.usuario_solicita_id === idUsuarioActual;
+        }
+        // Si el filtro es 'TODOS', pasan todas
         if (filtroEstado === 'TODOS') return true;
+
+        // De lo contrario, filtramos por el estado numérico (1, 2, 3...)
         return b.estado === filtroEstado;
     });
 
@@ -51,6 +49,7 @@ export function ListaBoleta() {
     const countAprobados = boletasFiltradas.filter(b => b.estado === 2).length;
     const countDespachados = boletasFiltradas.filter(b => b.estado === 3).length;
     const countRechazados = boletasFiltradas.filter(b => b.estado === 4).length;
+    const mios = boletasFiltradas.filter(b => b.usuario_solicita_id === parseInt(localStorage.getItem('id'))).length;
 
     return (
         <>
@@ -74,6 +73,10 @@ export function ListaBoleta() {
                     <div className="row align-items-center mb-3 g-3">
                         <div className="col-xl-8 ">
                             <div className="d-flex1  gap-2">
+                                   <button className={`btn btn-sm border fw-bold ${filtroEstado === 'MIOS' ? 'btn-dark' : 'text-success'}`}
+                                    onClick={() => setFiltroEstado('MIOS')}>
+                                    MIS BOLETAS <span>({mios})</span>
+                                </button>
                                 <button className="btn  btn-sm border text-success fw-bold" onClick={() => setFiltroEstado('TODOS')}>TODOS <span className="fw-bold mb-0 text-success">({boletasFiltradas.length})</span></button>
                                 <button className="btn  btn-sm border text-warning fw-bold" onClick={() => setFiltroEstado(1)}>SOLICITADOS <span className="fw-bold mb-0 text-warning">{countSolicitados}</span></button>
                                 <button className="btn  btn-sm border text-primary fw-bold" onClick={() => setFiltroEstado(2)}>APROBADOS <span className="fw-bold mb-0 text-primary">{countAprobados}</span></button>

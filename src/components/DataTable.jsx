@@ -25,18 +25,7 @@ const DataTable = ({ columns, data, funciones }) => {
                                 ))}
                                 <td>
                                     <div className="contenedor-botones">
-                                        {/* {funciones.map((f, index) => (
-                                            !f.enlace ?
-                                                <button
-                                                    key={index}
-                                                    onClick={() => f.boton(item.id)}
-                                                    className={f.className}
-                                                >
-                                                   <FontAwesomeIcon icon={f.icono} />{f.label} 
-                                                </button>
-                                                : <Link key={index} className={f.className} to={`${f.enlace}/${item.id}`} > <FontAwesomeIcon icon={f.icono} /> {f.label} </Link>
-
-                                        ))} */}
+                                      
                                         {funciones.map((f, index) => {
                                             // Resolvemos los valores dinámicos ejecutando la función si es necesario
                                             const className = typeof f.className === 'function' ? f.className(item.id, item) : f.className;

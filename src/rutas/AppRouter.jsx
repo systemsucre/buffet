@@ -49,6 +49,7 @@ import { ReportesAdministracionConsolidado } from "../reportes/reportesAdministr
 import { ListaBoleta } from "../boleta/Lista";
 import { FormularioBoleta } from "../boleta/Formulario";
 import { DetallesBoleta } from "../boleta/detalles";
+import { LayoutPorRol } from "./layout";
 
 
 
@@ -198,10 +199,20 @@ export default function AppRouter() {
       errorElement: <E500 />,
       children: [
 
-        {
-          path: 'otro',
-          element: <Check component={null} roleRequired="auxiliar" />,
-        },
+
+        // {
+        //   path: 'lista-clientes',
+        //   element: <Check component={ListaClientes} roleRequired="auxiliar" />,
+        // },
+        // {
+        //   path: 'nuevo-cliente',
+        //   element: <Check component={NuevoCliente} roleRequired="auxiliar" />,
+        // },
+
+        // {
+        //   path: 'editar-cliente/:id',
+        //   element: <Check component={NuevoCliente} roleRequired="auxiliar" />,
+        // },
 
       ],
     },
@@ -251,9 +262,12 @@ export default function AppRouter() {
       ],
     },
 
-    // ROUTES TO ALL USERS
+
+
+
+    // RUTAS CAJERO
     {
-      path: LOCAL_URL + '/',
+      path: LOCAL_URL + '/cajero',
       element: <>
         <NavbarCajero />
         <main className="main-content">
@@ -261,6 +275,52 @@ export default function AppRouter() {
           <Outlet />
         </main>
       </>, // El Layout siempre se muestra
+      errorElement: <E500 />,
+      children: [
+
+        {
+          path: 'lista-clientes',
+          element: <Check component={ListaClientes} roleRequired="cajero" />,
+        },
+        {
+          path: 'nuevo-cliente',
+          element: <Check component={NuevoCliente} roleRequired="cajero" />,
+        },
+        {
+          path: 'editar-cliente/:id',
+          element: <Check component={NuevoCliente} roleRequired="cajero" />,
+        },
+
+
+        {
+          path: 'lista-tramites',
+          element: <Check component={ListaTramites} roleRequired="cajero" />,
+        },
+        {
+          path: 'nuevo-tramite',
+          element: <Check component={NuevoTramite} roleRequired="cajero" />,
+        },
+        {
+          path: 'editar-tramite/:id',
+          element: <Check component={NuevoTramite} roleRequired="cajero" />,
+        },
+
+
+
+      ],
+    },
+
+    // ROUTES TO ALL USERS
+    {
+      path: LOCAL_URL + '/',
+      element: <LayoutPorRol />,
+      //  <>
+      //   <NavbarCajero />
+      //   <main className="main-content">
+      //     {/* Outlet es donde se renderizarán las páginas (Pacientes, Login, etc.) */}
+      //     <Outlet />
+      //   </main>
+      // </>, // El Layout siempre se muestra
       errorElement: <E500 />,
       children: [
 
@@ -320,53 +380,6 @@ export default function AppRouter() {
 
       ],
     },
-
-
-    // RUTAS CAJERO
-    {
-      path: LOCAL_URL + '/cajero',
-      element: <>
-        <NavbarCajero />
-        <main className="main-content">
-          {/* Outlet es donde se renderizarán las páginas (Pacientes, Login, etc.) */}
-          <Outlet />
-        </main>
-      </>, // El Layout siempre se muestra
-      errorElement: <E500 />,
-      children: [
-
-        {
-          path: 'lista-clientes',
-          element: <Check component={ListaClientes} roleRequired="cajero" />,
-        },
-        {
-          path: 'nuevo-cliente',
-          element: <Check component={NuevoCliente} roleRequired="cajero" />,
-        },
-        {
-          path: 'editar-cliente/:id',
-          element: <Check component={NuevoCliente} roleRequired="cajero" />,
-        },
-
-
-        {
-          path: 'lista-tramites',
-          element: <Check component={ListaTramites} roleRequired="cajero" />,
-        },
-        {
-          path: 'nuevo-tramite',
-          element: <Check component={NuevoTramite} roleRequired="cajero" />,
-        },
-        {
-          path: 'editar-tramite/:id',
-          element: <Check component={NuevoTramite} roleRequired="cajero" />,
-        },
-
-
-
-      ],
-    },
-
 
 
   ]);

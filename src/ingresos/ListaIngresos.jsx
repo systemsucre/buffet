@@ -98,7 +98,6 @@ export function ListaIngresosTramite() {
                 <div className=" d-flex justify-content-end gap-2 " style={{ marginRight: '10px' }}>
                     {/* El botón nuevo gasto hereda el UUID correctamente */}
                     {tramites.length > 0 && parseInt(localStorage.getItem('numRol')) === 3 ?
-
                         tramites[0].estado === 1 ?
                             < button
                                 className="btn btn-success  fw-bold"

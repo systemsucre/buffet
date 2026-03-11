@@ -32,6 +32,7 @@ export default function Check({ component: Component, roleRequired, ...rest }) {
 
     if (userRole === '4' && roleRequired === 'auxiliar') {
         // Redirigir a una página permitida para el Gerente o al Home
+        alert('ruta auxiliar')
         return <Component />;
     }
     

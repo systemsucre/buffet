@@ -34,7 +34,7 @@ const NavbarCajero = () => {
           {/* Contenedor de Texto */}
           <div className="d-flex flex-column justify-content-start" style={{ lineHeight: '1' }}>
             <span className="brand-text fw-bold">
-              KR<span className="text-primary">ESTUDIOS{`.   `}</span>
+              KR<span className="text-primary">ESTUDIOS {`.   `}</span>
             </span>
             <div className="user-info-brand" style={{ marginTop: '-2px' }}>
               <span className="text-muted text-uppercase" style={{ fontSize: '9px', fontWeight: '700' }}>
@@ -57,7 +57,7 @@ const NavbarCajero = () => {
               Boletas <span className="arrow">▼</span>
             </NavLink>
             <ul className="submenu-list">
-              <li><NavLink to={LOCAL_URL + "/nuevo-boleta"} className="submenu-link">Crear Boleta</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/nueva-boleta"} className="submenu-link">Crear Boleta</NavLink></li>
               <li><NavLink to={LOCAL_URL + "/boletas"} className="submenu-link">Listar Boletas</NavLink></li>
             </ul>
           </div>

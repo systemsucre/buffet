@@ -49,7 +49,17 @@ const NavbarAuxiliar = () => {
 
         {/* Desktop Menu */}
         <ul className="nav-menu-desktop">
-          <li><NavLink to={LOCAL_URL + "/auxiliar/salidas"} className="nav-link-item">Salidas</NavLink></li>
+          <li><NavLink to={LOCAL_URL + "/movimientos"} end className="nav-link-item">Movimientos</NavLink></li>
+
+          <div className="nav-item-container has-submenu">
+            <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+              Boletas <span className="arrow">▼</span>
+            </NavLink>
+            <ul className="submenu-list">
+              <li><NavLink to={LOCAL_URL + "/nueva-boleta"} className="submenu-link">Crear Boleta</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/boletas"} className="submenu-link">Listar Boletas</NavLink></li>
+            </ul>
+          </div>
 
 
           <div className="nav-item-container has-submenu">
@@ -92,8 +102,17 @@ const NavbarAuxiliar = () => {
           {/* Mobile Overlay Menu */}
           <div className={`nav-menu-mobile ${isMobileMenuOpen ? 'open' : ''}`}>
 
-            <NavLink to={LOCAL_URL + "/auxiliar/salidas"} className="mobile-link">Salidas</NavLink>
+            <NavLink to={LOCAL_URL + "/movimientos"} className="mobile-link">Movimientos</NavLink>
 
+            <div className="nav-item-container has-submenu">
+              <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+                Boletas <span className="arrow">▼</span>
+              </NavLink>
+              <ul className="submenu-list">
+                <li><NavLink to={LOCAL_URL + "/nueva-boleta"} className="submenu-link">Nueva Boleta</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/boletas"} className="submenu-link">Lista Boletas</NavLink></li>
+              </ul>
+            </div>
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
                 Reportes <span className="arrow">▼</span>
