@@ -38,7 +38,7 @@ export const UseCustomBoletas = () => {
 
     const consultarDetalleBoleta = async (codigo_boleta) => {
         setCargando(true);
-        const res = await start(`${URL}boletas/detalles`, { codigo_boleta });
+        const res = await start(`${URL}boletas/detalles`, { codigo_boleta });  
         if (res) {
             setItemsBoleta(res);
         }
@@ -177,7 +177,8 @@ export const UseCustomBoletas = () => {
         const busqueda = e.target.value.toLowerCase();
         const filtrados = boletas.filter(b =>
             b.numero_boleta?.toString().includes(busqueda) ||
-            b.codigo?.toString().includes(busqueda)
+            b.codigo_boleta?.toString().includes(busqueda) ||
+            b.solicitado_por?.toString().includes(busqueda)
         );
         setBoletasFiltradas(filtrados);
     };

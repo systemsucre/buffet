@@ -50,6 +50,9 @@ import { ListaBoleta } from "../boleta/Lista";
 import { FormularioBoleta } from "../boleta/Formulario";
 import { DetallesBoleta } from "../boleta/detalles";
 import { LayoutPorRol } from "./layout";
+import { ListaHonorariosTramite } from "../honorarios/Lista";
+import FormularioHonorario from "../honorarios/FormularioHonorarios";
+import { ReportesHonorarios } from "../reportes/reportesHonorarios";
 
 
 
@@ -182,6 +185,10 @@ export default function AppRouter() {
           path: 'editar-tipo-tramite/:id',
           element: <Check component={NuevoTipoTramite} roleRequired="admin" />,
         },
+        {
+          path: 'reporte-honorarios',
+          element: <Check component={ReportesHonorarios} roleRequired="admin" />,
+        },
 
       ],
     },
@@ -259,6 +266,12 @@ export default function AppRouter() {
           element: <Check component={NuevoCliente} roleRequired="gerente" />,
         },
 
+        {
+          path: 'reporte-honorarios',
+          element: <Check component={ReportesHonorarios} roleRequired="gerente" />,
+        },
+
+
       ],
     },
 
@@ -290,6 +303,25 @@ export default function AppRouter() {
           path: 'editar-cliente/:id',
           element: <Check component={NuevoCliente} roleRequired="cajero" />,
         },
+
+        {
+          path: 'listar-honorarios',
+          element: <Check component={ListaHonorariosTramite} roleRequired="cajero" />,
+        },
+        {
+          path: 'guardar-honorario',
+          element: <Check component={FormularioHonorario} roleRequired="cajero" />,
+        },
+        {
+          path: 'editar-honorario/:id',
+          element: <Check component={FormularioHonorario} roleRequired="cajero" />,
+        },
+
+        {
+          path: 'reporte-honorarios',
+          element: <Check component={ReportesHonorarios} roleRequired="cajero" />,
+        },
+
 
 
         {

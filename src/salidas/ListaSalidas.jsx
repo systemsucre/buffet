@@ -60,9 +60,6 @@ export function ListaSalidas() {
                 <div className="d-flex justify-content-between align-items-center mb-4 m-2">
                     <div>
                         <h3 className="text-dark fw-bold mb-0 text-titulos">Panel de Aprobación de Gastos</h3>
-                        <p className="text-muted mb-0 small text-uppercase" style={{ letterSpacing: '1px', fontSize: '0.7rem' }}>
-                            Nivel Gerencial - Revisión y Aprobación
-                        </p>
                     </div>
                 </div>
 
@@ -83,7 +80,7 @@ export function ListaSalidas() {
                 <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">
                     <div className="row align-items-center mb-3 g-3">
                         <div className="col-md-6">
-                            <div className="d-flex gap-2">
+                            <div className="d-flex1 gap-2">
                                 <button className="btn  btn-sm border text-success fw-bold" onClick={() => setFiltroEstado('TODOS')}>TODOS <span className="fw-bold mb-0 text-success">({salidasFiltradas.length})</span></button>
                                 <button className="btn  btn-sm border text-warning fw-bold" onClick={() => setFiltroEstado(1)}>SOLICITADOS <span className="fw-bold mb-0 text-warning">{countPendientes}</span></button>
                                 <button className="btn  btn-sm border text-primary fw-bold" onClick={() => setFiltroEstado(2)}>APROBADOS <span className="fw-bold mb-0 text-primary">{countAprobados}</span></button>

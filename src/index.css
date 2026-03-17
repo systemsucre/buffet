@@ -673,7 +673,7 @@ button:not(:disabled),
 @media (max-width: 400px) {
   .d-flex1 .btn {
     padding: 3px;
-    font-size: 7px;
+    font-size: 8px;
   }
 }
 
@@ -1332,17 +1332,16 @@ button:not(:disabled),
   overflow: hidden;
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: auto;
   margin-top: 2rem;
   /* Ocupa toda la altura de la ventana */
 }
 
 
-
 .login-card {
   background: #ffffff;
   padding: 40px;
-  border-radius: 0px;
+  border-radius: 28px;
   box-shadow: 0 25px 50px -12px rgba(0, 86, 179, 0.15);
   border: 1px solid rgba(0, 123, 255, 0.1);
   width: 100%;
@@ -1359,13 +1358,19 @@ button:not(:disabled),
   .login-card {
     /* CLAVE: Cambiar height de 1000px a auto */
     height: auto;
+
     padding: 15px;
     /* Un padding más equilibrado para móviles */
-    border-radius: 0px;
+    border-radius: 20px;
     /* Bordes un poco menos pronunciados en móvil */
     margin-bottom: 20px;
     /* Espacio extra abajo para que no pegue al borde del navegador */
   }
+
+  div .ext-dark {
+    font-size: 14px;
+  }
+
 }
 
 @media (max-width: 600px) {

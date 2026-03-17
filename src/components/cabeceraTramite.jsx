@@ -58,52 +58,54 @@ const CabeceraTramite = ({ id }) => {
                                 estado === 2 ? 'text-warning' :
                                     estado === 3 ? 'text-info' : '-'}
 
-                            > {
-                            estado === 1 ? 'EN CURSO' :
-                                estado === 2 ? 'PARALIZADO' :
-                                    estado === 3 ? 'FNALIZADO' : '-'
-                        }</span>
+                        > {
+                                estado === 1 ? 'EN CURSO' :
+                                    estado === 2 ? 'PARALIZADO' :
+                                        estado === 3 ? 'FNALIZADO' : '-'
+                            }</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-            {/* --- GRÁFICO DE BALANCE ROJO (Gasto) vs VERDE (A favor) --- */ }
-    <div className="mt-3">
-        <div className="d-flex justify-content-between mb-1" style={{ fontSize: '0.75rem' }}>
-            <span className="fw-bold text-danger">GASTADO ({porcentajeGasto.toFixed(1)}%)</span>|
-            <span className="fw-bold " style={{ color: '#1bbec0' }}>A FAVOR ({porcentajeSaldo.toFixed(1)}%)</span>
-        </div>
+            {saldo > 0 ?
+                < div className="mt-3">
+                    <div className="d-flex justify-content-between mb-1" style={{ fontSize: '0.75rem' }}>
+                        <span className="fw-bold text-danger">GASTADO ({porcentajeGasto.toFixed(1)}%)</span>|
+                        <span className="fw-bold " style={{ color: '#1bbec0' }}>A FAVOR ({porcentajeSaldo.toFixed(1)}%)</span>
+                    </div>
 
-        {/* Contenedor principal de la barra */}
-        <div style={{
-            height: '14px',
-            backgroundColor: '#e9ecef',
-            borderRadius: '7px',
-            overflow: 'hidden',
-            display: 'flex', // Esto permite que las dos barras internas convivan
-            boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)'
-        }}>
-            {/* PARTE ROJA: GASTOS */}
-            <div style={{
-                width: `${porcentajeGasto}%`,
-                height: '100%',
-                backgroundColor: '#f43f5e', // Rojo
-                transition: 'width 0.6s ease'
-            }}></div>
+                    {/* Contenedor principal de la barra */}
+                    <div style={{
+                        height: '14px',
+                        backgroundColor: '#e9ecef',
+                        borderRadius: '7px',
+                        overflow: 'hidden',
+                        display: 'flex', // Esto permite que las dos barras internas convivan
+                        boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)'
+                    }}>
+                        {/* PARTE ROJA: GASTOS */}
+                        <div style={{
+                            width: `${porcentajeGasto}%`,
+                            height: '100%',
+                            backgroundColor: '#f43f5e', // Rojo
+                            transition: 'width 0.6s ease'
+                        }}></div>
 
-            {/* PARTE VERDE: DINERO A FAVOR */}
-            <div style={{
-                width: `${porcentajeSaldo}%`,
-                height: '100%',
-                backgroundColor: '#1bbec0', // Verde
-                transition: 'width 0.6s ease'
-            }}></div>
-        </div>
+                        {/* PARTE VERDE: DINERO A FAVOR */}
+                        <div style={{
+                            width: `${porcentajeSaldo}%`,
+                            height: '100%',
+                            backgroundColor: '#1bbec0', // Verde
+                            transition: 'width 0.6s ease'
+                        }}></div>
+                    </div>
 
-        <div className="d-flex justify-content-between mt-1" style={{ fontSize: '0.65rem', color: '#6c757d' }}>
-            <span>Total Abonado:    </span> <span>{'Bs. ' + ingresos.toFixed(2)}</span>
-        </div>
-    </div>
+
+                    <div className="d-flex justify-content-between mt-1" style={{ fontSize: '0.65rem', color: '#6c757d' }}>
+                        <span>Total Abonado:    </span> <span>{'Bs. ' + ingresos.toFixed(2)}</span>
+                    </div>
+                </div>
+                : null}
         </div >
     );
 };

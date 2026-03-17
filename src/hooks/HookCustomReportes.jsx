@@ -5,6 +5,7 @@ import { generarReporteFinanciero } from "../reportes/reportes";
 import { useCallback } from "react";
 import { useEffect } from "react";
 import { generarReporteResumen } from "../reportes/generarReporteConsolidado";
+import toast from "react-hot-toast";
 
 export const useReportes = () => {
 
@@ -28,49 +29,145 @@ export const useReportes = () => {
 
 
     const reporteSalidas = async (id, desde, hasta) => {
-        // const data = await getSalidasExcel(id, desde, hasta);
-        const data = await start(`${URL}comuun/salidas-excel`, { id, desde, hasta });
+        const generarDocumento = async () => {
+            // const data = await getSalidasExcel(id, desde, hasta);
+            const data = await start(`${URL}comuun/salidas-excel`, { id, desde, hasta });
 
-        const tramite = (await start(`${URL}comuun/listar-tramites`, { id }))[0];
-        // console.log(data, '  salidas')
+            const tramite = (await start(`${URL}comuun/listar-tramites`, { id }))[0];
+            // console.log(data, '  salidas')
 
-        await generarReporteFinanciero('SALIDAS', data, tramite, { desde, hasta });
+            if (data.length > 0) {
+                await generarReporteFinanciero('SALIDAS', data, tramite, { desde, hasta });
+                return "PDF descargado con éxito";
+            }
+            else
+                alert("No hay movimientos en el rango de fechas seleccionado");
+        }
+        // Ejecutamos la promesa con los mensajes automáticos
+        toast.promise(generarDocumento(), {
+            loading: 'Generando PDF profesional...',
+            success: (msg) => <b>{msg}</b>,
+            error: (err) => <b>{err.message}</b>,
+        }, {
+            style: {
+                minWidth: '250px',
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+            },
+            success: {
+                duration: 4000,
+                icon: '📄',
+            },
+        });
     };
 
 
     const reporteIngresos = async (id, desde, hasta) => {
-        // const data = await getIngresosExcel(id, desde, hasta);
-        const data = await start(`${URL}comuun/ingresos-excel`, { id, desde, hasta });
-        const tramite = (await start(`${URL}comuun/listar-tramites`, { id }))[0];
-        await generarReporteFinanciero('INGRESOS', data, tramite, { desde, hasta });
+
+        const generarDocumento = async () => {
+            // const data = await getIngresosExcel(id, desde, hasta);
+            const data = await start(`${URL}comuun/ingresos-excel`, { id, desde, hasta });
+            const tramite = (await start(`${URL}comuun/listar-tramites`, { id }))[0];
+            if (data.length > 0) {
+                await generarReporteFinanciero('INGRESOS', data, tramite, { desde, hasta });
+                return "PDF descargado con éxito";
+            }
+            else alert("No hay movimientos en el rango de fechas seleccionado");
+
+        }
+
+        // Ejecutamos la promesa con los mensajes automáticos
+        toast.promise(generarDocumento(), {
+            loading: 'Generando PDF profesional...',
+            success: (msg) => <b>{msg}</b>,
+            error: (err) => <b>{err.message}</b>,
+        }, {
+            style: {
+                minWidth: '250px',
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+            },
+            success: {
+                duration: 4000,
+                icon: '📄',
+            },
+        });
     };
 
 
     const reporteGeneral = async (id, desde, hasta) => {
-        const ingresos = await await start(`${URL}comuun/ingresos-excel`, { id, desde, hasta });
-        const salidas = await start(`${URL}comuun/salidas-excel`, { id, desde, hasta });
-        const tramite = (await start(`${URL}comuun/listar-tramites`, { id }))[0];
 
-        // Combinar y normalizar datos
-        const mixto = [
-            ...ingresos.map(i => ({ ...i, tipo_mov: 'INGRESO', fecha: i.fecha_ingreso })),
-            ...salidas.map(s => ({ ...s, tipo_mov: 'SALIDA', fecha: s.fecha_solicitud }))
-        ].sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+        const generarDocumento = async () => {
 
-        await generarReporteFinanciero('GENERAL', mixto, tramite, { desde, hasta });
+            const ingresos = await await start(`${URL}comuun/ingresos-excel`, { id, desde, hasta });
+            const salidas = await start(`${URL}comuun/salidas-excel`, { id, desde, hasta });
+            const tramite = (await start(`${URL}comuun/listar-tramites`, { id }))[0];
+
+            // Combinar y normalizar datos
+            const mixto = [
+                ...ingresos.map(i => ({ ...i, tipo_mov: 'INGRESO', fecha: i.fecha_ingreso })),
+                ...salidas.map(s => ({ ...s, tipo_mov: 'SALIDA', fecha: s.fecha_solicitud }))
+            ].sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+            if (mixto.length > 0) {
+
+                await generarReporteFinanciero('GENERAL', mixto, tramite, { desde, hasta });
+                return "PDF descargado con éxito";
+            }
+            else alert("No hay movimientos en el rango de fechas seleccionado");
+        };
+
+        // Ejecutamos la promesa con los mensajes automáticos
+        toast.promise(generarDocumento(), {
+            loading: 'Generando PDF profesional...',
+            success: (msg) => <b>{msg|| 'Reporte excel generado'}</b>,
+            error: (err) => <b>{err.message}</b>,
+        }, {
+            style: {
+                minWidth: '250px',
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+            },
+            success: {
+                duration: 4000,
+                icon: '📄',
+            },
+        });
+
     };
 
 
     const reporteConsolidado = async (desde, hasta, estado) => {
 
+        const generarDocumento = async () => {
+            const data = (await start(`${URL}comuun/reporte-consolidado`, { desde, hasta, estado, }));
 
-        const data = (await start(`${URL}comuun/reporte-consolidado`, { desde, hasta, estado, }));
-
-        if (data && data.length > 0) {
-            await generarReporteResumen(data, { desde, hasta });
-        } else {
-            alert("No hay movimientos en el rango de fechas seleccionado");
+            if (data && data.length > 0) {
+                await generarReporteResumen(data, { desde, hasta });
+            } else {
+                alert("No hay movimientos en el rango de fechas seleccionado");
+            }
         }
+        // Ejecutamos la promesa con los mensajes automáticos
+        toast.promise(generarDocumento(), {
+            loading: 'Generando reporte Excel...',
+            success: (msg) => <b>{msg}</b>,
+            error: (err) => <b>{err.message}</b>,
+        }, {
+            style: {
+                minWidth: '250px',
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+            },
+            success: {
+                duration: 4000,
+                icon: '📄',
+            },
+        });
     };
 
 

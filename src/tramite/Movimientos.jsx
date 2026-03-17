@@ -13,34 +13,35 @@ export function Movimientos() {
         allListTramite,
         filterByEstado,
         cargando,
-        filterByDeleteTramite,
+        filterByDelete,
         exportPDfTramites
     } = useTramites();
     const enCurso = tramites.filter(t => t.estado === 1).length;
-    const paralizados = tramites.filter(t => t.estado === 0).length;
+    const paralizados = tramites.filter(t => t.estado === 2).length;
+    const finalizados = tramites.filter(t => t.estado === 3).length;
+
 
     return (
         <>
             <main className="container-xl mt-5" style={{ maxWidth: "100%" }}>
                 <div className="d-flex justify-content-between align-items-end mb-4">
                     <div>
-                        <h3 className="text-dark fw-bold mb-0 p-2">Gestión de Movimientos</h3>
-                        <p className="text-muted mb-0 small text-uppercase p-2" style={{ letterSpacing: '1px', fontSize: '0.7rem' }}>
-                            Panel de control de movimientos - KR Estudios
-                        </p>
+                        <h3 className="text-dark fw-bold mb-0 p-2">Ver Movimientos</h3>
+                      
                     </div>
                 </div>
 
                 <div className="panel-custom bg-white rounded shadow-sm p-1">
                     <div className="row align-items-center mb-3 g-3">
                         <div className="col-md-6">
-                            <div className="d-flex gap-2">
+                            <div className="d-flex1 gap-2">
                                 <button className="btn btn-light btn-sm border text-success fw-bold" onClick={allListTramite}>TODOS <span className="fw-bold mb-0 text-success">{tramites.length}</span></button>
                                 <button className="btn btn-primary btn-sm border text-primary fw-bold" onClick={() => filterByEstado(1)}>EN CURSO <span className="fw-bold mb-0 text-primary">{enCurso}</span></button>
-                                <button className="btn btn-warningd btn-sm border text-warning fw-bold" onClick={() => filterByEstado(0)}>PARALIZADOS <span className="fw-bold mb-0 text-warning">{paralizados}</span></button>
+                                <button className="btn btn-warningd btn-sm border text-danger fw-bold" onClick={() => filterByEstado(0)}>PARALIZADOS <span className="fw-bold mb-0 text-danger">{paralizados}</span></button>
+                                <button className="btn btn-warning1 btn-sm border text-warning fw-bold" onClick={() => filterByEstado(3)}>FINALIZADOS <span className="fw-bold mb-0 text-warning">{finalizados}</span></button>
                                 {tramites.filter(t => t.eliminado == 0).length > 0 && (
-                                    <button className="btn btn-warning btn-sm border text-danger fw-bold" onClick={() => filterByDeleteTramite(0)}>
-                                        RECICLAJE <span className="fw-bold mb-0 text-danger">{tramites.filter(t => t.eliminado == 0).length}</span>
+                                    <button className="btn btn-danger btn-sm border text-white fw-bold" onClick={() => filterByDelete(0)}>
+                                        RECICLAJE  (<span className="fw-bold mb-0 text-white">{tramites.filter(t => t.eliminado == 0).length}</span>)
                                     </button>
                                 )}
                             </div>
@@ -49,7 +50,7 @@ export function Movimientos() {
                             <div style={{ width: '100%', maxWidth: '300px', paddingLeft: '5px', paddingTop: '10px' }}>
                                 <InputUsuarioSearch
                                     name="input-search-tramite"
-                                    placeholder='Buscar por código, cliente o tipo...'
+                                    placeholder='Buscar por código, cliente o numero...'
                                     onChange={handleSearch}
                                 />
                             </div>

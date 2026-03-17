@@ -7,6 +7,8 @@ const reporteConsolidoTramite = async (output, { tramite, ingresos = [], salidas
     const totalSalidas = salidas.reduce((acc, curr) => acc + parseFloat(curr.monto || 0), 0);
     const saldo = totalIngresos - totalSalidas;
 
+    // console.log(salidas, ' lista de salidas del tramite')
+
     const content = [
         // 1. ENCABEZADO PRINCIPAL
         {
@@ -32,8 +34,8 @@ const reporteConsolidoTramite = async (output, { tramite, ingresos = [], salidas
                 widths: ['auto', '*', 'auto', '*'],
                 body: [
                     [
-                        { text: 'CÓDIGO:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.codigo },
-                        { text: 'FECHA INGRESO:', bold: true, fillColor: '#f2f2f2' }, { text: new Date(tramite.fecha_ingreso).toLocaleDateString() }
+                        { text: 'CÓDIGO TRAMITE:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.codigo },
+                        { text: ' NUMERO TRAMITE:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.numero  }
                     ],
                     [
                         { text: 'CLIENTE:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.cliente_nombre || 'S/D', colSpan: 3 }, {}, {}
@@ -42,7 +44,7 @@ const reporteConsolidoTramite = async (output, { tramite, ingresos = [], salidas
                         { text: 'DETALLE:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.detalle, colSpan: 3 }, {}, {}
                     ],
                     [
-                        { text: 'COSTO: ', bold: true, fillColor: '#f2f2f2' }, { text: 'BS: ' + tramite.costo, colSpan: 3 }, {}, {}
+                        { text: 'FECHA INGRESO: ', bold: true, fillColor: '#f2f2f2' }, { text:  new Date(tramite.fecha_ingreso).toLocaleDateString(), colSpan: 3 }, {}, {}
                     ]
                 ]
             },
@@ -82,6 +84,7 @@ const reporteConsolidoTramite = async (output, { tramite, ingresos = [], salidas
         { text: 'DETALLE DE EGRESOS / GASTOS', style: 'nhcheader', margin: [0, 10, 0, 5], color: '#dc3545' },
 
         // 4. TABLA DE SALIDAS
+        
         {
             table: {
                 headerRows: 1,

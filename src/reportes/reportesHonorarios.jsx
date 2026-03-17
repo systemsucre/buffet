@@ -1,14 +1,11 @@
-import { faArrowLeft, faFileDownload, faChartLine, faFileInvoiceDollar, faWallet } from "@fortawesome/free-solid-svg-icons";
-import Select from 'react-select';
-import { InputUsuarioStandard } from "../components/input/elementos";
-import { useReportes } from "../hooks/HookCustomReportes";
-import { useNavigate } from "react-router-dom";
-import { INPUT, LOCAL_URL } from "../Auth/config";
+import {  faFileDownload, faChartLine, } from "@fortawesome/free-solid-svg-icons";
+import { InputUsuarioStandard, Select1 } from "../components/input/elementos";
+import { UseCustomHonorarios } from "../hooks/HookCustomHonorarios";
+import { INPUT,  } from "../Auth/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export function ReportesAdministracionPorTramite() {
-    const navigate = useNavigate();
-    const { estados, setters, listaTramite, reporteSalidas, reporteIngresos, reporteGeneral } = useReportes();
+export function ReportesHonorarios() {
+    const { estados, setters, listarHonorariosReporte } = UseCustomHonorarios();
 
     return (
         <>
@@ -19,7 +16,7 @@ export function ReportesAdministracionPorTramite() {
                     border-radius: 15px; 
                     box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
                     border: none;
-                    padding: 8px;
+                    padding: 5px;
                 }
                 .section-title {
                     border-left: 5px solid #1B4F72;
@@ -57,36 +54,15 @@ export function ReportesAdministracionPorTramite() {
                     {/* Header */}
                     <div className="d-flex justify-content-between align-items-center mb-4">
                         <div className="section-title">
-                            <h3 className="text-dark fw-bold mb-0">Reportes Individual de Tramite</h3>
+                            <h3 className="text-dark fw-bold mb-0">Reportes de Honorarios</h3>
                             {/* <p className="text-muted mb-0 small text-uppercase">Gestión Económica de Trámites</p> */}
                         </div>
                     </div>
 
-      
 
                     <div className="report-card">
                         <div className="row g-4">
-                            {/* Selector de Trámite */}
-                            <div className="col-lg-12">
-                                <label className="custom-label">Seleccionar Expediente / Trámite <span className="text-danger">*</span></label>
-                                <Select
-                                    placeholder='Busque por código o nombre del cliente...'
-                                    onChange={(e) => setters.setTramite({ campo: e ? e.value : '', valido: e ? 'true' : 'false' })}
-                                    options={listaTramite}
-                                    value={listaTramite.find(opt => opt.value === estados.tramite.campo) || null}
-                                    isSearchable={true}
-                                    isClearable={true}
-                                    styles={{
-                                        control: (base) => ({
-                                            ...base,
-                                            borderRadius: '10px',
-                                            padding: '5px',
-                                            borderColor: '#dee2e6',
-                                            boxShadow: 'none'
-                                        })
-                                    }}
-                                />
-                            </div>
+                     
 
                             {/* Filtros de Fecha */}
                             <div className="col-md-6">
@@ -114,27 +90,12 @@ export function ReportesAdministracionPorTramite() {
                             <div className="col-12 mt-5">
                                 <div className="p-3 bg-light rounded-3">
                                     <h6 className="text-center mb-4 text-muted text-uppercase small fw-bold">Generar Archivos Excel</h6>
-                                    <div className="row g-3">
-                                        <div className="col-md-4">
-                                            <button className="btn-report btn-salidas py-3"
-                                                onClick={() => reporteSalidas(estados.tramite.campo, estados.desde.campo, estados.hasta.campo)}>
-                                                <FontAwesomeIcon icon={faWallet} /> Reporte Salidas
-                                            </button>
-                                        </div>
-                                        {parseInt(localStorage.getItem('numRol') )<4 ? <>
-                                            <div className="col-md-4">
-                                                <button className="btn-report btn-ingresos py-3"
-                                                    onClick={() => reporteIngresos(estados.tramite.campo, estados.desde.campo, estados.hasta.campo)}>
-                                                    <FontAwesomeIcon icon={faFileInvoiceDollar} /> Reporte Ingresos
-                                                </button>
-                                            </div>
-                                            <div className="col-md-4">
-                                                <button className="btn-report btn-general py-3"
-                                                    onClick={() => reporteGeneral(estados.tramite.campo, estados.desde.campo, estados.hasta.campo)}>
-                                                    <FontAwesomeIcon icon={faChartLine} /> Balance General
-                                                </button>
-                                            </div>
-                                        </> : null}
+
+                                    <div className="col-md-12 m-auto">
+                                        <button className="btn-report btn-ingresos py-3"
+                                            onClick={() => listarHonorariosReporte(estados.desde.campo, estados.hasta.campo)}>
+                                            <FontAwesomeIcon icon={faChartLine} /> Generar Reporte
+                                        </button>
                                     </div>
                                 </div>
                             </div>

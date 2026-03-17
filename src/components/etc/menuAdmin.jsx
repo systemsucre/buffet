@@ -75,8 +75,9 @@ const NavbarAdmin = () => {
               Reportes <span className="arrow">▼</span>
             </NavLink>
             <ul className="submenu-list">
-              <li><NavLink to={LOCAL_URL + "/admin/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/admin/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/admin/reportes-honorarios"} className="submenu-link">Honorarios</NavLink></li>
             </ul>
           </div>
 
@@ -150,8 +151,9 @@ const NavbarAdmin = () => {
                 Reportes <span className="arrow">▼</span>
               </NavLink>
               <ul className="submenu-list">
-                <li><NavLink to={LOCAL_URL + "/admin/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
-                <li><NavLink to={LOCAL_URL + "/admin/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/admin/reporte-honorarios"} className="submenu-link">Honorarios</NavLink></li>
               </ul>
             </div>
 

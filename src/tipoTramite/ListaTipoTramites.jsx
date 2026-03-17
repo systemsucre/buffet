@@ -41,7 +41,7 @@ export function ListaTipoTramite() {
                             <div style={{ width: '280px' }}>
                                 <InputUsuarioSearch
                                     name="search-tramite"
-                                    placeholder='Buscar por nombre de trámite...'
+                                    placeholder='Buscar por tipo tramite ...'
                                     onChange={handleSearch}
                                 />
                             </div>

@@ -1,13 +1,10 @@
 import createPdf from './base.js';
 
 const ticketSalidaIndividual = async (output, { salida }) => {
-    console.log(salida.fecha_solicitud, ' fecha solicitud')
+    // console.log(salida, ' fecha solicitud')
 
     const montoFormateado = salida?.monto ? parseFloat(salida.monto).toFixed(2) : "0.00";
     const numeroSalida = salida?.numero || "S/N";
-    const fechaSalida = salida?.fecha_solicitud
-        ? new Date(salida.fecha_solicitud?.split('T')[0]).toLocaleDateString()
-        : "---";
 
     const estados = { 1: 'SOLICITADO', 2: 'APROBADO', 3: 'DESPACHADO', 4: 'RECHAZADO' };
     const estado = salida.estado
@@ -32,13 +29,20 @@ const ticketSalidaIndividual = async (output, { salida }) => {
         { text: ' ', margin: [0, 10] },
 
         // Datos del Trámite y Fecha
+
+        { text: `N° BOLETA: ${salida?.numero_boleta}`, style: 'tHeaderLabel' },
+        { text: `CODIGO BOLETA: ${salida?.codigo_boleta}`, style: 'tHeaderLabel' },
+      
+        { text: '_______________________________________________________________________________________________', color: '#eeeeee', margin: [0, 5, 0, 10] },
+
         {
             columns: [
                 { text: `N° Salida: ${numeroSalida}`, style: 'nhcheader' },
-                { text: `Fecha: ${fechaSalida}`, style: 'tHeaderLabel' }
+                // { text: `Fecha: ${fechaSalida}`, style: 'tHeaderLabel' }
             ]
         },
         { text: `Trámite Ref: ${salida.codigo_tramite}`, style: 'text', alignment: 'left' },
+        { text: `Cliente: ${salida.cliente}`, style: 'text', alignment: 'left' },
 
         { text: '_______________________________________________________________________________________________', color: '#eeeeee', margin: [0, 5, 0, 10] },
 

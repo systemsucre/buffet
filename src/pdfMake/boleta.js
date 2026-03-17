@@ -3,6 +3,9 @@ import createPdf from './base.js';
 const ticketBoleta = async (output, { itemsBoleta }) => {
     // Tomamos la cabecera del primer item (como en el JSX)
     const infoCabecera = itemsBoleta && itemsBoleta.length > 0 ? itemsBoleta[0] : {};
+    // console.log(infoCabecera)
+
+    const numeroBoleta = infoCabecera?.numero_boleta || "S/C";
     const codigoBoleta = infoCabecera?.codigo_boleta || "S/N";
 
     // Configuración de Colores según estado (Igual al JSX)
@@ -19,8 +22,8 @@ const ticketBoleta = async (output, { itemsBoleta }) => {
                 body: [
                     [{
                         stack: [
-                            { text: 'COMPROBANTE DE EGRESO GRUPAL', style: 'hc', color: 'white' },
-                            { text: `BOLETA: ${codigoBoleta}`, fontSize: 14, bold: true, color: 'white', margin: [0, 5, 0, 0] }
+                            { text: 'COMPROBANTE DE BOLETA', style: 'hc', color: 'white' },
+                            // { text: `BOLETA: ${numeroBoleta}`, fontSize: 14, bold: true, color: 'white', margin: [0, 5, 0, 0] }
                         ],
                         fillColor: '#2c3e50',
                         margin: [20, 10, 20, 10],
@@ -34,11 +37,14 @@ const ticketBoleta = async (output, { itemsBoleta }) => {
         // 2. ETIQUETA DE ESTADO (BADGE)
         {
             canvas: [{ type: 'rect', x: 180, y: 5, w: 200, h: 20, r: 5, fillColor: bgEstado, lineColor: colorEstado }],
-            absolutePosition: { x: 15, y: 93 }
+            absolutePosition: { x: 15, y: 71 }
         },
         { text: textoEstado, color: textEstadoColor, bold: true, fontSize: 8, alignment: 'center', margin: [0, 10, 0, 10] },
 
         // 3. SECCIÓN DE INFORMACIÓN DE FIRMAS (3 COLUMNAS)
+        { text: 'NUMERO BOLETA: ' + numeroBoleta || '---', bold: true },
+        { text: 'CODIGO BOLETA: ' + codigoBoleta || '---', bold: true },
+
         {
             columns: [
                 {
@@ -70,32 +76,20 @@ const ticketBoleta = async (output, { itemsBoleta }) => {
         {
             table: {
                 headerRows: 1,
-                widths: [20, '*', 60, 80, 50],
+                widths: [55,100, '*',  50],
                 body: [
                     // Header de la Tabla
                     [
-                        { text: '#', style: 'tProductsHeader', fillColor: '#2c3e50', color: 'white' },
-                        { text: 'DETALLE GASTO', style: 'tProductsHeader', fillColor: '#2c3e50', color: 'white' },
                         { text: 'TRAMITE', style: 'tProductsHeader', fillColor: '#2c3e50', color: 'white' },
-                        { text: 'ESTADO FINANCIERO TRAMITE', style: 'tProductsHeader', fillColor: '#2c3e50', color: 'white', alignment: 'left' },
+                        { text: 'CLIENTE', style: 'tProductsHeader', fillColor: '#2c3e50', color: 'white' },
+                        { text: 'DETALLE ITEM', style: 'tProductsHeader', fillColor: '#2c3e50', color: 'white' },
                         { text: 'MONTO SOLICITADO', style: 'tProductsHeader', fillColor: '#2c3e50', color: 'white', alignment: 'right' }
                     ],
                     // Filas de Items
                     ...itemsBoleta.map(item => [
-                        { text: item.numero, alignment: 'center', fontSize: 9 },
-
-                        { text: item.detalle, bold: true, fontSize: 10 },
-
                         { text: item.codigo_tramite, fontSize: 8, color: '#4e73df' },
-
-                        {
-                            fontSize: 7,
-                            stack: [
-                                { text: `Abonado: ${item.tramite_total_ingresos} Bs.`, color: 'green' },
-                                { text: `Gastado: ${item.tramite_total_gastos_pagados} Bs.`, color: 'red' },
-                                { text: `Disponible: ${item.saldoDisponibleTramite} Bs.`, bold: true, color: '#2c3e50' }
-                            ]
-                        },
+                        { text: item.cliente, alignment: 'center', fontSize: 9 },
+                        { text: item.detalle, bold: true, fontSize: 10 },
                         { text: `${parseFloat(item.monto).toFixed(2)} Bs.`, alignment: 'right', bold: true, fontSize: 10 }
                     ])
                 ]

@@ -1,10 +1,8 @@
 import { useState, } from "react";
 import { useNavigate } from "react-router-dom";
 import ticketSalidaIndividual from "../pdfMake/salida";
-import fileDownload from "js-file-download";
-import { LOCAL_URL, URL } from '../Auth/config';
-import { saveDB, start } from '../service/service';
-import { datosAuditoriaExtra } from "./datosAuditoriaExtra";
+import {  URL } from '../Auth/config';
+import {  start } from '../service/service';
 
 export const UseCustomSalidas = () => {
     const navigate = useNavigate();

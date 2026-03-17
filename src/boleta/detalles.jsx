@@ -4,13 +4,10 @@ import { UseCustomBoletas } from "../hooks/HookCustomBoleta";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 
-    faWallet,
-    faArrowUp,
-    faArrowDown,
+
     faFilePdf,
     faCheck,
-    faTimes,
-    faThumbsUp,
+
     faClock, faCircleCheck, faUserTie, faEdit,
     faTrash,
     faArrowLeft
@@ -73,8 +70,14 @@ export const DetallesBoleta = () => {
                             <div className="card-header  border-bottom py-4 px-4 mt-3 ">
                                 <div className="align-items-center">
                                     <div className="d-flex align-items-center gap-3 mb-3">
-                                        <h4 className="fw-bold mb-0 text-dark text-titulos">
-                                            BOLETA <span className="codigo-boleta text-primary ms-2">{codigo}</span>
+                                        <h4 className="fw-bold mb-0 text-dark text-titulos" style={{margin:'0', padding:'0'}}>
+                                            CODIGO  <span className="codigo-boleta text-primary ms-2" >{codigo}</span>
+                                        </h4>
+                                    </div>
+                                    <div className="d-flex align-items-center gap-3 mb-3">
+
+                                        <h4 className="fw-bold mb-0 text-dark text-titulos" style={{margin:'0', padding:'0', marginBottom:'1rem'}}>
+                                            NUMERO BOLETA  <span className="codigo-boleta text-primary ms-2">{itemsBoleta && itemsBoleta.length > 0 ? itemsBoleta[0].numero_boleta : 'S/N'}</span>
                                         </h4>
                                     </div>
                                     <span style={{ ...styles.badgeStatus, background: infoCabecera?.estado === 3 ? '#dcfce7' : '#fef9c3', fontSize: '16px', color: infoCabecera?.estado === 3 ? '#166534' : '#854d0e' }}>
@@ -96,7 +99,7 @@ export const DetallesBoleta = () => {
                                             <div className="p-3 bg-white rounded shadow-sm h-100 border-top border-primary border-3">
                                                 <small className="text-muted fw-bold d-block mb-1"><FontAwesomeIcon icon={step.icon} className="me-1" /> {step.label}</small>
                                                 <div className="fw-bold text-dark mb-1">{step.user || '---'}</div>
-                                                <small className="text-muted d-block" style={{ fontSize: '0.7rem' }}>{step.date || 'Pendiente'}</small>
+                                                <small className="text-muted fw-bold d-block" style={{ fontSize: '0.9rem' }}>{step.date || 'Pendiente'}</small>
                                             </div>
                                         </div>
                                     ))}

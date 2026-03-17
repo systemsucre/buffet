@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function ListaBoleta() {
     const navigate = useNavigate();
-    const [filtroEstado, setFiltroEstado] = useState('MIOS');
+    const [filtroEstado, setFiltroEstado] = useState('TODOS');
 
 
     const {
@@ -73,7 +73,7 @@ export function ListaBoleta() {
                     <div className="row align-items-center mb-3 g-3">
                         <div className="col-xl-8 ">
                             <div className="d-flex1  gap-2">
-                                   <button className={`btn btn-sm border fw-bold ${filtroEstado === 'MIOS' ? 'btn-dark' : 'text-success'}`}
+                                <button className={`btn btn-sm border fw-bold ${filtroEstado === 'MIOS' ? 'btn-dark' : 'text-success'}`}
                                     onClick={() => setFiltroEstado('MIOS')}>
                                     MIS BOLETAS <span>({mios})</span>
                                 </button>
@@ -89,7 +89,7 @@ export function ListaBoleta() {
                         <div className="col-xl-4 ">
                             <InputUsuarioSearch
                                 name="search-boleta"
-                                placeholder="Buscar por Nro. Boleta, codigo tramite "
+                                placeholder="Buscar por Nro/código Boleta o solicitante "
                                 onChange={handleSearchBoleta}
                             />
                         </div>

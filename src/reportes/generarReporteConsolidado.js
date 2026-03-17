@@ -8,7 +8,7 @@ export const generarReporteResumen = async (data, filtros, ) => {
 
 
     // 1. TÍTULO Y FECHAS DEL FILTRO
-    sheet.mergeCells('A1:J1');
+    sheet.mergeCells('A1:I1');
     const titleCell = sheet.getCell('A1');
     titleCell.value = 'REPORTE CONSOLIDADO DE TRÁMITES - KR ESTUDIOS';
     titleCell.font = { size: 16, bold: true, color: { argb: 'FFFFFF' } };
@@ -17,7 +17,7 @@ export const generarReporteResumen = async (data, filtros, ) => {
 
     sheet.addRow([
         `RANGO DE CONSULTA: ${filtros.desde || 'Inicio'} hasta ${filtros.hasta || 'Hoy'}`,
-        '', '', '', '', '', '', '',
+        '', '', '', '', '', '',
         `FECHA GEN: ${new Date().toLocaleDateString()}`
     ]);
     sheet.addRow([]); // Espacio
@@ -29,7 +29,7 @@ export const generarReporteResumen = async (data, filtros, ) => {
         'TIPO TRÁMITE',
         'DETALLE',
         'FECHA ING.',
-        'COSTO PACTADO',
+        // 'COSTO PACTADO',
         'INGRESOS (PERIODO)',
         'GASTOS (PERIODO)',
         'SALDO (PERIODO)',
@@ -64,7 +64,7 @@ export const generarReporteResumen = async (data, filtros, ) => {
             item.nombre_tipo_tramite,
             item.detalle,
             item.fecha_ingreso?.split('T')[0] || '-',
-            parseInt(localStorage.getItem('numRol')) === 4 ? 0.0 : costo,
+            // parseInt(localStorage.getItem('numRol')) === 4 ? 0.0 : costo,
             ingresos,
             gastos,
             saldo,
@@ -89,7 +89,7 @@ export const generarReporteResumen = async (data, filtros, ) => {
     sheet.addRow([]);
     const totalRow = sheet.addRow([
         '', '', '', 'TOTALES GENERALES', '',
-        totalCosto,
+        // totalCosto,
         totalIngresos,
         totalGastos,
         (totalIngresos - totalGastos),

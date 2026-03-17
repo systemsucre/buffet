@@ -24,9 +24,7 @@ export function ListaClientes() {
                 <div className="d-flex justify-content-between align-items-center p-2">
                     <div>
                         <h3 className="text-dark fw-bold mb-0">Gestión de Clientes</h3>
-                        <p className="text-muted mb-0 small text-uppercase" style={{ letterSpacing: '1px', fontSize: '0.7rem' }}>
-                            Directorio de clientes y registro de contacto KR Estudios
-                        </p>
+                     
                     </div>
 
                 </div>

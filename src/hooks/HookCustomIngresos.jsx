@@ -175,7 +175,6 @@ export const UseCustomIngresos = () => {
     const handleSearch = (e) => {
         const busqueda = e.target.value.toLowerCase();
         const filtrados = ingresos.filter(i =>
-            i.codigo_tramite?.toLowerCase().includes(busqueda) ||
             i.detalle?.toLowerCase().includes(busqueda)
         );
         setIngresosFiltrados(filtrados);

@@ -86,13 +86,14 @@ const NavbarGerente = () => {
               Reportes <span className="arrow">▼</span>
             </NavLink>
             <ul className="submenu-list">
-              <li><NavLink to={LOCAL_URL + "/gerente/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/gerente/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/gerente/reportes-honorarios"} className="submenu-link">Honorarios</NavLink></li>
+
             </ul>
           </div>
 
 
-          <li><NavLink to="/reportes" className="nav-link-item">Reportes</NavLink></li>
           <li className="nav-action">
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item btn-nav-profile" onClick={(e) => e.preventDefault()}>
@@ -159,8 +160,10 @@ const NavbarGerente = () => {
                 Reportes <span className="arrow">▼</span>
               </NavLink>
               <ul className="submenu-list">
-                <li><NavLink to={LOCAL_URL + "/gerente/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
-                <li><NavLink to={LOCAL_URL + "/gerente/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/gerente/reporte-honorarios"} className="submenu-link">honorarios</NavLink></li>
+
               </ul>
             </div>
             <div className="nav-item-container has-submenu mt-4" >

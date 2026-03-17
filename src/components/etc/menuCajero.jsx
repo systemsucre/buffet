@@ -63,6 +63,15 @@ const NavbarCajero = () => {
           </div>
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+              Honorarios <span className="arrow">▼</span>
+            </NavLink>
+            <ul className="submenu-list">
+              <li><NavLink to={LOCAL_URL + "/cajero/guardar-honorario"} className="submenu-link">Registrar Honorario</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/cajero/listar-honorarios"} className="submenu-link">Lista Honorarios</NavLink></li>
+            </ul>
+          </div>
+          <div className="nav-item-container has-submenu">
+            <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
               Clientes <span className="arrow">▼</span>
             </NavLink>
             <ul className="submenu-list">
@@ -79,14 +88,15 @@ const NavbarCajero = () => {
               <li><NavLink to={LOCAL_URL + "/cajero/lista-tramites"} className="submenu-link">Lista Tramites</NavLink></li>
             </ul>
           </div>
-
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
               Reportes <span className="arrow">▼</span>
             </NavLink>
             <ul className="submenu-list">
-              <li><NavLink to={LOCAL_URL + "/cajero/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/cajero/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/cajero/reporte-honorarios"} className="submenu-link">Honorarios</NavLink></li>
+
             </ul>
           </div>
           <div className="nav-item-container has-submenu">
@@ -126,7 +136,15 @@ const NavbarCajero = () => {
                 <li><NavLink to={LOCAL_URL + "/boletas"} className="submenu-link">Lista Boletas</NavLink></li>
               </ul>
             </div>
-
+            <div className="nav-item-container has-submenu">
+              <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+                Honorarios <span className="arrow">▼</span>
+              </NavLink>
+              <ul className="submenu-list">
+                <li><NavLink to={LOCAL_URL + "/cajero/guardar-honorario"} className="submenu-link">Registrar Honorario</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/cajero/listar-honorarios"} className="submenu-link">Listar Honorarios</NavLink></li>
+              </ul>
+            </div>
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
                 Clientes <span className="arrow">▼</span>
@@ -151,8 +169,10 @@ const NavbarCajero = () => {
                 Reportes <span className="arrow">▼</span>
               </NavLink>
               <ul className="submenu-list">
-                <li><NavLink to={LOCAL_URL + "/cajero/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
-                <li><NavLink to={LOCAL_URL + "/cajero/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/cajero/reporte-honorarios"} className="submenu-link">Honorarios</NavLink></li>
+
               </ul>
             </div>
 

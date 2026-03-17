@@ -4,8 +4,20 @@ export const ColumnsTable = [
         field: 'numero',
         render: (row) => (
             <div style={{ minWidth: '10px' }}>
+                <div className="fw-bold text-dark ">{row.numero_boleta}</div>
+
+            </div>
+        ),
+        sortable: true,
+    },
+
+    {
+        label: 'CODIGO. BOLETA',
+        field: 'codigo',
+        render: (row) => (
+            <div style={{ minWidth: '10px' }}>
                 <div className="fw-bold text-dark ">{row.codigo_boleta}</div>
-            
+
             </div>
         ),
         sortable: true,

@@ -1,19 +1,19 @@
 export const ColumnsTableSalidas = [
     {
-        label: 'SOLICITUD',
+        label: 'ÍTEM',
         field: 'numero',
         render: (row) => (
             <div style={{ minWidth: '10px' }}>
                 <div className="fw-bold text-dark text-center">{row.numero}</div>
-                <small className="text-muted" style={{ fontSize: '0.7rem' }}>
+                {/* <small className="text-muted" style={{ fontSize: '0.7rem' }}>
                     Registrado por: {row.usuario_nombre}
-                </small>
+                </small> */}
             </div>
         ),
         sortable: true,
     },
     {
-        label: 'Detalle del Gasto',
+        label: 'Detalle ítem',
         field: 'detalle',
         render: (row) => (
             <div style={{ minWidth: '200px' }}>
@@ -27,8 +27,8 @@ export const ColumnsTableSalidas = [
         )
     },
     {
-        label: 'Fecha Registro',
-        field: 'created_at',
+        label: 'Fecha Solicitud',
+        field: 'fecha_solicitud',
         render: (row) => {
             const fecha = new Date(row.fecha_solicitud?.split(" ")[0])
             return (

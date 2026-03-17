@@ -67,8 +67,8 @@ const NavbarAuxiliar = () => {
               Reportes <span className="arrow">▼</span>
             </NavLink>
             <ul className="submenu-list">
-              <li><NavLink to={LOCAL_URL + "/auxiliar/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/auxiliar/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
             </ul>
           </div>
 
@@ -118,8 +118,8 @@ const NavbarAuxiliar = () => {
                 Reportes <span className="arrow">▼</span>
               </NavLink>
               <ul className="submenu-list">
-                <li><NavLink to={LOCAL_URL + "/auxiliar/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
-                <li><NavLink to={LOCAL_URL + "/auxiliar/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
               </ul>
             </div>
 

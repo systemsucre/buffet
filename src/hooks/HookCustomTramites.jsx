@@ -14,12 +14,12 @@ export const useTramites = () => {
     // --- ESTADOS PARA FORMULARIO (Tabla tramites) ---
     const [idCliente, setIdCliente] = useState({ campo: '', valido: null });
     const [idTipoTramite, setIdTipoTramite] = useState({ campo: '', valido: null });
-    const [codigo, setCodigo] = useState({ campo: '', valido: null });
     const [fechaIngreso, setFechaIngreso] = useState({ campo: '', valido: null });
     const [fechaFinalizacion, setFechaFinalizacion] = useState({ campo: '', valido: null });
     const [plazo, setPlazo] = useState({ campo: 0, valido: 'true' });
     const [detalle, setDetalle] = useState({ campo: '', valido: null });
-    const [costo, setCosto] = useState({ campo: '', valido: null });
+    const [costo, setCosto] = useState({ campo: 0.00, valido: 'true' });
+    const [codigo, setCodigo] = useState({ campo: '', valido: null });
     const [otros, setOtros] = useState({ campo: '', valido: 'true' });
     const [estado, setEstado] = useState({ campo: 1, valido: 'true' }); // 1: En curso, 0: Paralizado
 
@@ -87,8 +87,8 @@ export const useTramites = () => {
         if (res) {
             // console.log(res,' codigo', id)
             setTramites(res)
-            setCodigo({ campo: res.codigo, valido: 'true' });
             setIdCliente({ campo: res.id_cliente, valido: 'true' });
+            setCodigo({ campo: res.codigo, valido: 'true' });
             setIdTipoTramite({ campo: res.id_tipo_tramite, valido: 'true' });
             setFechaIngreso({ campo: res.fecha_ingreso.split('T')[0], valido: 'true' });
             setFechaFinalizacion({ campo: res.fecha_finalizacion.split('T')[0], valido: 'true' });
@@ -103,26 +103,8 @@ export const useTramites = () => {
     const guardarTramite = async (e, idParaEditar = null) => {
         if (e) e.preventDefault();
 
-
-
-
-        // 2. Buscar el objeto del trámite seleccionado en la lista que vino de la BD
-        const encontrado = listaTipos.find(t => t.value === parseInt(idTipoTramite.campo));
-
-        // 3. Limpiar el nombre (quitar espacios al inicio/final)
-        const nombre = encontrado.label.trim().toUpperCase();
-
-        // 4. Extraer las 3 primeras letras
-        // Si el nombre tiene menos de 3, tomará lo que haya
-        const iniciales = nombre.substring(0, 3);
-
-        // 5. Formatear el prefijo (Ej: "JUD-", "ADM-", "PRO-")
-        const prefijo = `${iniciales}-`;
-
-
         const data = {
             id_cliente: idCliente.campo,
-            codigo: prefijo + codigo.campo.split('-')[1],
             fecha_ingreso: fechaIngreso.campo,
             fecha_finalizacion: fechaFinalizacion.campo,
             plazo: plazo.campo,
@@ -260,7 +242,7 @@ export const useTramites = () => {
         const filtrados = tramites.filter((t) => (
             t.codigo.toLowerCase().includes(busqueda) ||
             t.cliente_nombre.toLowerCase().includes(busqueda) ||
-            t.nombre_tipo_tramite.toLowerCase().includes(busqueda)
+            t.numero.toLowerCase().includes(busqueda)
         ));
         setTramitesFiltrados(filtrados);
     };
@@ -282,11 +264,11 @@ export const useTramites = () => {
         handleSearch,
         cargando,
         estados: {
-            idCliente, idTipoTramite, codigo, fechaIngreso,
+            idCliente, idTipoTramite,  fechaIngreso, codigo,
             fechaFinalizacion, plazo, detalle, costo, otros, estado
         },
         setters: {
-            setIdCliente, setIdTipoTramite, setCodigo, setFechaIngreso,
+            setIdCliente, setIdTipoTramite, setFechaIngreso,
             setFechaFinalizacion, setPlazo, setDetalle, setCosto, setOtros, setEstado
         },
         guardarTramite,

@@ -1,16 +1,35 @@
 export const ColumnsTableDetalle = [
+    // {
+    //     label: 'ITEM',
+    //     field: 'numero',
+    //     render: (row) => (
+    //         <div style={{ minWidth: '10px' }}>
+    //             <div className="fw-bold text-dark ">{row.numero}</div>
+
+    //         </div>
+    //     ),
+    //     sortable: true,
+    // },
+
+
+
     {
-        label: '#',
-        field: 'numero',
-        render: (row) => (
-            <div style={{ minWidth: '10px' }}>
-                <div className="fw-bold text-dark ">{row.numero}</div>
-
-            </div>
-        ),
-        sortable: true,
+        label: 'Código Tramite',
+        field: 'codigo',
+        render: (row) =>
+            <div> <span className="fw-bold text-primary">{row.codigo_tramite}</span></div>
     },
-
+    {
+        label: 'CLIENTE',
+        field: 'cliente',
+        render: (row) => {
+            return (
+                <div className={`fw-bold  text-dark`} style={{ fontSize: '0.7rem' }}>
+                    {row.cliente}
+                </div>
+            );
+        }
+    },
     {
         label: 'Detalle del Gasto',
         field: 'detalle',
@@ -23,24 +42,6 @@ export const ColumnsTableDetalle = [
                             {row.detalle?.substring(0, 40)}...
                         </small>
                     }
-                </div>
-            );
-        }
-    },
-    {
-        label: 'Código Tramite',
-        field: 'codigo',
-        render: (row) =>
-            <div> <span className="fw-bold text-primary">{row.codigo_tramite}</span></div>
-    },
-    {
-        label: 'Saldo Tramite',
-        field: 'costo',
-        render: (row) => {
-            const costo = row.costo || 0;
-            return (
-                <div className={`fw-bold ${row.saldoDisponibleTramite > 2000 ? `text-dark` : row.saldoDisponibleTramite > 1000 ? `text-warning` : `text-danger`}`} style={{ fontSize: '0.7rem' }}>
-                    SALDO DISP.  BS. {row.saldoDisponibleTramite}
                 </div>
             );
         }
@@ -68,7 +69,7 @@ export const ColumnsTableDetalle = [
                 1: { badge: 'bgss-secondary text-dark', texto: 'SOLICITADO', icon: 'bi-hourglass-split' },
                 2: { badge: 'bg-info text-white', texto: 'APROBADO', icon: 'bi-check-circle' },
                 3: { badge: 'bg-success text-white', texto: 'DESPACHADO', icon: 'bi-cash-stack' },
-                4: { badge: 'bg-danger text-white', texto: 'RECHAZADO', icon:  'bi-x-circle' }
+                4: { badge: 'bg-danger text-white', texto: 'RECHAZADO', icon: 'bi-x-circle' }
             };
 
             const est = estados[row.estado] || { badge: 'bg-secondary', texto: 'DESCONOCIDO', icon: 'bi-question' };

@@ -7,7 +7,7 @@
 
 import ExcelJS from 'exceljs';
 
-export const generarReporteFinanciero = async (tipoReporte, data, tramiteInfo, filtros, ) => {
+export const generarReporteFinanciero = async (tipoReporte, data, tramiteInfo, filtros,) => {
     const workbook = new ExcelJS.Workbook();
     workbook.creator = 'System Sucre - 71166513';
 
@@ -28,6 +28,8 @@ export const generarReporteFinanciero = async (tipoReporte, data, tramiteInfo, f
     titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
     titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '1B4F72' } };
 
+
+
     sheet.addRow([]);
 
     // 2. BLOQUE DE INFORMACIÓN (Ajustado para evitar saltos dobles)
@@ -37,18 +39,22 @@ export const generarReporteFinanciero = async (tipoReporte, data, tramiteInfo, f
     infoHeader.value = `INFORMACIÓN DEL TRÁMITE`;
     infoHeader.font = { name: 'Arial', size: 10, bold: true, color: { argb: '1B4F72' } };
 
+
+
     // Usamos addRow de forma secuencial sin saltos manuales innecesarios
     sheet.addRow(['CÓDIGO:', tramiteInfo.codigo, '', 'FECHA REPORTE:', new Date().toLocaleDateString()]);
-    sheet.addRow(['CLIENTE:', tramiteInfo.cliente_nombre, '', 'TIPO:', tramiteInfo.nombre_tipo_tramite]);
-    sheet.addRow(['COSTO TOTAL:', parseInt(localStorage.getItem('numRol')) === 4 ? '0.0' : 'BS. ' + parseFloat(tramiteInfo.costo).toFixed(2), '', 'SALDO DISP.:', 'BS. ' + parseFloat(tramiteInfo.saldoDisponible).toFixed(2)]);
+    sheet.addRow(['NUMERO:', tramiteInfo.numero, '', 'TIPO:', tramiteInfo.nombre_tipo_tramite]);
+    sheet.addRow(['CLIENTE:', tramiteInfo.cliente_nombre, '', 'SALDO DISP.:', 'BS. ' + parseFloat(tramiteInfo.saldoDisponible).toFixed(2)]);
     sheet.addRow(['DETALLE:', tramiteInfo.detalle]);
     sheet.addRow(['FECHA INGRESO:', tramiteInfo.fecha_ingreso?.split('T')[0], '', 'FECHA FINALIZACION:', tramiteInfo.fecha_finalizacion?.split('T')[0] || '-',]);
 
+    const num = sheet.getCell('B4');
+    num.alignment = { horizontal: 'left' };
     // Estilo para etiquetas (Las filas ahora son 3, 4, 5 y 6 por el título en fila 2)
     ['A3', 'A4', 'A5', 'A6', 'A7', 'D3', 'D4', 'D5', 'D7'].forEach(cell => {
         sheet.getCell(cell).font = { bold: true };
     });
-    sheet.mergeCells('B4:C4');
+    sheet.mergeCells('B5:C5');
     sheet.mergeCells('B6:E6');
 
     // UN SOLO ESPACIO ANTES DE LA TABLA
@@ -56,8 +62,8 @@ export const generarReporteFinanciero = async (tipoReporte, data, tramiteInfo, f
 
     // 3. ENCABEZADOS DE LA TABLA
     const headerRow = sheet.addRow([
+        'N° ITEM',
         'FECHA',
-        'N° COMPROBANTE',
         'DESCRIPCIÓN / DETALLE',
         'MONTO (Bs.)',
         'RESPONSABLE'
@@ -86,8 +92,8 @@ export const generarReporteFinanciero = async (tipoReporte, data, tramiteInfo, f
     data.forEach(item => {
         const montoActual = parseFloat(item.monto) || 0;
         const row = sheet.addRow([
-            item.fecha_solicitud?.split('T')[0] || item.fecha_ingreso?.split('T')[0] || item.fecha?.split('T')[0] || '-',
             item.numero || item.id || '-',
+            item.fecha_solicitud?.split('T')[0] || item.fecha_ingreso?.split('T')[0] || item.fecha?.split('T')[0] || '-',
             tipoReporte === 'GENERAL' ? `[${item.tipo_mov}] ${item.detalle}` : item.detalle,
             montoActual,
             item.usuario_nombre || 'S/N'

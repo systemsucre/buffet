@@ -1,28 +1,38 @@
-export const ColumnsTableIngresos = [
+export const ColumnsTableHonorarios = [
     {
         label: 'ITEM',
         field: 'id',
         render: (row) => (
             <div className="text-center">
                 <div className="fw-bold text-dark small" style={{ fontSize: '0.7rem' }}>
-                    { row.numero }
+                    {row.numero}
                 </div>
-                {/* <small className="badge bg-light text-secondary border">INGRESO</small> */}
+
             </div>
         ),
         sortable: true,
     },
     {
-        label: 'Concepto de Ingreso',
-        field: 'detalle',
+        label: 'CLIENTE',
+        field: 'cliente',
+        render: (row) => (
+            <div className="text-center">
+                <div className="fw-bold text-dark">{row.cliente}</div>
+            </div>
+        ),
+        sortable: true,
+    },
+    {
+        label: 'Servicio / Concepto',
+        field: 'descripcion',
         render: (row) => (
             <div style={{ minWidth: '220px' }}>
-                {row.detalle?.length < 20 ?
-                    <div className="fw-bold text-dark">{row.detalle}</div> :
-                    <small className="text-muted" style={{ fontSize: '0.7rem' }}>
-                        {row.detalle?.substring(0, 40)}...
-                    </small>
-                }
+                <div className="fw-bold text-dark small" style={{ fontSize: '0.7rem' }}>
+                    {row.descripcion?.substring(0, 35)}
+                </div>
+                <small className="text-muted" style={{ fontSize: '0.9rem' }}>
+                    TRAMITE: {row.codigo_tramite}
+                </small>
             </div>
         )
     },
@@ -30,12 +40,11 @@ export const ColumnsTableIngresos = [
         label: 'Fecha de Cobro',
         field: 'fecha_ingreso',
         render: (row) => {
-            // Manejamos la fecha de ingreso definida en el formulario
             const fecha = new Date(row.fecha_ingreso);
             return (
                 <div className="small text-secondary">
                     <span className="fw-bold text-dark">
-                        <i className="bi bi-calendar-check me-1 text-success"></i>
+                        <i className="bi bi-cash-stack me-1 text-primary"></i>
                         {fecha.toLocaleDateString('es-BO')}
                     </span>
                     <br />
@@ -47,11 +56,11 @@ export const ColumnsTableIngresos = [
         }
     },
     {
-        label: 'Monto Recibido',
+        label: 'Monto Honorario',
         field: 'monto',
         render: (row) => (
             <div className="text-end pe-3">
-                <span className="fw-bold text-success" style={{ fontSize: '1.1rem' }}>
+                <span className="fw-bold text-primary" style={{ fontSize: '1.1rem' }}>
                     Bs. {Number(row.monto || 0).toLocaleString('es-BO', {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
@@ -60,26 +69,25 @@ export const ColumnsTableIngresos = [
             </div>
         )
     },
-
     {
-        label: 'TIPO PAGO',
-        field: 'TIPO',
+        label: 'Metodo de Pago',
+        field: 'tipo_pago',
         render: (row) => (
-            <div className="text-end pe-3">
-                <div className="fw-bold text-dark">
-                    {row.tipo}
-                </div>
+            <div className="">
+                <span className="badge rounded-pill bg-light text-dark border px-3">
+                    {row.tipo_pago}
+                </span>
             </div>
         )
     },
     {
-        label: 'RECIBIDO POR',
+        label: 'Cobrado Por',
         field: 'username',
         render: (row) => (
             <div style={{ minWidth: '200px' }}>
                 <div className="fw-bold text-dark">{row.usuario_nombre}</div>
                 <small className="text-muted" style={{ fontSize: '0.7rem' }}>
-                    Usuario : {row.username + ` ID: ${row.id_usuario}`}
+                    {row.username}
                 </small>
             </div>
         )

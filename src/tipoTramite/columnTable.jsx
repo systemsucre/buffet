@@ -7,6 +7,13 @@ export const columns = [
         width: '80px'
     },
     {
+        label: 'CODIGO',
+        field: 'codigo',
+        render: row => row.codigo,
+        sortable: true,
+        width: '80px'
+    },
+    {
         label: 'Descripción del Trámite',
         field: 'tipo_tramite',
         render: row => <span className="fw-bold text-dark">{row.tipo_tramite}</span>,

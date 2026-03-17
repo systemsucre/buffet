@@ -1,5 +1,11 @@
 export const ColumnsTableTramites = [
     {
+        label: 'Numero',
+        field: 'numero,',
+        render: (row) =>
+            <div> <span className="fw-bold text-primary">{row.numero}</span></div>
+    },
+    {
         label: 'Código',
         field: 'codigo',
         render: (row) =>
@@ -85,16 +91,14 @@ export const ColumnsTableTramites = [
                     <div className="fw-bold text-dark">
                         GASTOS : Bs. {row.total_gastos}
                     </div>
-                    {localStorage.getItem('numRol') != 4 ?
-                        <>
-                            <div className=" fw-bold text-muted text-success italic" style={{ fontSize: '0.7rem' }}>
-                                COSTO TRAMITE  Bs. {costo}
-                            </div>
-                            <div className=" fw-bold text-muted text-success italic" style={{ fontSize: '0.7rem' }}>
-                                MONTO ABONADO  Bs. {row.total_ingresos}
-                            </div>
-                        </>
-                        : null}
+                    {/* {localStorage.getItem('numRol') != 4 ?
+                        <div className=" fw-bold text-muted text-success italic" style={{ fontSize: '0.7rem' }}>
+                            COSTO TRAMITE  Bs. {costo}
+                        </div>
+                        : null} */}
+                    <div className=" fw-bold text-muted text-success italic" style={{ fontSize: '0.7rem' }}>
+                        MONTO ABONADO  Bs. {row.total_ingresos}
+                    </div>
                     <div className={`fw-bold ${row.saldoDisponible > 2000 ? `text-dark` : row.saldoDisponible > 1000 ? `text-warning` : `text-danger`}`} style={{ fontSize: '0.7rem' }}>
                         SALDO DISP.  BS. {row.saldoDisponible}
                     </div>
