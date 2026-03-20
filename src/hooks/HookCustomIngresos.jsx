@@ -4,6 +4,7 @@ import { saveDB, start } from '../service/service';
 import { datosAuditoriaExtra } from "./datosAuditoriaExtra";
 import { useNavigate } from "react-router-dom";
 import ticketIngresoIndividual from "../pdfMake/ingresos";
+import toast from "react-hot-toast";
 
 export const UseCustomIngresos = () => {
     const navigate = useNavigate();
@@ -133,49 +134,67 @@ export const UseCustomIngresos = () => {
         }
     };
 
-        // EXPORTAR PDF
+    // EXPORTAR PDF
     const exportPDfIngresos = async (output, row) => {
         // Generamos el PDF con el objeto 'row'}
-        console.log("Iniciando exportación...", { output, row });
-
-        const response = await ticketIngresoIndividual(output, { ingreso: row });
-        console.log(response, ' reponse')
-        if (!response?.success) {
-            alert(response?.message);
-            return;
-        }
-
-        if (output === "b64") {
-            const byteCharacters = atob(response.content);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-                byteNumbers[i] = byteCharacters.charCodeAt(i);
+        // console.log("Iniciando exportación...", { output, row });
+        const generarDocumento = async () => {
+            const response = await ticketIngresoIndividual(output, { ingreso: row });
+            console.log(response, ' reponse')
+            if (!response?.success) {
+                alert(response?.message);
+                return;
             }
-            const byteArray = new Uint8Array(byteNumbers);
-            const blob = new Blob([byteArray], { type: "application/pdf" });
 
-            const nombreArchivo = `ingreso_${row.numero + ' Tramite ' + row.codigo_tramite || 'sin-numero'}.pdf`;
+            if (output === "b64") {
+                const byteCharacters = atob(response.content);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: "application/pdf" });
 
-            // MÉTODO DE DESCARGA NATIVO (A prueba de fallos)
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = nombreArchivo;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
+                const nombreArchivo = `ingreso_${row.numero + ' Tramite ' + row.codigo_tramite || 'sin-numero'}.pdf`;
 
-            console.log("3. Descarga iniciada");
+                // MÉTODO DE DESCARGA NATIVO (A prueba de fallos)
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = nombreArchivo;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+
+                console.log("3. Descarga iniciada");
+            }
         }
-
+        // Ejecutamos la promesa con los mensajes automáticos
+        toast.promise(generarDocumento(), {
+            loading: 'Generando PDF profesional...',
+            success: (msg) => <b>{msg|| 'Documento Generado'}</b>,
+            error: (err) => <b>{err.message}</b>,
+        }, {
+            style: {
+                minWidth: '250px',
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+            },
+            success: {
+                duration: 4000,
+                icon: '📄',
+            },
+        });
     };
 
     // 5. BUSCADORES
     const handleSearch = (e) => {
         const busqueda = e.target.value.toLowerCase();
         const filtrados = ingresos.filter(i =>
-            i.detalle?.toLowerCase().includes(busqueda)
+            i.detalle?.toLowerCase().includes(busqueda) ||
+            String(i.numero).toLowerCase().includes(busqueda)
         );
         setIngresosFiltrados(filtrados);
     };
@@ -183,7 +202,7 @@ export const UseCustomIngresos = () => {
 
     return {
         ingresos, ingresosFiltrados, cargando,
-        estados: {  idTramite, monto, tipo, detalle, fechaIngreso },
+        estados: { idTramite, monto, tipo, detalle, fechaIngreso },
         setters: { setIdTramite, setMonto, setTipo, setDetalle, setFechaIngreso },
         listarIngresos,
         cargarIngresoPorId,

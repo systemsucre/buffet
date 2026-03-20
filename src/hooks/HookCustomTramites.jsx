@@ -162,7 +162,6 @@ export const useTramites = () => {
     };
 
     // EXPORTAR PDF
-
     const exportPDfTramites = async (output, row) => {
         // Definimos la lógica dentro de una función interna para pasarla al toast
         const generarProceso = async () => {
@@ -240,9 +239,10 @@ export const useTramites = () => {
         }
 
         const filtrados = tramites.filter((t) => (
-            t.codigo.toLowerCase().includes(busqueda) ||
-            t.cliente_nombre.toLowerCase().includes(busqueda) ||
-            t.numero.toLowerCase().includes(busqueda)
+            (t.codigo && t.codigo.toLowerCase().includes(busqueda)) ||
+            (t.cliente_nombre && t.cliente_nombre.toLowerCase().includes(busqueda)) ||
+            // Convertimos a String y usamos optional chaining
+            (t.numero && String(t.numero).includes(busqueda))
         ));
         setTramitesFiltrados(filtrados);
     };
@@ -264,7 +264,7 @@ export const useTramites = () => {
         handleSearch,
         cargando,
         estados: {
-            idCliente, idTipoTramite,  fechaIngreso, codigo,
+            idCliente, idTipoTramite, fechaIngreso, codigo,
             fechaFinalizacion, plazo, detalle, costo, otros, estado
         },
         setters: {

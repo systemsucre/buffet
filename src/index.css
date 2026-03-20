@@ -1341,7 +1341,7 @@ button:not(:disabled),
 .login-card {
   background: #ffffff;
   padding: 40px;
-  border-radius: 28px;
+  border-radius: 5px;
   box-shadow: 0 25px 50px -12px rgba(0, 86, 179, 0.15);
   border: 1px solid rgba(0, 123, 255, 0.1);
   width: 100%;

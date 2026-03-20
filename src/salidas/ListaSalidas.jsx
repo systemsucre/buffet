@@ -59,7 +59,7 @@ export function ListaSalidas() {
             <main className="container-xl mt-2" style={{ maxWidth: "100%", padding: '3px' }}>
                 <div className="d-flex justify-content-between align-items-center mb-4 m-2">
                     <div>
-                        <h3 className="text-dark fw-bold mb-0 text-titulos">Panel de Aprobación de Gastos</h3>
+                        <h3 className="text-dark fw-bold mb-0 text-titulos">Panel de Gatos</h3>
                     </div>
                 </div>
 
@@ -92,7 +92,7 @@ export function ListaSalidas() {
                             <div style={{ width: '100%', maxWidth: '300px', paddingRight: '10px' }}>
                                 <InputUsuarioSearch
                                     name="input-search-salida"
-                                    placeholder="Buscar en esta lista..."
+                                    placeholder="codigo boleta, detalle"
                                     onChange={handleSearch}
                                 />
                             </div>

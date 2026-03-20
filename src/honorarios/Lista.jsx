@@ -38,7 +38,7 @@ export function ListaHonorariosTramite() {
     const totalHonorarios = honorariosFiltrados.reduce((acc, curr) => acc + Number(curr.monto || 0), 0);
 
     // Definición de acciones según Rol (3 = Cajero/Admin con permisos)
-    const funciones = parseInt(localStorage.getItem('numRol')) === 3 ? [
+    const funciones = parseInt(localStorage.getItem('numRol')) <= 3 ? [
         {
             boton: (id_honorario) => {
                 const rol = parseInt(localStorage.getItem('numRol'))
@@ -75,11 +75,6 @@ export function ListaHonorariosTramite() {
                     </div>
                 </div>
 
-                <div className="d-flex justify-content-end gap-2" style={{ marginBottom: '10px' }}>
-                    <button className="btn btn-dark" style={{ marginLeft: '4px' }} onClick={() => navigate(-1)}>
-                        <FontAwesomeIcon icon={faArrowLeft} className="me-2" /> VOLVER
-                    </button>
-                </div>
 
 
                 <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">

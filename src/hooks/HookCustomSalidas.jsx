@@ -93,8 +93,8 @@ export const UseCustomSalidas = () => {
     const handleSearch = (e) => {
         const busqueda = e.target.value.toLowerCase();
         const filtrados = salidas.filter(s =>
-            s.codigo_tramite?.toLowerCase().includes(busqueda) ||
-            s.detalle?.toLowerCase().includes(busqueda)
+            s.codigo_boleta?.toLowerCase().includes(busqueda) ||
+            s.detalle?.toLowerCase().includes(busqueda) 
         );
         setSalidasFiltradas(filtrados);
     };

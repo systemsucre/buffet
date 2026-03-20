@@ -54,14 +54,14 @@ const FormularioIngreso = () => {
             <section className="container">
                 <div className="row justify-content-center">
                     <div className="col-12 col-md-10 col-lg-8 col-xl-7 animate-fade-in">
-                        <div className="login-card shadow p-4 p-md-5 bg-white" style={{  borderRadius: '20px', borderTop: `10px solid ${isEdit ? '#0dcaf0' : '#0d6efd'}` }} >
+                        <div className="login-card shadow p-4 p-md-5 bg-white" style={{  borderTop: `10px solid ${isEdit ? '#0dcaf0' : '#0d6efd'}` }} >
 
                             {/* Encabezado dinámico */}
                             <div className="text-center mb-4">
                                 <div className="mb-3">
                                     <span style={{ fontSize: '3.5rem' }}>{isEdit ? '📝' : '📥'}</span>
                                 </div>
-                                <h2 className="h3 fw-bold text-success text-uppercase">
+                                <h2 className="h3 fw-bold text-success text-uppercase" style={{marginTop:'0'}}>
                                     {isEdit ? 'Editar Registro de Ingreso' : 'Nuevo Ingreso / Abono'}
                                 </h2>
                                 <p className="text-muted small">Registro de dinero percibido para trámites</p>

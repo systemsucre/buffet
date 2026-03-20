@@ -27,7 +27,7 @@ const NavbarCajero = () => {
   return (
     <nav className={` nav-main ${isScrolled ? 'nav-scrolled' : ''}`}>
       <div className="nav-container">
-        <NavLink to={LOCAL_URL + "/"} className="nav-brand d-flex align-items-center">
+        <NavLink to={LOCAL_URL + "/mivimientos"} className="nav-brand d-flex align-items-center">
           {/* Logo Principal */}
           {/* <span style={{ fontSize: '24px', marginRight: '8px' }}>👔</span> */}
 
@@ -67,7 +67,7 @@ const NavbarCajero = () => {
             </NavLink>
             <ul className="submenu-list">
               <li><NavLink to={LOCAL_URL + "/cajero/guardar-honorario"} className="submenu-link">Registrar Honorario</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/cajero/listar-honorarios"} className="submenu-link">Lista Honorarios</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/cajero/listar-honorarios"} className="submenu-link">Listar Honorarios</NavLink></li>
             </ul>
           </div>
           <div className="nav-item-container has-submenu">
@@ -76,7 +76,7 @@ const NavbarCajero = () => {
             </NavLink>
             <ul className="submenu-list">
               <li><NavLink to={LOCAL_URL + "/cajero/nuevo-cliente"} className="submenu-link">Nuevo Cliente</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/cajero/lista-clientes"} className="submenu-link">Lista Clientes</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/cajero/lista-clientes"} className="submenu-link">Listar Clientes</NavLink></li>
             </ul>
           </div>
           <div className="nav-item-container has-submenu">

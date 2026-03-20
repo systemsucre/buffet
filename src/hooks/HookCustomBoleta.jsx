@@ -176,9 +176,9 @@ export const UseCustomBoletas = () => {
     const handleSearchBoleta = (e) => {
         const busqueda = e.target.value.toLowerCase();
         const filtrados = boletas.filter(b =>
-            b.numero_boleta?.toString().includes(busqueda) ||
-            b.codigo_boleta?.toString().includes(busqueda) ||
-            b.solicitado_por?.toString().includes(busqueda)
+            b.numero_boleta?.includes(busqueda) ||
+            b.codigo_boleta?.toString().toLowerCase().includes(busqueda) ||
+            b.solicitado_por?.toString().toLowerCase().includes(busqueda)
         );
         setBoletasFiltradas(filtrados);
     };

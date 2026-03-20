@@ -63,7 +63,7 @@ export const DetallesBoleta = () => {
         !cargando ?
             <main className="py-5" style={{ minHeight: '100vh', background: '#f0f2f5' }}>
                 <div className="container">
-                    <div className="login-card shadow-lg border-0 mt-3">
+                    <div className="login-card shadow-lg border-0 mt-3" >
 
                         {/* CUERPO - TABLA DE ITEMS */}
                         <div className="card-body  px-4">
@@ -125,11 +125,11 @@ export const DetallesBoleta = () => {
                                         <button className="btn btn-blue-facebook btn-lg px-4 shadow-sm" onClick={() => despacharBoleta(codigo)}>
                                             <FontAwesomeIcon icon={faCheck} className="me-2" /> Despachar
                                         </button> :
-                                        parseInt(localStorage.getItem('numRol')) === 3 && infoCabecera?.estado === 1 ?
+                                        parseInt(localStorage.getItem('numRol')) === 3 && infoCabecera?.estado === 1 && parseInt(localStorage.getItem('id')) !== infoCabecera?.usuario ?
                                             <button className="btn btn-blue-facebook btn-lg px-4 shadow-sm" onClick={() => aprovarDespacharBoleta(codigo)}>
                                                 <FontAwesomeIcon icon={faCheck} className="me-2" /> Aprobar y Despachar
                                             </button> :
-                                            parseInt(localStorage.getItem('numRol')) === 2 && infoCabecera?.estado === 1 ?
+                                            parseInt(localStorage.getItem('numRol')) === 2 && infoCabecera?.estado === 1  && parseInt(localStorage.getItem('id')) !== infoCabecera?.usuario?
                                                 <button className="btn btn-blue-facebook btn-lg px-4 shadow-sm" onClick={() => aprobarBoleta(codigo)}>
                                                     <FontAwesomeIcon icon={faCheck} className="me-2" /> Aprobar
                                                 </button> : null}

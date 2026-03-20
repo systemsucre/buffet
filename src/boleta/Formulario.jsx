@@ -88,7 +88,7 @@ export const FormularioBoleta = () => {
     return (
         <main className="py-5" style={{ minHeight: '100vh', background: '#f8f9fa', marginTop:'30px' }}>
             <div className="container">
-                <div className="shadow-sm p-4 p-md-5 bg-white" style={{ borderRadius: '20px', border: '1px solid #eee' }}>
+                <div className="shadow-sm p-4 p-md-5 bg-white" style={{  border: '1px solid #eee' }}>
 
                     <div className="text-center mb-4">
                         <span style={{ fontSize: '3rem' }}>{codigo ? '📝' : '📑'}</span>

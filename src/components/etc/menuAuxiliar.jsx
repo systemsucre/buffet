@@ -26,7 +26,7 @@ const NavbarAuxiliar = () => {
   return (
     <nav className={` nav-main ${isScrolled ? 'nav-scrolled' : ''}`}>
       <div className="nav-container">
-        <NavLink to={LOCAL_URL + "/"} className="nav-brand d-flex align-items-center">
+        <NavLink to={LOCAL_URL + "/mivimientos"} className="nav-brand d-flex align-items-center">
           {/* Logo Principal */}
           {/* <span style={{ fontSize: '24px', marginRight: '8px' }}>👔</span> */}
 

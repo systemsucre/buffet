@@ -109,7 +109,7 @@ export const useUsuarios = (usuarioEdit = null) => {
 
     // 4. BUSQUEDA FILTRADA
     const handleSearch = (e) => {
-        const busqueda = e.target.value.toLowerCase();
+        const busqueda = e.target.value.toLowerCase(); 
         if (!busqueda) {
             setUsuariosFiltrados(usuarios);
             return;

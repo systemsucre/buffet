@@ -207,20 +207,6 @@ export default function AppRouter() {
       children: [
 
 
-        // {
-        //   path: 'lista-clientes',
-        //   element: <Check component={ListaClientes} roleRequired="auxiliar" />,
-        // },
-        // {
-        //   path: 'nuevo-cliente',
-        //   element: <Check component={NuevoCliente} roleRequired="auxiliar" />,
-        // },
-
-        // {
-        //   path: 'editar-cliente/:id',
-        //   element: <Check component={NuevoCliente} roleRequired="auxiliar" />,
-        // },
-
       ],
     },
 
@@ -264,6 +250,19 @@ export default function AppRouter() {
         {
           path: 'editar-cliente/:id',
           element: <Check component={NuevoCliente} roleRequired="gerente" />,
+        },
+
+        {
+          path: 'listar-honorarios',
+          element: <Check component={ListaHonorariosTramite} roleRequired="gerente" />,
+        },
+        {
+          path: 'guardar-honorario',
+          element: <Check component={FormularioHonorario} roleRequired="gerente" />,
+        },
+        {
+          path: 'editar-honorario/:id',
+          element: <Check component={FormularioHonorario} roleRequired="gerente" />,
         },
 
         {

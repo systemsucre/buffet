@@ -26,7 +26,7 @@ const NavbarAdmin = () => {
   return (
     <nav className={` nav-main ${isScrolled ? 'nav-scrolled' : ''}`}>
       <div className="nav-container">
-        <NavLink to={LOCAL_URL + "/"} className="nav-brand d-flex align-items-center">
+        <NavLink to={LOCAL_URL + "/admin/lista-tramites"} className="nav-brand d-flex align-items-center">
           {/* Logo Principal */}
           {/* <span style={{ fontSize: '24px', marginRight: '8px' }}>👔</span> */}
 
@@ -48,7 +48,7 @@ const NavbarAdmin = () => {
         </NavLink>
         {/* Desktop Menu */}
         <ul className="nav-menu-desktop">
-          <li><NavLink to="/" end className="nav-link-item">Dashboard</NavLink></li>
+          <li><NavLink to={LOCAL_URL+"/movimientos"} end className="nav-link-item">Movimientos</NavLink></li>
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
               Clientes <span className="arrow">▼</span>
@@ -77,7 +77,7 @@ const NavbarAdmin = () => {
             <ul className="submenu-list">
               <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
               <li><NavLink to={LOCAL_URL + "/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/admin/reportes-honorarios"} className="submenu-link">Honorarios</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/admin/reporte-honorarios"} className="submenu-link">Honorarios</NavLink></li>
             </ul>
           </div>
 
@@ -124,7 +124,7 @@ const NavbarAdmin = () => {
 
           {/* Mobile Overlay Menu */}
           <div className={`nav-menu-mobile ${isMobileMenuOpen ? 'open' : ''}`}>
-            <NavLink to="#" end className="mobile-link">Dashboard</NavLink>
+            <NavLink to={LOCAL_URL+"/movimientos"} end className="mobile-link">Movimientos</NavLink>
 
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>

@@ -27,7 +27,7 @@ const NavbarGerente = () => {
     <nav className={` nav-main ${isScrolled ? 'nav-scrolled' : ''}`}>
       <div className="nav-container">
 
-        <NavLink to={LOCAL_URL + "/"} className="nav-brand d-flex align-items-center">
+        <NavLink to={LOCAL_URL + "/mivimientos"} className="nav-brand d-flex align-items-center">
           {/* Logo Principal */}
           {/* <span style={{ fontSize: '24px', marginRight: '8px' }}>👔</span> */}
 
@@ -60,7 +60,15 @@ const NavbarGerente = () => {
               <li><NavLink to={LOCAL_URL + "/boletas"} className="submenu-link">Listar Boletas</NavLink></li>
             </ul>
           </div>
-
+          <div className="nav-item-container has-submenu">
+            <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+              Honorarios <span className="arrow">▼</span>
+            </NavLink>
+            <ul className="submenu-list">
+              <li><NavLink to={LOCAL_URL + "/gerente/guardar-honorario"} className="submenu-link">Registrar Honorario</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/gerente/listar-honorarios"} className="submenu-link">Listar Honorarios</NavLink></li>
+            </ul>
+          </div>
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
               Clientes <span className="arrow">▼</span>
@@ -68,7 +76,7 @@ const NavbarGerente = () => {
 
             <ul className="submenu-list">
               <li><NavLink to={LOCAL_URL + "/gerente/nuevo-cliente"} className="submenu-link">Nuevo Cliente</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/gerente/lista-clientes"} className="submenu-link">Lista Cliente</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/gerente/lista-clientes"} className="submenu-link">Listar Cliente</NavLink></li>
             </ul>
           </div>
           <div className="nav-item-container has-submenu">
@@ -77,7 +85,7 @@ const NavbarGerente = () => {
             </NavLink>
             <ul className="submenu-list">
               <li><NavLink to={LOCAL_URL + "/gerente/nuevo-tramite"} className="submenu-link">Nuevo Trámite</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/gerente/lista-tramites"} className="submenu-link">Lista Tramites</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/gerente/lista-tramites"} className="submenu-link">Listar Tramites</NavLink></li>
             </ul>
           </div>
 
@@ -133,6 +141,16 @@ const NavbarGerente = () => {
               <ul className="submenu-list">
                 <li><NavLink to={LOCAL_URL + "/nueva-boleta"} className="submenu-link">Nueva Boleta</NavLink></li>
                 <li><NavLink to={LOCAL_URL + "/boletas"} className="submenu-link">Lista Boletas</NavLink></li>
+              </ul>
+            </div>
+
+            <div className="nav-item-container has-submenu">
+              <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+                Honorarios <span className="arrow">▼</span>
+              </NavLink>
+              <ul className="submenu-list">
+                <li><NavLink to={LOCAL_URL + "/gerente/guardar-honorario"} className="submenu-link">Registrar Honorario</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/gerente/listar-honorarios"} className="submenu-link">Listar Honorarios</NavLink></li>
               </ul>
             </div>
 

@@ -135,7 +135,7 @@ export function ListaIngresosTramite() {
                             <div style={{ width: '100%', maxWidth: '300px' }}>
                                 <InputUsuarioSearch
                                     name="input-search-ingreso"
-                                    placeholder="detalle..."
+                                    placeholder="numero ingreso, detalle..."
                                     onChange={handleSearch}
                                 />
                             </div>

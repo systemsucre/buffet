@@ -30,7 +30,7 @@ const FormularioTramite = () => {
             <section className="container">
                 <div className="row justify-content-center">
                     <div className="col-12 col-md-10 col-lg-8 col-xl-7 animate-fade-in">
-                        <div className="login-card shadow-clinical p-4 p-md-5 bg-white"style={{  borderRadius: '20px', borderTop: `10px solid ${isEdit ? '#0dcaf0' : '#0d6efd'}` }} >
+                        <div className="login-card shadow-clinical p-4 p-md-5 bg-white"style={{  borderTop: `10px solid ${isEdit ? '#0dcaf0' : '#0d6efd'}` }} >
 
                             {/* Encabezado Dinámico */}
                             <div className="text-center mb-5">
