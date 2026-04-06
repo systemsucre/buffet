@@ -13,7 +13,8 @@ const CabeceraTramite = ({ id }) => {
 
     if (tramites.length === 0) return null;
 
-    const tramite = tramites[0];
+    const tramite = tramites.find(t => String(t.id) === String(id))
+
 
     // --- LÓGICA DE BALANCE BI-COLOR ---
     const ingresos = parseFloat(tramite.total_ingresos) || 0;
@@ -27,30 +28,16 @@ const CabeceraTramite = ({ id }) => {
     const porcentajeSaldo = 100 - porcentajeGasto;
 
     return (
-        <div className="alert alert-success border-0 shadow-sm mb-4" style={{ backgroundColor: '#f8fdf9', padding: '15px', marginTop: '10px', borderLeft: '5px solid #1bbec0' }}>
+        <div className="alert alert-success border-0 shadow-sm mb-4" style={{ borderRadius: '10px', backgroundColor: 'rgba(255,255,255,.7)', padding: '10px', margin: '5px', }}>
             <div className="row g-2 small">
                 <div className="col-md-6 col-12">
-                    <div>
+                    {/* <div>
                         <span className="fw-bold text-dark">EMPLEADOR: </span>
                         <strong className="text-success">{tramite.cliente_nombre}</strong>
-                    </div>
+                    </div> */}
                     <div>
-                        <span className="fw-bold text-dark">TRÁMITE: </span>
+                        <span className="fw-bold text-dark">TRAMITE: </span>
                         <strong className="text-success">{tramite.codigo}</strong>
-                    </div>
-                    <div className="fw-bold text-dark">
-                        TOTAL GASTADO: <span className="text-danger">Bs. {gastos.toFixed(2)}</span>
-                    </div>
-                </div>
-
-                <div className="col-md-6 col-12 text-md-end">
-                    {localStorage.getItem('numRol') < 4 && (
-                        <div className="text-muted" style={{ fontSize: '0.75rem' }}>
-                            ABONO TOTAL RECIBIDO: <span className="fw-bold">Bs. {ingresos.toFixed(2)}</span>
-                        </div>
-                    )}
-                    <div className="fw-bold text-dark">
-                        SALDO DISPONIBLE: <span className="text-success">Bs. {saldo.toFixed(2)}</span>
                     </div>
                     <div className="fw-bold text-dark">
                         ESTADO TRAMITE: <span className={
@@ -64,6 +51,22 @@ const CabeceraTramite = ({ id }) => {
                                         estado === 3 ? 'FNALIZADO' : '-'
                             }</span>
                     </div>
+
+                </div>
+
+                <div className="col-md-6 col-12 text-md-end">
+                    {localStorage.getItem('numRol') < 4 && (
+                        <div className="text-muted" style={{ fontSize: '0.75rem' }}>
+                            ABONO TOTAL RECIBIDO: <span className="fw-bold">Bs. {ingresos.toFixed(2)}</span>
+                        </div>
+                    )}
+                    <div className="text-muted" style={{ fontSize: '0.75rem' }}>
+                        TOTAL GASTADO: <span className="text-danger">Bs. {gastos.toFixed(2)}</span>
+                    </div>
+                    <div className="fw-bold text-dark">
+                        SALDO DISPONIBLE: <span className="text-success">Bs.{saldo.toFixed(2)}</span>
+                    </div>
+
                 </div>
             </div>
 
@@ -102,7 +105,7 @@ const CabeceraTramite = ({ id }) => {
 
 
                     <div className="d-flex justify-content-between mt-1" style={{ fontSize: '0.65rem', color: '#6c757d' }}>
-                        <span>Total Abonado:    </span> <span>{'Bs. ' + ingresos.toFixed(2)}</span>
+                        <span>Total Abonado:    </span> <span>Bs.{ ingresos.toFixed(2)}</span>
                     </div>
                 </div>
                 : null}

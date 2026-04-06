@@ -95,7 +95,7 @@ export function ListaIngresosTramite() {
                 <div className=" d-flex justify-content-end gap-2 " style={{ marginRight: '10px' }}>
                     {/* El botón nuevo gasto hereda el UUID correctamente */}
                     {tramites.length > 0 && parseInt(localStorage.getItem('numRol')) === 3 ?
-                        tramites[0].estado === 1 ?
+                        tramites.find(t => String(t.id) === String(id)).estado === 1 ?
                             < button
                                 className="btn btn-success  fw-bold"
                                 onClick={() => navigate(LOCAL_URL + `/crear-ingreso/${id}`)}
@@ -110,7 +110,7 @@ export function ListaIngresosTramite() {
                             </button> : null
                     }
                     <button className=" btn btn-dark" style={{ marginLeft: '4px' }} onClick={() => {
-                        navigate(LOCAL_URL +  "/movimientos")
+                        navigate(LOCAL_URL + "/movimientos")
                     }
                     }>
                         <FontAwesomeIcon icon={faArrowLeft} className="me-2" /> VOLVER

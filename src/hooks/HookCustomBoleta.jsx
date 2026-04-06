@@ -53,7 +53,7 @@ export const UseCustomBoletas = () => {
         const payload = {
             items: listaGastos,
             datosAuditoriaExtra
-        };
+        }; 
 
         return await saveDB(
             `${URL}boletas/crear-masivo`,

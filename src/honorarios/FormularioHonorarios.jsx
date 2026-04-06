@@ -39,18 +39,17 @@ const FormularioHonorario = () => {
     ];
 
     return (
-        <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh', background: '#f8f9fa' }}>
+        <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh' }}>
             <section className="container">
                 <div className="row justify-content-center">
-                    <div className="col-12 col-md-10 col-lg-8 col-xl-7 animate-fade-in">
-                        <div className="login-card shadow p-4 p-md-5 bg-white" style={{  borderTop: `10px solid ${isEdit ? '#0dcaf0' : '#0d6efd'}` }}>
-
+                    <div className="login-card shadow-clinical p-4 p-md-5 bg-white" style={{ borderTop: `10px solid  #0d6efd`, marginTop: '2rem' }} >
+                        <div className="form-boleta-container">
                             {/* Encabezado */}
                             <div className="text-center mb-4">
                                 <div className="mb-3">
                                     <span style={{ fontSize: '3.5rem' }}>{isEdit ? '✍️' : '⚖️'}</span>
                                 </div>
-                                <h2 className="h3 fw-bold text-primary text-uppercase">
+                                <h2 className="h3 fw-bold text-primary text-uppercase m-0">
                                     {isEdit ? 'Editar Cobro de Honorario' : 'Registrar Honorarios Profesionales'}
                                 </h2>
                             </div>

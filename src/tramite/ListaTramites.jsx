@@ -1,4 +1,4 @@
-import {  faEdit, faTrashAlt,  faRecycle, faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrashAlt, faRecycle, faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "../components/DataTable";
 import { InputUsuarioSearch } from "../components/input/elementos";
 import { ColumnsTableTramites } from "./columnTableTramites";
@@ -25,17 +25,17 @@ export function ListaTramites() {
 
     return (
         <>
-            <main className="container-xl mt-5" style={{ maxWidth: "100%" }}>
+           <main className="container-xl mt-2" style={{ maxWidth: "100%", padding: '3px' }}>
                 {/* Encabezado */}
                 <div className="d-flex justify-content-between align-items-end mb-4">
                     <div>
-                        <h3 className="text-dark fw-bold mb-0 p-2">Gestión de Trámites</h3>
-                      
+                        <h3 className="text-dark fw-bold mb-0 p-2 text-titulos">Gestión de Trámites</h3>
+
                     </div>
 
                 </div>
 
-                <div className="panel-custom bg-white rounded shadow-sm p-1">
+                <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">
                     {/* BARRA DE ACCIONES: Filtros y Buscador */}
                     <div className="row align-items-center mb-3 g-3">
                         <div className="col-md-6">
@@ -80,7 +80,7 @@ export function ListaTramites() {
                                     })(),
                                     label: 'Editar'
                                 },
-                       
+
                                 {
                                     boton: (id, row) => eliminarTramite(id, row.eliminado === 1 ? 0 : 1), // Ejemplo para paralizar/activar 
                                     className: (id, row) => row.eliminado === 1 ? 'btn btn-danger py-1 px-3 x-small' : 'btn btn-warning py-1 px-3 x-small',

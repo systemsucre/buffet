@@ -56,7 +56,7 @@ export function ListaBoleta() {
             <main className="container-xl mt-2" style={{ maxWidth: "100%", padding: '3px' }}>
                 <div className="d-flex justify-content-between align-items-center mb-4 m-2">
                     <div>
-                        <h3 className="text-dark fw-bold mb-0 text-titulos">Gestión de Boletas de Gasto</h3>
+                        <h3 className="text-dark fw-bold mb-0 text-titulos text-titulos">Gestión de Boletas de Gasto</h3>
                     </div>
 
                 </div>

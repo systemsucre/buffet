@@ -37,11 +37,11 @@ const NuevoCliente = () => {
     }, [id, clientesFiltrados, setNombre, setAp1, setAp2, setCi, setCelular, setDireccion, setEstado]);
 
     return (
-        <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh', background: '#f8f9fa' }}>
+            <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh' }}>
             <section className="container">
                 <div className="row justify-content-center">
                     <div className="col-12 col-md-11 col-lg-9 col-xl-8 animate-fade-in">
-                        <div className="login-card shadow-clinical p-4 p-md-5 bg-white" style={{   borderTop: `10px solid  #0d6efd` }} >
+                        <div className="login-card shadow-clinical p-4 p-md-5 bg-white" style={{ borderTop: `10px solid  #0d6efd`, marginTop:'2rem' }} >
 
                             {/* Encabezado Dinámico */}
                             <div className="text-center mb-5">
@@ -59,14 +59,14 @@ const NuevoCliente = () => {
                                 <div className="col-md-4">
                                     <InputUsuarioStandard
                                         estado={estados.nombre} cambiarEstado={setters.setNombre}
-                                        tipo='text' name='nombre' etiqueta='Nombre *'
+                                        tipo='text' name='nombre' etiqueta='Nombre '
                                         placeholder="Ej. Juan" ExpresionRegular={INPUT.NOMBRE}
                                     />
                                 </div>
                                 <div className="col-md-4">
                                     <InputUsuarioStandard
                                         estado={estados.ap1} cambiarEstado={setters.setAp1}
-                                        tipo='text' name='ap1' etiqueta='Primer Apellido *'
+                                        tipo='text' name='ap1' etiqueta='Primer Apellido '
                                         placeholder="Ej. Perez" ExpresionRegular={INPUT.NOMBRE}
                                     />
                                 </div>
@@ -75,21 +75,21 @@ const NuevoCliente = () => {
                                         estado={estados.ap2} cambiarEstado={setters.setAp2}
                                         tipo='text' name='ap2' etiqueta='Segundo Apellido'
                                         placeholder="Ej. Gomez" ExpresionRegular={INPUT.NOMBRE}
-                                        importante = {false}
+                                        importante={false}
                                     />
                                 </div>
 
                                 <div className="col-md-6">
                                     <InputUsuarioStandard
                                         estado={estados.ci} cambiarEstado={setters.setCi}
-                                        tipo='text' name='ci' etiqueta='C.I. / NIT *'
+                                        tipo='text' name='ci' etiqueta='C.I. / NIT '
                                         placeholder="1234567" ExpresionRegular={INPUT.CI}
                                     />
                                 </div>
                                 <div className="col-md-6">
                                     <InputUsuarioStandard
                                         estado={estados.celular} cambiarEstado={setters.setCelular}
-                                        tipo='text' name='celular' etiqueta='Teléfono / Celular *'
+                                        tipo='text' name='celular' etiqueta='Teléfono / Celular '
                                         placeholder="70000000" ExpresionRegular={INPUT.TELEFONO}
                                     />
                                 </div>
@@ -97,7 +97,7 @@ const NuevoCliente = () => {
                                 <div className="col-12">
                                     <InputUsuarioStandard
                                         estado={estados.direccion} cambiarEstado={setters.setDireccion}
-                                        tipo='text' name='direccion' etiqueta='Dirección de Domicilio *'
+                                        tipo='text' name='direccion' etiqueta='Dirección de Domicilio '
                                         placeholder="Av. Principal #123" ExpresionRegular={INPUT.DIRECCION}
                                     />
                                 </div>

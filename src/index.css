@@ -187,6 +187,25 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
+  /* --- FONDO OPTIMIZADO --- */
+  background-image: url("/img/fondo1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  /* Mantiene el fondo quieto mientras el contenido sube */
+
+  /* --- AJUSTES DE SCROLL Y ALTURA --- */
+  /* overflow: hidden;  <-- ELIMINA O COMENTA ESTA LÍNEA */
+  overflow-y: auto;
+  /* Asegura que el scroll vertical aparezca si es necesario */
+
+  width: 100%;
+  min-height: 100vh;
+  /* Usa min-height en lugar de height fijo */
+  display: flex;
+  /* Opcional: ayuda a centrar el contenido del login */
+  flex-direction: column;
 }
 
 
@@ -412,8 +431,8 @@ button:not(:disabled),
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * 0.5);
-  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  /* padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5); */
   margin-right: auto;
   margin-left: auto;
 }
@@ -513,6 +532,11 @@ button:not(:disabled),
   .col-md-3 {
     flex: 0 0 auto;
     width: 25%;
+  }
+
+  .col-md-2 {
+    flex: 0 0 auto;
+    width: 16.666%;
   }
 
   .col-md-6 {
@@ -645,6 +669,7 @@ button:not(:disabled),
   border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
   border-radius: var(--bs-btn-border-radius);
   background-color: var(--bs-btn-bg);
+  border-radius: 10px;
 
   transition: var(--bs-transition);
 }
@@ -888,7 +913,7 @@ button:not(:disabled),
   --bs-btn-disabled-color: #FFF;
   --bs-btn-disabled-bg: #262626;
   --bs-btn-disabled-border-color: #262626;
-  /* border-radius: 4px; */
+  border-radius: 5px;
 }
 
 .btn-dark:hover {
@@ -926,15 +951,14 @@ button:not(:disabled),
 /* Agrega estas clases a tu index.css */
 .text-titulos {
   letter-spacing: -0.5px;
+  color: white;
 }
 
 .codigo-boleta {
-  background: linear-gradient(120deg, #e0e7ff 0%, #f3f4f6 100%);
   padding: 2px 8px;
   border-radius: 4px;
   font-family: 'Courier New', Courier, monospace;
-  /* O cualquier fuente mono */
-  border: 1px solid #c7d2fe;
+ 
 }
 
 .ls-1 {
@@ -1194,7 +1218,7 @@ button:not(:disabled),
 
 .bg-white {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
+  background-color: rgba(var(--bs-white-rgb), .7) !important;
 }
 
 @media (min-width: 768px) {
@@ -1328,12 +1352,12 @@ button:not(:disabled),
 
 /* --- CONTENEDOR PRINCIPAL (EL SECRETO DEL CENTRADO) --- */
 .login-wrapper {
-  background: radial-gradient(circle, #ffffff 0%, #e2e8f0 100%);
+  background: zradial-gradient(circle, #ffffff 0%, #e2e8f0 100%);
   overflow: hidden;
   position: relative;
   width: 100%;
   height: auto;
-  margin-top: 2rem;
+  padding-top: 2rem;
   /* Ocupa toda la altura de la ventana */
 }
 
@@ -1361,7 +1385,7 @@ button:not(:disabled),
 
     padding: 15px;
     /* Un padding más equilibrado para móviles */
-    border-radius: 20px;
+    border-radius: 5px;
     /* Bordes un poco menos pronunciados en móvil */
     margin-bottom: 20px;
     /* Espacio extra abajo para que no pegue al borde del navegador */
@@ -1377,9 +1401,9 @@ button:not(:disabled),
   .login-card {
     /* CLAVE: Cambiar height de 1000px a auto */
     height: auto;
-    padding: 4px;
+    padding: 10px;
     /* Un padding más equilibrado para móviles */
-    border-radius: 0px;
+    border-radius: 8px;
 
   }
 }
@@ -1487,31 +1511,45 @@ button:not(:disabled),
 
 
 /* MENU */
-/* --- NAVEGACIÓN BASE --- */
+
+
+/* --- NAVEGACIÓN BASE (CENTRADA Y AJUSTABLE) --- */
 .nav-main {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  top: 5px; /* Tu margen superior */
+  
+  /* EL SECRETO DEL CENTRADO CON MÁRGENES FIJOS */
+  left: 5px; 
+  right: 5px;
+  width: calc(100% - 10px); /* 100% menos la suma de los márgenes (8px + 8px) */
+  
   height: 85px;
   display: flex;
   align-items: center;
   z-index: 1000;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  background: transparent;
+  
+  /* ESTILO VISUAL */
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px); /* Toque Pro: desenfoca el fondo de finanzas al pasar */
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde sutil para resaltar */
+  
+  /* Eliminamos margin-left manual para que left/right hagan el trabajo */
+  margin: 0 auto; 
 }
-
 
 .main-content {
   /* Debe ser igual o mayor a la altura (height) de tu Navbar */
   padding-top: 5px;
   min-height: calc(100vh - 85px);
-  background-color: var(--bs-light);
+  /* background-color: var(--bs-light); */
 }
 
 .nav-scrolled {
   height: 70px;
-  background: rgba(255, 255, 255, 0.85);
+  background:transparent;   
+  /* rgba(255, 255, 255, 0.85); */
   backdrop-filter: blur(12px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 123, 255, 0.1);
@@ -1843,9 +1881,9 @@ button:not(:disabled),
 
 /* --- ESTILOS DE TABLA RESPONSIVA --- */
 .table-container {
-  background: white;
+  /* background: white; */
   /* border-radius: 15px; */
-  padding: 10px;
+  /* padding: 5px; */
   box-shadow: var(--bs-shadow-md);
   margin-top: 0.5rem;
   overflow: hidden;
@@ -1853,7 +1891,7 @@ button:not(:disabled),
 
 @media (max-width: 500px) {
   .table-container {
-    padding: 5px;
+    padding: 0px;
 
   }
 }
@@ -1909,6 +1947,11 @@ thead {
   border-radius: 0;
 }
 
+.table-responsive-custom tr {
+
+  background: #fff;
+}
+
 /* --- MAGIA PARA MÓVILES (Celulares y Tablets pequeñas) --- */
 @media (max-width: 878px) {
   .table-responsive-custom {
@@ -1924,8 +1967,8 @@ thead {
     display: block;
     margin-top: 5px;
     margin-bottom: 1.5rem;
-    border: 1px solid var(--hospital-blue);
-    /* border-radius: 12px; */
+    /* border: 1px solid var(--hospital-blue); */
+    border-radius: 10px;
     padding: 3px;
     background: #fff;
   }
@@ -2013,14 +2056,15 @@ thead {
 
 /* Reemplazo profesional para .card */
 .panel-custom {
-  background: #ffffff;
-  /* border-radius: 0px; */
+  /* background: #ffffff; */
+  border-radius: 10px;
   border: 1px solid #edf2f7;
   /* Un borde muy sutil */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   /* Sombra suave */
   padding: 0;
   height: 100%;
+  margin: 5px;
   transition: all 0.3s ease;
 }
 
@@ -2099,4 +2143,355 @@ thead {
   /* Prohíbe crecer, prohíbe encoger */
   white-space: nowrap !important;
   /* Prohíbe que el texto se parta */
+}
+
+
+
+
+
+
+
+
+/* Contenedor del Skeleton */
+.skeleton-card {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  /* Para que el borde giratorio no se salga */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  /* Tu animación de entrada suave */
+  animation: fadeInLoader 0.5s ease-out forwards;
+}
+
+/* El Borde que Gira */
+.skeleton-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(transparent,
+      transparent,
+      transparent,
+      #1bbec0
+      /* Tu color Turquesa */
+    );
+  animation: rotateBorder 2s linear infinite;
+  z-index: 1;
+}
+
+/* Capa interna para ocultar el centro del degradado */
+.skeleton-card::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  /* Grosor del borde */
+  background: white;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+/* Contenido del Skeleton (Líneas de carga) */
+.skeleton-content {
+  position: relative;
+  z-index: 3;
+  /* Por encima del borde */
+}
+
+.skeleton-line {
+  height: 15px;
+  width: 100%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+/* Animaciones */
+@keyframes rotateBorder {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes fadeInLoader {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.container {
+  margin-top: 30px;
+  padding: 5px;
+}
+
+/* formulario boletas  */
+
+
+/* --- ESTILOS GENERALES Y CONTENEDORES --- */
+
+/* Contenedor principal del formulario */
+.form-boleta-container {
+  /* background: rgba(255, 255, 255, 0.7); */
+  border-radius: 16px;
+  /* Bordes redondeados modernos */
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  /* Sombra muy suave */
+  max-width: 1000px;
+  margin: 20px auto;
+  /* border: 1px solid #f0f0f0; */
+}
+
+/* El título principal */
+.titulo-boleta {
+  font-family: 'Arial', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #007bff;
+  /* El azul de tu título */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* --- ESTILOS DE LOS INPUTS Y ETIQUETAS --- */
+
+/* Etiquetas de campo (Tramite, Monto, etc.) */
+.form-label-profesional {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1B4F72;
+  /* Azul marino de tu marca */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Estilo unificado para inputs, selects y textareas */
+.form-control-profesional {
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+/* EFECTO AL HACER CLIC (FOCUS) - ¡Clave para lo profesional! */
+.form-control-profesional:focus {
+  border-color: #1bbec0;
+  /* Tu color turquesa */
+  box-shadow: 0 0 0 4px rgba(27, 190, 192, 0.1);
+  /* Brillo suave */
+  outline: none;
+}
+
+/* Placeholder (texto de ayuda) */
+.form-control-profesional::placeholder {
+  color: #a0a0a0;
+  font-weight: 300;
+}
+
+/* Estilo específico para el selector de fecha */
+.form-date-profesional {
+  position: relative;
+}
+
+/* --- ESTILOS DE LOS BOTONES --- */
+
+/* Botón "Añadir Otro Gasto" */
+.btn-add-gasto {
+  background-color: #ffffff;
+  border: 2px solid #1bbec0;
+  color: #1bbec0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  /* Estilo píldora */
+  transition: all 0.3s ease;
+}
+
+.btn-add-gasto:hover {
+  background-color: #1bbec0;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(27, 190, 192, 0.2);
+}
+
+/* Botón "Cancelar" */
+.btn-cancelar-boleta {
+  background-color: #6c757d;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-cancelar-boleta:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+  /* Pequeña elevación */
+}
+
+/* Botón "Guardar Boleta" - ¡El más importante! */
+.btn-guardar-boleta {
+  background-color: #198754;
+  /* El verde de tu botón */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(25, 135, 84, 0.15);
+  margin-left: 10px;
+}
+
+.btn-guardar-boleta:hover {
+  background-color: #157347;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(25, 135, 84, 0.25);
+}
+
+/* --- ESTILOS ESPECÍFICOS PARA MÓVIL --- */
+
+@media (max-width: 768px) {
+  .form-boleta-container {
+    padding: 0px;
+    margin: 5px;
+    border-radius: 12px;
+  }
+
+  .titulo-boleta {
+    font-size: 1.5rem;
+  }
+
+  /* En móvil, los campos ocupan todo el ancho y se apilan */
+  .form-control-profesional {
+    margin-bottom: 15px;
+  }
+
+  /* Los botones finales se apilan */
+  .btn-action-container {
+    flex-direction: column-reverse;
+    gap: 10px;
+    padding: 15px !important;
+  }
+
+  .btn-guardar-boleta,
+  .btn-cancelar-boleta {
+    width: 100%;
+    margin-left: 0px;
+
+  }
+}
+
+/* Bloque de cada ítem en el bucle */
+.item-gasto-row {
+  position: relative;
+  /* background: #fcfcfc; */
+  border: 1px solid #eef0f2;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  animation: fadeInLoader 0.4s ease-out;
+}
+
+.item-gasto-row:hover {
+  border-color: #1bbec0;
+  background: #ffffff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Indicador de número de ítem */
+.item-number {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: #1B4F72;
+  color: white;
+  padding: 2px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+/* Botón eliminar mejorado */
+.btn-eliminar-fila {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff5f5;
+  color: #ff4d4d;
+  border: 1px solid #ffe3e3;
+  transition: all 0.2s ease;
+}
+
+.btn-eliminar-fila:hover {
+  background: #ff4d4d;
+  color: white;
+  transform: rotate(90deg);
+}
+
+/* Estilo para el botón de Añadir Gasto */
+.btn-add-gasto {
+  border: 2px dashed #1bbec0 !important;
+  background: rgba(27, 190, 192, 0.05) !important;
+  color: #1bbec0 !important;
+  font-weight: 700 !important;
+  width: 100%;
+  padding: 15px !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-add-gasto:hover {
+  background: #1bbec0 !important;
+  color: white !important;
+  border-style: solid !important;
 }

@@ -30,7 +30,7 @@ const FormularioTramite = () => {
             <section className="container">
                 <div className="row justify-content-center">
                     <div className="col-12 col-md-10 col-lg-8 col-xl-7 animate-fade-in">
-                        <div className="login-card shadow-clinical p-4 p-md-5 bg-white"style={{  borderTop: `10px solid ${isEdit ? '#0dcaf0' : '#0d6efd'}` }} >
+                        <div className="login-card shadow-clinical p-4 p-md-5 bg-white" style={{ borderTop: `10px solid ${isEdit ? '#0dcaf0' : '#0d6efd'}` }} >
 
                             {/* Encabezado Dinámico */}
                             <div className="text-center mb-5">
@@ -53,7 +53,7 @@ const FormularioTramite = () => {
                                         cambiarEstado={setters.setIdTipoTramite}
                                         Name="id_tipo_tramite"
                                         lista={auxiliares.listaTipos}
-                                        etiqueta="Tipo de Trámite *"
+                                        etiqueta="Tipo de Trámite"
                                         msg="Seleccione el tipo de servicio"
                                         ExpresionRegular={INPUT.ID}
                                     />
@@ -64,11 +64,11 @@ const FormularioTramite = () => {
                                         estado={estados.estado}
                                         cambiarEstado={setters.setEstado}
                                         Name="estado"
-                                        lista={[ {value:1, label: 'En curso'}, {value:2, label: 'Paralizado'}, {value:3, label: 'Finalizado'}, ]}
-                                        etiqueta="Estado Tramite *"
+                                        lista={[{ value: 1, label: 'En curso' }, { value: 2, label: 'Paralizado' }, { value: 3, label: 'Finalizado' },]}
+                                        etiqueta="Estado Tramite "
                                         msg="Cambiar Estado"
                                         ExpresionRegular={INPUT.ID}
-                                    />  
+                                    />
                                 </div>
                                 <div className="col-md-12">
                                     <Select1
@@ -76,7 +76,7 @@ const FormularioTramite = () => {
                                         cambiarEstado={setters.setIdCliente}
                                         Name="id_cliente"
                                         lista={auxiliares.listaClientes}
-                                        etiqueta="Cliente / Empleador *"
+                                        etiqueta="Cliente / Empleador "
                                         msg="Busque y seleccione al cliente"
                                         ExpresionRegular={INPUT.ID}
                                     />
@@ -88,7 +88,7 @@ const FormularioTramite = () => {
                                         cambiarEstado={setters.setFechaIngreso}
                                         tipo='date'
                                         name='fecha_ingreso'
-                                        etiqueta={'Fecha Ingreso *'}
+                                        etiqueta={'Fecha Ingreso '}
                                     />
                                 </div>
 
@@ -149,7 +149,7 @@ const FormularioTramite = () => {
                     </div>
                 </div>
             </section>
-        </main>
+        </main >
     );
 };
 

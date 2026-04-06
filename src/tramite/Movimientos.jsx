@@ -14,7 +14,7 @@ export function Movimientos() {
         filterByEstado,
         cargando,
         filterByDelete,
-        exportPDfTramites
+        exportPDfTramites 
     } = useTramites();
     const enCurso = tramites.filter(t => t.estado === 1).length;
     const paralizados = tramites.filter(t => t.estado === 2).length;
@@ -23,15 +23,15 @@ export function Movimientos() {
 
     return (
         <>
-            <main className="container-xl mt-5" style={{ maxWidth: "100%" }}>
+            <main className="container-xl mt-2" style={{ maxWidth: "100%", padding: '3px' }}>
                 <div className="d-flex justify-content-between align-items-end mb-4">
                     <div>
-                        <h3 className="text-dark fw-bold mb-0 p-2">Ver Movimientos</h3>
+                        <h3 className="text-dark fw-bold mb-0 p-2 text-titulos">Ver Movimientos</h3>  
                       
                     </div>
                 </div>
 
-                <div className="panel-custom bg-white rounded shadow-sm p-1">
+                  <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">  
                     <div className="row align-items-center mb-3 g-3">
                         <div className="col-md-6">
                             <div className="d-flex1 gap-2">
@@ -43,7 +43,7 @@ export function Movimientos() {
                                     <button className="btn btn-danger btn-sm border text-white fw-bold" onClick={() => filterByDelete(0)}>
                                         RECICLAJE  (<span className="fw-bold mb-0 text-white">{tramites.filter(t => t.eliminado == 0).length}</span>)
                                     </button>
-                                )}
+                                )} 
                             </div>
                         </div>
                         <div className="col-md-6 d-flex justify-content-md-end">

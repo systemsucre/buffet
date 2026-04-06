@@ -45,13 +45,12 @@ const NuevoUsuario = () => {
     }, [id, usuariosFiltrados, setNombre, setAp1, setAp2, setCi, setCelular, setDireccion, setUsername, setIdRol, setEstado]);
 
     return (
-        <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh' }}>
+         <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh' }}>
             <section className="container">
                 <div className="row justify-content-center">
-                    <div className="col-12 col-md-11 col-lg-9 col-xl-8 animate-fade-in">
-                        <div className="login-card shadow-clinical p-4 p-md-5 bg-white">
+                    <div className="col-12 col-md-10 col-lg-8 col-xl-7 animate-fade-in">
+                        <div className="login-card shadow-clinical p-4 p-md-5 bg-white"style={{  borderTop: `10px solid ${isEdit ? '#0dcaf0' : '#0d6efd'}` }} >
 
-                            {/* Encabezado Dinámico */}
                             <div className="text-center mb-5">
                                 <div className="icon-pulse mb-3">
                                     <span className="fs-1">{id ? '📝' : '👤'}</span>
@@ -84,7 +83,7 @@ const NuevoUsuario = () => {
                                         estado={estados.ap2} cambiarEstado={setters.setAp2}
                                         tipo='text' name='ap2' etiqueta='Segundo Apellido'
                                         placeholder="Ej. Gomez" ExpresionRegular={INPUT.NOMBRE}
-                                        importante = {false}
+                                        importante={false}
                                     />
                                 </div>
 
@@ -127,7 +126,7 @@ const NuevoUsuario = () => {
 
                                 <div className="col-md-6">
                                     <InputUsuarioStandard
-                                        estado={estados.username} cambiarEstado={setters.setUsername} mayusculas ={false}
+                                        estado={estados.username} cambiarEstado={setters.setUsername} mayusculas={false}
                                         tipo='text' name='username' etiqueta='Nombre de Usuario *'
                                         placeholder="juan.perez" ExpresionRegular={INPUT.INPUT_USUARIO}
                                     />
@@ -139,7 +138,7 @@ const NuevoUsuario = () => {
                                         etiqueta={id ? 'Nueva Contraseña (Opcional)' : 'Contraseña *'}
                                         placeholder="Dejar en blanco para no cambiar"
                                         ExpresionRegular={id ? null : INPUT.PASSWORD}
-                                        importante = {false}
+                                        importante={false}
                                     />
                                 </div>
 

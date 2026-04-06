@@ -1,4 +1,4 @@
-import { faEdit, faTrashAlt, faCheck,  } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrashAlt, faCheck, } from "@fortawesome/free-solid-svg-icons";
 import DataTable from "../components/DataTable";
 import { InputUsuarioSearch } from "../components/input/elementos";
 import { useTipoTramite } from "../hooks/HookCustomTipoTramite"; // Hook adaptado
@@ -12,24 +12,24 @@ export function ListaTipoTramite() {
         cargando,
         toggleEstadoTramite,
         handleSearch,
-        listActivos, 
+        listActivos,
         allList
     } = useTipoTramite();
 
     return (
         <>
-            <main className="container-xl mt-5">
+            <main className="container-xl mt-2" style={{ maxWidth: "100%", padding: '3px' }}>
                 <div className="d-flex justify-content-between align-items-center p-2">
                     <div>
                         <h3 className="text-dark fw-bold mb-0">Tipos de Trámite</h3>
-                        <p className="text-muted mb-0 small text-uppercase" style={{ letterSpacing: '1px', fontSize: '0.7rem' }}>
+                        <p className="text-muted mb-0 small text-uppercase" style={{ letterSpacing: '1px', fontSize: '0.7rem', color:'white'}}>
                             Configuración de categorías y servicios KR Estudios
                         </p>
                     </div>
-                    
+
                 </div>
 
-                <div className="panel-custom mt-3">
+                <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">
                     <div className="d-flex align-items-center mb-3 bg-white p-3 shadow-sm row m-0">
                         <div className="col-sm-6">
                             <div className="d-flex gap-2">
@@ -47,29 +47,30 @@ export function ListaTipoTramite() {
                             </div>
                         </div>
                     </div>
-
-                    <DataTable
-                        columns={columns}
-                        data={tramitesFiltrados}
-                        progressPending={cargando}
-                        funciones={[
-                            {
-                                boton: null,
-                                className: 'btn btn-info py-1 px-3 x-small',
-                                icono: faEdit,
-                                enlace: LOCAL_URL + '/admin/editar-tipo-tramite',
-                                label: 'Editar'
-                            },
-                            {
-                                // Lógica de eliminación lógica (activar/desactivar)
-                                boton: (id, row) => toggleEstadoTramite(id, row.estado),
-                                className: (id, row) => row.estado === 1 ? 'btn btn-danger py-1 px-3 x-small' : 'btn btn-success py-1 px-3 x-small',
-                                icono: (id, row) => row.estado === 1 ? faTrashAlt : faCheck,
-                                enlace: null,
-                                label: (id, row) => row.estado === 1 ? 'Desactivar' : 'Activar'
-                            }
-                        ]}
-                    />
+                    <div className="table-responsive">
+                        <DataTable
+                            columns={columns}
+                            data={tramitesFiltrados}
+                            progressPending={cargando}
+                            funciones={[
+                                {
+                                    boton: null,
+                                    className: 'btn btn-info py-1 px-3 x-small',
+                                    icono: faEdit,
+                                    enlace: LOCAL_URL + '/admin/editar-tipo-tramite',
+                                    label: 'Editar'
+                                },
+                                {
+                                    // Lógica de eliminación lógica (activar/desactivar)
+                                    boton: (id, row) => toggleEstadoTramite(id, row.estado),
+                                    className: (id, row) => row.estado === 1 ? 'btn btn-danger py-1 px-3 x-small' : 'btn btn-success py-1 px-3 x-small',
+                                    icono: (id, row) => row.estado === 1 ? faTrashAlt : faCheck,
+                                    enlace: null,
+                                    label: (id, row) => row.estado === 1 ? 'Desactivar' : 'Activar'
+                                }
+                            ]}
+                        />
+                    </div>
                 </div>
             </main>
         </>

@@ -23,7 +23,7 @@ const DataTable = ({ columns, data, funciones }) => {
                                         {col.render ? col.render(item) : item[col.field]}
                                     </td>
                                 ))}
-                                <td>
+                              {funciones.length>0 ?<td>
                                     <div className="contenedor-botones">
                                       
                                         {funciones.map((f, index) => {
@@ -52,7 +52,7 @@ const DataTable = ({ columns, data, funciones }) => {
                                             );
                                         })}
                                     </div>
-                                </td>
+                                </td>:null}
                             </tr>
                         ))}
                     </tbody>

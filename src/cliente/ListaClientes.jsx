@@ -5,10 +5,13 @@ import { InputUsuarioSearch } from "../components/input/elementos";
 import { useClientes } from "../hooks/HookCustomCliente"; // Importamos el hook de clientes
 import { LOCAL_URL } from '../Auth/config';
 import { columns } from "./columnTable"; // Importamos las columnas de clientes
-import { Link } from "react-router-dom";
+import { useNavigate,} from "react-router-dom";
 
 export function ListaClientes() {
+
+    const navigate = useNavigate();
     // 1. Extraemos la lógica del Custom Hook de Clientes
+
     const {
         clientesFiltrados,
         cargando,
@@ -20,16 +23,16 @@ export function ListaClientes() {
 
     return (
         <>
-            <main className="container-xl mt-5">
+            <main className="container-xl mt-2" style={{ maxWidth: "100%", padding: '3px' }}>
                 <div className="d-flex justify-content-between align-items-center p-2">
                     <div>
-                        <h3 className="text-dark fw-bold mb-0">Gestión de Clientes</h3>
-                     
+                        <h3 className="text-dark fw-bold mb-0 text-titulos">Gestión de Clientes</h3>
+
                     </div>
 
                 </div>
 
-                <div className="panel-custom mt-3">
+                <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">
                     <div className="d-flex align-items-center mb-3 bg-white p-3 shadow-sm row m-0">
                         <div className="col-sm-6">
                             <div className="d-flex gap-2">
@@ -47,29 +50,37 @@ export function ListaClientes() {
                             </div>
                         </div>
                     </div>
-
-                    <DataTable
-                        columns={columns}
-                        data={clientesFiltrados}
-                        progressPending={cargando}
-                        funciones={[
-                            {
-                                boton: null,
-                                className: 'btn btn-info py-1 px-3 x-small',
-                                icono: faEdit,
-                                enlace: LOCAL_URL + '/admin/editar-cliente',
-                                label: 'Editar'
-                            },
-                            {
-                                // Botón dinámico: Si está activo muestra Desactivar, si no, Activar
-                                boton: (id, row) => toggleEstadoCliente(id, row.estado),
-                                className: (id, row) => row.estado === 1 ? 'btn btn-danger py-1 px-3 x-small' : 'btn btn-success py-1 px-3 x-small',
-                                icono: (id, row) => row.estado === 1 ? faTrashAlt : faCheck,
-                                enlace: null,
-                                label: (id, row) => row.estado === 1 ? 'Desactivar' : 'Activar'
-                            }
-                        ]}
-                    />
+                    <div className="table-responsive">
+                        <DataTable
+                            columns={columns}
+                            data={clientesFiltrados}
+                            progressPending={cargando}
+                            funciones={[
+                                {
+                                    boton: (id) => {
+                                        let path = null;
+                                        const rol = parseInt(localStorage.getItem('numRol'))
+                                        if (rol === 1) path = 'admin'
+                                        if (rol === 2) path = 'gerente'
+                                        if (rol === 3) path = 'cajero'
+                                        navigate(`${LOCAL_URL}/${path}/editar-cliente/${id}`)
+                                    },
+                                    className: 'btn btn-info py-1 px-3 x-small',
+                                    icono: faEdit,
+                                    enlace: null,
+                                    label: 'Editar'
+                                },
+                                {
+                                    // Botón dinámico: Si está activo muestra Desactivar, si no, Activar
+                                    boton: (id, row) => toggleEstadoCliente(id, row.estado),
+                                    className: (id, row) => row.estado === 1 ? 'btn btn-danger py-1 px-3 x-small' : 'btn btn-success py-1 px-3 x-small',
+                                    icono: (id, row) => row.estado === 1 ? faTrashAlt : faCheck,
+                                    enlace: null,
+                                    label: (id, row) => row.estado === 1 ? 'Desactivar' : 'Activar'
+                                }
+                            ]}
+                        />
+                    </div>
                 </div>
             </main>
         </>

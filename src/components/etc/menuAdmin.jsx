@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation, Link } from 'react-router-dom';
 import { LOCAL_URL } from '../../Auth/config';
 import useAuth from "../../Auth/useAuth";
-import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
@@ -51,7 +51,7 @@ const NavbarAdmin = () => {
           <li><NavLink to={LOCAL_URL+"/movimientos"} end className="nav-link-item">Movimientos</NavLink></li>
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-              Clientes <span className="arrow">▼</span>
+              Clientes <FontAwesomeIcon icon={faChevronDown} />
             </NavLink>
 
             <ul className="submenu-list">
@@ -61,7 +61,7 @@ const NavbarAdmin = () => {
           </div>
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-              Tramites <span className="arrow">▼</span>
+              Tramites <FontAwesomeIcon icon={faChevronDown} />
             </NavLink>
 
             <ul className="submenu-list">
@@ -72,7 +72,7 @@ const NavbarAdmin = () => {
 
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-              Reportes <span className="arrow">▼</span>
+              Reportes <FontAwesomeIcon icon={faChevronDown} />
             </NavLink>
             <ul className="submenu-list">
               <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
@@ -83,7 +83,7 @@ const NavbarAdmin = () => {
 
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-              CONF <span className="arrow">▼</span>
+              CONF <FontAwesomeIcon icon={faChevronDown} />
             </NavLink>
 
             <ul className="submenu-list">
@@ -128,17 +128,17 @@ const NavbarAdmin = () => {
 
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-                Clientes <span className="arrow">▼</span>
+                Clientes <FontAwesomeIcon icon={faChevronDown} />
               </NavLink>
               <ul className="submenu-list">
                 <li><NavLink to={LOCAL_URL + "/admin/nuevo-cliente"} className="submenu-link">Nuevo Cliente</NavLink></li>
-                <li><NavLink to={LOCAL_URL + "/admin/clientes"} className="submenu-link">Lista Clientes</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/admin/lista-clientes"} className="submenu-link">Lista Clientes</NavLink></li>
               </ul>
             </div>
             <div className="nav-item-container has-submenu">
 
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-                Tramites <span className="arrow">▼</span>
+                Tramites <FontAwesomeIcon icon={faChevronDown} />
               </NavLink>
               <ul className="submenu-list">
                 <li><NavLink to={LOCAL_URL + "/admin/nuevo-tramite"} className="submenu-link">Nuevo Trámite</NavLink></li>
@@ -148,7 +148,7 @@ const NavbarAdmin = () => {
 
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-                Reportes <span className="arrow">▼</span>
+                Reportes <FontAwesomeIcon icon={faChevronDown} />
               </NavLink>
               <ul className="submenu-list">
                 <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
@@ -160,7 +160,7 @@ const NavbarAdmin = () => {
 
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-                CONFIGURACIONES <span className="arrow">▼</span>
+                CONFIGURACIONES <FontAwesomeIcon icon={faChevronDown} />
               </NavLink>
               <ul className="submenu-list">
                 <li><NavLink to={LOCAL_URL + "/admin/nuevo-usuario"} className="submenu-link">Nuevo Usuario</NavLink></li>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation, Link } from 'react-router-dom';
 import { LOCAL_URL } from '../../Auth/config';
 import useAuth from "../../Auth/useAuth";
-import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
@@ -53,7 +53,7 @@ const NavbarAuxiliar = () => {
 
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-              Boletas <span className="arrow">▼</span>
+              Boletas <FontAwesomeIcon icon={faChevronDown} />
             </NavLink>
             <ul className="submenu-list">
               <li><NavLink to={LOCAL_URL + "/nueva-boleta"} className="submenu-link">Crear Boleta</NavLink></li>
@@ -64,7 +64,7 @@ const NavbarAuxiliar = () => {
 
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-              Reportes <span className="arrow">▼</span>
+              Reportes <FontAwesomeIcon icon={faChevronDown} />
             </NavLink>
             <ul className="submenu-list">
               <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
@@ -106,7 +106,7 @@ const NavbarAuxiliar = () => {
 
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-                Boletas <span className="arrow">▼</span>
+                Boletas <FontAwesomeIcon icon={faChevronDown} />
               </NavLink>
               <ul className="submenu-list">
                 <li><NavLink to={LOCAL_URL + "/nueva-boleta"} className="submenu-link">Nueva Boleta</NavLink></li>
@@ -115,7 +115,7 @@ const NavbarAuxiliar = () => {
             </div>
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-                Reportes <span className="arrow">▼</span>
+                Reportes <FontAwesomeIcon icon={faChevronDown} />
               </NavLink>
               <ul className="submenu-list">
                 <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
