@@ -45,11 +45,11 @@ const NuevoUsuario = () => {
     }, [id, usuariosFiltrados, setNombre, setAp1, setAp2, setCi, setCelular, setDireccion, setUsername, setIdRol, setEstado]);
 
     return (
-         <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh' }}>
+        <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh' }}>
             <section className="container">
                 <div className="row justify-content-center">
                     <div className="col-12 col-md-10 col-lg-8 col-xl-7 animate-fade-in">
-                        <div className="login-card shadow-clinical p-4 p-md-5 bg-white"style={{  borderTop: `10px solid ${isEdit ? '#0dcaf0' : '#0d6efd'}` }} >
+                        <div className="login-card shadow-clinical p-4 p-md-5 bg-white" style={{ borderTop: `10px #0d6efd` }} >
 
                             <div className="text-center mb-5">
                                 <div className="icon-pulse mb-3">
