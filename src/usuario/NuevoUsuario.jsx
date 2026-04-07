@@ -67,14 +67,14 @@ const NuevoUsuario = () => {
                                 <div className="col-md-4">
                                     <InputUsuarioStandard
                                         estado={estados.nombre} cambiarEstado={setters.setNombre}
-                                        tipo='text' name='nombre' etiqueta='Nombre *'
+                                        tipo='text' name='nombre' etiqueta='Nombre '
                                         placeholder="Ej. Juan" ExpresionRegular={INPUT.NOMBRE}
                                     />
                                 </div>
                                 <div className="col-md-4">
                                     <InputUsuarioStandard
                                         estado={estados.ap1} cambiarEstado={setters.setAp1}
-                                        tipo='text' name='ap1' etiqueta='Primer Apellido *'
+                                        tipo='text' name='ap1' etiqueta='Primer Apellido'
                                         placeholder="Ej. Perez" ExpresionRegular={INPUT.NOMBRE}
                                     />
                                 </div>
@@ -90,7 +90,7 @@ const NuevoUsuario = () => {
                                 <div className="col-md-4">
                                     <InputUsuarioStandard
                                         estado={estados.ci} cambiarEstado={setters.setCi}
-                                        tipo='text' name='ci' etiqueta='C.I. *'
+                                        tipo='text' name='ci' etiqueta='C.I.'
                                         placeholder="1234567" ExpresionRegular={INPUT.CI}
                                     />
                                 </div>
