@@ -68,7 +68,7 @@ const reporteConsolidoTramite = async (output, { tramite, ingresos = [], salidas
                     ],
                     ...ingresos.map(i => [
                         i.numero,
-                        new Date(i.fecha_ingreso).toLocaleDateString(),
+                        i.fecha_ingreso?.split('T')[0],
                         i.detalle,
                         { text: `Bs. ${parseFloat(i.monto).toFixed(2)}`, alignment: 'right' }
                     ]),

@@ -39,6 +39,10 @@ const CabeceraTramite = ({ id }) => {
                         <span className="fw-bold text-dark">TRAMITE: </span>
                         <strong className="text-success">{tramite.codigo}</strong>
                     </div>
+                    <div>
+                        <span className="fw-bold text-dark">CLIENTE: </span>
+                        <strong className="text-success">{tramite.cliente_nombre}</strong>
+                    </div>
                     <div className="fw-bold text-dark">
                         ESTADO TRAMITE: <span className={
                             estado === 1 ? 'text-success' :
@@ -51,7 +55,6 @@ const CabeceraTramite = ({ id }) => {
                                         estado === 3 ? 'FNALIZADO' : '-'
                             }</span>
                     </div>
-
                 </div>
 
                 <div className="col-md-6 col-12 text-md-end">
@@ -105,7 +108,7 @@ const CabeceraTramite = ({ id }) => {
 
 
                     <div className="d-flex justify-content-between mt-1" style={{ fontSize: '0.65rem', color: '#6c757d' }}>
-                        <span>Total Abonado:    </span> <span>Bs.{ ingresos.toFixed(2)}</span>
+                        <span>Total Abonado:    </span> <span>Bs.{ingresos.toFixed(2)}</span>
                     </div>
                 </div>
                 : null}

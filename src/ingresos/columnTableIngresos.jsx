@@ -31,12 +31,13 @@ export const ColumnsTableIngresos = [
         field: 'fecha_ingreso',
         render: (row) => {
             // Manejamos la fecha de ingreso definida en el formulario
-            const fecha = new Date(row.fecha_ingreso);
+            const fecha = row.fecha_ingreso?.split('T')[0];
             return (
                 <div className="small text-secondary">
                     <span className="fw-bold text-dark">
                         <i className="bi bi-calendar-check me-1 text-success"></i>
-                        {fecha.toLocaleDateString('es-BO')}
+                        {fecha}
+                        {/* {fecha.toLocaleDateString('es-BO')} */}
                     </span>
                     <br />
                     <span className="text-muted" style={{ fontSize: '0.7rem' }}>

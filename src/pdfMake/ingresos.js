@@ -8,7 +8,7 @@ const ticketIngresoIndividual = async (output, { ingreso }) => {
     
     // Usamos fecha_ingreso de la tabla ingresos
     const fechaIngreso = ingreso?.fecha_ingreso
-        ? new Date(ingreso.fecha_ingreso).toLocaleDateString()
+        ? ingreso.fecha_ingreso.split('T')[0]
         : "---";
 
     const content = [
