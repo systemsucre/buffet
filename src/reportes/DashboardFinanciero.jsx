@@ -36,7 +36,7 @@ const DashboardFinanciero = () => {
         return () => clearTimeout(timer);
     }, []);
 
-    if (cargando) return <div className="p-5 text-center">Cargando métricas...</div>;
+    if (cargando) return <div className="p-5 text-center">Cargando métricas...</div>;  
 
 
     // console.log(kpis, ' comsolidado')

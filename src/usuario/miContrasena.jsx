@@ -24,9 +24,9 @@ const MiContrasena = () => {
                                     <span className="fs-1">{'👤'}</span>
                                 </div>
                                 <h2 className="h3 fw-black text-primary text-uppercase m-0">
-                                    {'Actualizar mi Perfil'}
+                                    {'CAMBIAR MI CONTRASEÑA'}
                                 </h2>
-                                <p className="text-muted small">Mi Perfil - KR Estudios</p>
+                                <p className="text-muted small">KR Estudios</p>
                             </div>
 
                             <div className="row g-3" >
@@ -67,7 +67,7 @@ const MiContrasena = () => {
                                 </div>
                                 <div className="col-12 p-3 text-end">
                                     <button type="submit" className={`btn ${` btn-success`} px-5 py-2 fw-bold shadow-sm`} onClick={(e) => recet_(e)}>
-                                        {'ACTUALIZAR MIS DATOS'}
+                                        {'CAMBIAR MI CONTRASEÑA'}
                                     </button>
                                    
                                 </div>

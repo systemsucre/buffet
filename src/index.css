@@ -2058,13 +2058,13 @@ thead {
 .panel-custom {
   /* background: #ffffff; */
   border-radius: 10px;
-  border: 1px solid #edf2f7;
+  border: 1px solid #edf2f7;  
   /* Un borde muy sutil */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   /* Sombra suave */
   padding: 0;
   height: 100%;
-  margin: 2px;
+  margin: 4px;  
   transition: all 0.3s ease;
 }
 
