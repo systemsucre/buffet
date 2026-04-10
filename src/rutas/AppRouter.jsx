@@ -53,7 +53,7 @@ import { LayoutPorRol } from "./layout";
 import { ListaHonorariosTramite } from "../honorarios/Lista";
 import FormularioHonorario from "../honorarios/FormularioHonorarios";
 import { ReportesHonorarios } from "../reportes/reportesHonorarios";
-import { ReportesMovimientosCajas } from "../reportes/reportesMovimientosCajas";
+import { ReportesMovimientosCajas } from "../reportes/ReportesMovimientosCajas";
 import DashboardFinanciero from "../reportes/DashboardFinanciero";
 import MiPerfil from "../usuario/miPerfil";
 import MiContrasena from "../usuario/miContrasena";
