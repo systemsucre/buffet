@@ -49,6 +49,8 @@ const NavbarAuxiliar = () => {
 
         {/* Desktop Menu */}
         <ul className="nav-menu-desktop">
+          <li><NavLink to={LOCAL_URL + "/dash-1"} end className="nav-link-item">Dashboard</NavLink></li>
+
           <li><NavLink to={LOCAL_URL + "/movimientos"} end className="nav-link-item">Movimientos</NavLink></li>
 
           <div className="nav-item-container has-submenu">
@@ -68,7 +70,8 @@ const NavbarAuxiliar = () => {
             </NavLink>
             <ul className="submenu-list">
               <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/reportes-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/reporte-por-movimientos"} className="submenu-link">Movimientos</NavLink></li>
             </ul>
           </div>
 
@@ -79,7 +82,7 @@ const NavbarAuxiliar = () => {
               </NavLink>
               <ul className="submenu-list mt-4">
                 <li><NavLink to={"#"} className="submenu-link" onClick={() => auth.logout()}>Cerrar sesion <FontAwesomeIcon icon={faPowerOff} /></NavLink></li>
-                <li><NavLink to={LOCAL_URL + "/perfil"} className="submenu-link">Perfil</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/mi-perfil"} className="submenu-link">Perfil</NavLink></li>
               </ul>
             </div>
 
@@ -101,6 +104,7 @@ const NavbarAuxiliar = () => {
 
           {/* Mobile Overlay Menu */}
           <div className={`nav-menu-mobile ${isMobileMenuOpen ? 'open' : ''}`}>
+            <NavLink to={LOCAL_URL + "/dash-1"} end className="mobile-link">Dashboard</NavLink>
 
             <NavLink to={LOCAL_URL + "/movimientos"} className="mobile-link">Movimientos</NavLink>
 
@@ -120,6 +124,7 @@ const NavbarAuxiliar = () => {
               <ul className="submenu-list">
                 <li><NavLink to={LOCAL_URL + "/reportes-por-tramite"} className="submenu-link">Por Trámite</NavLink></li>
                 <li><NavLink to={LOCAL_URL + "/reporte-consolidado"} className="submenu-link">Consolidado</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/reporte-por-movimientos"} className="submenu-link">Movimientos</NavLink></li>
               </ul>
             </div>
 
@@ -127,7 +132,7 @@ const NavbarAuxiliar = () => {
               <NavLink to={'#'} className="mobile-link profile" onClick={(e) => e.preventDefault()} >Mi Perfil</NavLink>
               <ul className="submenu-list mt-4">
                 <li><NavLink to={"#"} className="submenu-link" onClick={() => auth.logout()}>Cerrar sesion <FontAwesomeIcon icon={faPowerOff} /> </NavLink> </li>
-                <li><NavLink to={LOCAL_URL + "/perfil"} className="submenu-link">Perfil</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/mi-perfil"} className="submenu-link">Perfil</NavLink></li>
               </ul>
             </div>
           </div>

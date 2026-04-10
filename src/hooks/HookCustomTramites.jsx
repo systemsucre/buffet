@@ -256,7 +256,8 @@ export const useTramites = () => {
         listarTramites();
         if (localStorage.getItem('numRol') != 4)
             cargarAuxiliares();
-    }, [listarTramites, cargarAuxiliares]);
+        // listarTramites, cargarAuxiliares
+    }, []);
 
     return {
         tramitesFiltrados, tramites,

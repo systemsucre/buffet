@@ -53,6 +53,10 @@ import { LayoutPorRol } from "./layout";
 import { ListaHonorariosTramite } from "../honorarios/Lista";
 import FormularioHonorario from "../honorarios/FormularioHonorarios";
 import { ReportesHonorarios } from "../reportes/reportesHonorarios";
+import { ReportesMovimientosCajas } from "../reportes/reportesMovimientosCajas";
+import DashboardFinanciero from "../reportes/DashboardFinanciero";
+import MiPerfil from "../usuario/miPerfil";
+import MiContrasena from "../usuario/miContrasena";
 
 
 
@@ -405,10 +409,29 @@ export default function AppRouter() {
         },
 
         {
-          path: 'reportes-consolidado',
+          path: 'reporte-por-movimientos',
+          element: <Check component={ReportesMovimientosCajas} roleRequired="all" />,
+        },
+
+        {
+          path: 'reporte-consolidado',
           element: <Check component={ReportesAdministracionConsolidado} roleRequired="all" />,
         },
 
+        {
+          path: 'dash-1',
+          element: <Check component={DashboardFinanciero} roleRequired="all" />,
+        },
+
+        {
+          path: 'mi-perfil',
+          element: <Check component={MiPerfil} roleRequired="all" />,
+        },
+
+        {
+          path: 'c-pass',
+          element: <Check component={MiContrasena} roleRequired="all" />,
+        },
       ],
     },
 

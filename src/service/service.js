@@ -49,7 +49,7 @@ async function start(url, payload = null, msg = null) {
         if (data.hasOwnProperty("sesion")) {
             console.log(data, ' sesion desde el servidor')
             handleSessionError();
-            return [];  
+            return [];
         }
 
         // console.log(data, ' res bc service')
@@ -59,7 +59,7 @@ async function start(url, payload = null, msg = null) {
             return data.data || [];
         } else {
             toast.error(data.msg || "Error desconocido");
-            
+
             return [];
         }
 
@@ -159,7 +159,7 @@ async function saveDB_IMG(url, dato, modal, estado, reload = false, vaciar = nul
  * @param {function} onSuccess - Callback opcional al tener éxito (ej: redirigir o recargar lista)
  * @param {function} setCargando - Función para cambiar el estado de carga (opcional)
  */
-async function saveDB(url, dato, onSuccess = null, setCargando = null) {
+async function saveDB(url, dato, onSuccess = null, setCargando = null, resData = false) {
     try {
         if (setCargando) setCargando(true);
         const loadingToast = toast.loading('Procesando solicitud...');
@@ -174,7 +174,8 @@ async function saveDB(url, dato, onSuccess = null, setCargando = null) {
 
             // Si pasamos una función de éxito (como navegar a la lista)
             if (onSuccess) onSuccess();
-
+            // console.log(resData, ' parametro en resData', res)
+            if (resData) return res
             return true;
         } else {
             // Manejo de errores de validación del backend (tu middleware validaciones)

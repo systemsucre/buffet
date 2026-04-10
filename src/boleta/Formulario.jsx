@@ -17,6 +17,8 @@ export const FormularioBoleta = () => {
         actualizarBoletaMasiva,
         consultarDetalleBoleta,
         itemsBoleta,
+        setters,
+        estados,
         cargando
     } = UseCustomBoletas();
 
@@ -66,6 +68,7 @@ export const FormularioBoleta = () => {
         setItemsForm(itemsForm.filter((_, i) => i !== index));
     };
 
+
     const handleGuardar = async (e) => {
         if (e) e.preventDefault();
 
@@ -102,7 +105,7 @@ export const FormularioBoleta = () => {
                                 {codigo && <p className='text-center'> <span className="badge bg-info text-dark">Editando Código: {codigo}</span></p>}
 
                             </div>
-    
+
                             {tramitesFiltrados.length > 0 ?
                                 <form onSubmit={handleGuardar} style={{ marginTop: '10px' }}>
 
@@ -175,8 +178,27 @@ export const FormularioBoleta = () => {
                                         </div>
                                     ))}
 
+                                    <div className="col-12" >
+                                        <div className="card border-primary-subtle bg-light">
+                                            <div className="card-body">
+                                                <label className="form-label-profesional text-primary fw-bold">
+                                                    <FontAwesomeIcon icon={faPlusCircle} className="me-2" />
+                                                    DOCUMENTO DE RESPALDO (EXCEL ÚNICO)
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    className="form-control form-control-profesional"
+                                                    accept=".xlsx, .xls"
+                                                    onChange={(e) => setters.setArchivoBoleta(e.target.files[0])}
+                                                />
+                                                <small className="text-muted">
+                                                    Adjunte el archivo Excel que resume todos los ítems de esta boleta.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {/* Botón de Añadir Gasto Mejorado */}
-                                    <div className="mt-2 mb-4">
+                                    <div className="mt-2 mb-4 mt-5">
                                         <button type="button" className="btn btn-add-gasto" onClick={agregarFila}>
                                             <FontAwesomeIcon icon={faPlusCircle} />
                                             Añadir otra línea de gasto
@@ -186,7 +208,7 @@ export const FormularioBoleta = () => {
                                     <div className="row align-items-center mt-5">
                                         <div className="col-md-6 text-start">
                                             <strong className="text-uppercase" style={{ letterSpacing: '1px' }}>Total Acumulado: </strong>
-                                            <span className="text-success fw-bold ms-1 fs-5">{localStorage.getItem('moneda')} {totalBoleta}</span>
+                                            <span className="text-success fw-bold ms-1 fs-5">Bs.  {totalBoleta}</span>
                                         </div>
 
                                         <div className="col-md-6 text-end btn-action-container d-flex justify-content-end gap-2" style={{ padding: '5px' }}>

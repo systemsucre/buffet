@@ -1,22 +1,92 @@
+import { faFileExcel, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { LOCAL_URL, URL } from "../Auth/config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { datosAuditoriaExtra } from "../hooks/datosAuditoriaExtra";
+import { saveDB } from "../service/service";
+
+
+const handleEliminarExcel = async (codigo) => {
+    if (window.confirm('Eliminar Archivo excel ?')) {
+        await saveDB(URL + 'boletas/eliminar-excel-boleta', {
+            codigo_boleta: codigo,
+            datosAuditoriaExtra
+        })
+        navigate(`${LOCAL_URL + '/boletas'}`)
+    }
+}
+
 export const ColumnsTable = [
-    {
-        label: 'NUM. BOLETA',
-        field: 'numero',
-        render: (row) => (
-            <div style={{ minWidth: '10px' }}>
-                <div className="fw-bold text-dark ">{row.numero_boleta}</div>
 
-            </div>
-        ),
-        sortable: true,
-    },
+    // {
+    //     label: 'CODIGO. BOLETA',
+    //     field: 'codigo',
+    //     render: (row) => (
+    //         <div className="d-flex align-items-center gap-2" style={{ minWidth: '150px' }}>
+    //             {/* Código de la Boleta */}
+    //             <div className="fw-bold text-dark">{row.codigo_boleta}</div>
 
+    //             {/* Enlace al Excel (Solo si existe) */}
+    //             {row.excel_path && (
+    //                 <a
+    //                     href={`${URL}storage/boletas/${row.excel_path}`}
+    //                     download={`${row.codigo_boleta}.xlsx`} // Sugiere el nombre al descargar
+    //                     target="_blank"
+    //                     rel="noopener noreferrer"
+    //                     className="btn btn-sm btn-outline-success border-0 p-1"
+    //                     title="Descargar Respaldo Excel"
+    //                 >
+    //                     <FontAwesomeIcon icon={faFileExcel} className="text-success" />
+    //                 </a>
+    //             )
+    //             }
+    //         </div >
+    //     ),
+    //     sortable: true,
+    // },
     {
         label: 'CODIGO. BOLETA',
         field: 'codigo',
         render: (row) => (
-            <div style={{ minWidth: '10px' }}>
+            /* Añadimos la clase 'parent-hover' para controlar los hijos con CSS */
+            <div className="d-flex align-items-center gap-2 parent-hover" style={{ minWidth: '200px', position: 'relative', overflow: 'hidden' }}>
+
                 <div className="fw-bold text-dark ">{row.codigo_boleta}</div>
+
+                {row.excel_path && (
+                    <div className="d-flex align-items-center gap-1 transition-buttons">
+                        {/* Botón de Descargar (Siempre visible o tú decides) */}
+                        <a
+                            href={`${URL}storage/boletas/${row.excel_path}`}
+                            download={`${row.codigo_boleta}.xlsx`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-sm btn-outline-success border-0 p-1"
+                            title="Descargar Respaldo Excel"
+                        >
+                            <FontAwesomeIcon icon={faFileExcel} className="text-success" />
+                        </a>
+
+                        {/* Botón de Eliminar (Oculto por defecto, aparece al hacer hover) */}
+                        <button
+                            onClick={() => handleEliminarExcel(row.codigo_boleta)} // Tu función de eliminar
+                            className="btn btn-sm btn-outline-danger border-0 p-1 btn-delete-file"
+                            title="Eliminar archivo excel"
+                        >
+                            <FontAwesomeIcon icon={faTrash} />
+                            <span className="ms-1 small text-delete">Eliminar</span>
+                        </button>
+                    </div>
+                )}
+            </div>
+        ),
+        sortable: true,
+    },
+    {
+        label: 'NUMERO BOLETA',
+        field: 'numero',
+        render: (row) => (
+            <div style={{ minWidth: '10px' }}>
+                <div className="fw-bold text-dark text-center ">{row.numero_boleta}</div>
 
             </div>
         ),

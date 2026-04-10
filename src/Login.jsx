@@ -7,6 +7,8 @@ import useAuth from "./Auth/useAuth";
 import { ComponenteCheck, InputUsuarioStandard } from './components/input/elementos';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSign, faUnlock } from '@fortawesome/free-solid-svg-icons';
 
 const HomeLogin = () => {
 
@@ -144,7 +146,7 @@ const HomeLogin = () => {
                                 </div>
 
                                 <button type="submit" className="btn btn-dark-clinical w-100 py-3 shadow-sm" >
-                                    Iniciar Sesión
+                                    Iniciar Sesión  <FontAwesomeIcon icon={faUnlock} />
                                 </button>
                             </form>
 

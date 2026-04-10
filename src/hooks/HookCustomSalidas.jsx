@@ -1,8 +1,8 @@
 import { useState, } from "react";
 import { useNavigate } from "react-router-dom";
 import ticketSalidaIndividual from "../pdfMake/salida";
-import {  URL } from '../Auth/config';
-import {  start } from '../service/service';
+import { URL } from '../Auth/config';
+import { start } from '../service/service';
 
 export const UseCustomSalidas = () => {
     const navigate = useNavigate();
@@ -92,10 +92,20 @@ export const UseCustomSalidas = () => {
     // 6. BUSCADORES
     const handleSearch = (e) => {
         const busqueda = e.target.value.toLowerCase();
-        const filtrados = salidas.filter(s =>
-            s.codigo_boleta?.toLowerCase().includes(busqueda) ||
-            s.detalle?.toLowerCase().includes(busqueda) 
-        );
+
+        const filtrados = salidas.filter(s => {
+            // Convertimos todo a String y usamos el operador || "" para evitar errores con nulos
+            const codigo = String(s.codigo_boleta || "").toLowerCase();
+            const numero = String(s.numero_boleta || "").toLowerCase();
+            const detalle = (s.detalle || "").toLowerCase();
+
+            return (
+                codigo.includes(busqueda) ||
+                numero.includes(busqueda) ||
+                detalle.includes(busqueda)
+            );
+        });
+
         setSalidasFiltradas(filtrados);
     };
 
@@ -105,7 +115,7 @@ export const UseCustomSalidas = () => {
         estados: { idTramite, monto, detalle, fechaSolicitud },
         setters: { setIdTramite, setMonto, setDetalle, setFechaSolicitud },
         listarSalidas,
-    
+
         exportPDf,
         handleSearch,
         cargarSalidaPorId,

@@ -16,7 +16,7 @@ export const UseCustomBoletas = () => {
     const [monto, setMonto] = useState({ campo: '', valido: null });
     const [detalle, setDetalle] = useState({ campo: '', valido: null });
     const [fechaSolicitud, setFechaSolicitud] = useState({ campo: '', valido: null });
-
+    const [archivoBoleta, setArchivoBoleta] = useState(null);
     // ESTADO PARA LISTADO Y MULTIPLES ITEMS
     const [boletas, setBoletas] = useState([]);
     const [boletasFiltradas, setBoletasFiltradas] = useState([]);
@@ -38,9 +38,11 @@ export const UseCustomBoletas = () => {
 
     const consultarDetalleBoleta = async (codigo_boleta) => {
         setCargando(true);
-        const res = await start(`${URL}boletas/detalles`, { codigo_boleta });  
+        const res = await start(`${URL}boletas/detalles`, { codigo_boleta });
         if (res) {
+            // console.log(res[0], ' consulta detalles')
             setItemsBoleta(res);
+            setArchivoBoleta(res[0]?.excel_path)
         }
         setCargando(false);
     };
@@ -48,24 +50,45 @@ export const UseCustomBoletas = () => {
     // 2. GUARDAR BOLETA MASIVA (Varios gastos en una boleta)
     const guardarBoletaMasiva = async (e, listaGastos) => {
         if (e) e.preventDefault();
-        if (listaGastos.length === 0) return alert("Debe agregar al menos un ítem a la boleta.");
+        setCargando(true);
 
-        const payload = {
+        // PASO 1: Guardar la data (JSON normal)
+        const dataBoleta = {
             items: listaGastos,
-            datosAuditoriaExtra
-        }; 
+            datosAuditoriaExtra,
+            // ... otros datos que ya envías
+        };
 
-        return await saveDB(
-            `${URL}boletas/crear-masivo`,
-            payload,
-            () => {
+        try {
+            const resBoleta = await saveDB(`${URL}boletas/crear-masivo`, dataBoleta, null, null, true);
 
-                console.log(`${LOCAL_URL}boletas`)
-                setTimeout(() => navigate(`${LOCAL_URL}/boletas`), 1000);
-            },
-            setCargando
-        );
+            if (resBoleta.ok && archivoBoleta) {
+                // PASO 2: Si la boleta se creó y hay un archivo, lo enviamos
+                const extension = archivoBoleta.name.split('.').pop();
+                const nombreFinal = `${resBoleta.boleta}.${extension}`;
+
+                const formData = new FormData();
+                formData.append('archivoExcel', archivoBoleta);
+                formData.append('codigo_boleta', resBoleta.boleta);
+                formData.append('nombreArchivo', nombreFinal);
+
+                await saveDB(
+                    `${URL}boletas/subir-excel-boleta`,
+                    formData,
+                    null,
+                    setCargando,
+                );
+            }
+
+            navigate(`${LOCAL_URL}/boletas`);
+        } catch (error) {
+            toast.error("Error en el proceso");
+            console.log(error)
+        } finally {
+            setCargando(false);
+        }
     };
+
 
 
     // MODIFICAR BOLETA EXISTENTE
@@ -83,16 +106,35 @@ export const UseCustomBoletas = () => {
             datosAuditoriaExtra
         };
 
-        return await saveDB(
+        // alert('ok, actualziado')
+        const resBoleta = await saveDB(
             `${URL}boletas/actualizar-masivo/`,
             payload,
-            () => {
-                setTimeout(() => navigate(`${LOCAL_URL}/boletas`), 1500);
-            },
+            null,
             setCargando,
+            true
         );
 
+        // console.log(resBoleta.ok, archivoBoleta, ' datos de la boleta')
+        if (resBoleta.ok && archivoBoleta) {
+            // PASO 2: Si la boleta se creó y hay un archivo, lo enviamos
+            const extension = archivoBoleta.name.split('.').pop();
+            const nombreFinal = `${codigo_boleta}.${extension}`;
 
+            const formData = new FormData();
+            formData.append('archivoExcel', archivoBoleta);
+            formData.append('codigo_boleta', codigo_boleta);
+            formData.append('nombreArchivo', nombreFinal);
+
+            await saveDB(
+                `${URL}boletas/subir-excel-boleta`,
+                formData,
+                null,
+                setCargando,
+            );
+        }
+
+        navigate(`${LOCAL_URL}/boletas`);
     };
 
 
@@ -175,21 +217,31 @@ export const UseCustomBoletas = () => {
     // 6. BUSCADOR POR NÚMERO DE BOLETA O DETALLE
     const handleSearchBoleta = (e) => {
         const busqueda = e.target.value.toLowerCase();
-        const filtrados = boletas.filter(b =>
-            b.numero_boleta?.includes(busqueda) ||
-            b.codigo_boleta?.toString().toLowerCase().includes(busqueda) ||
-            b.solicitado_por?.toString().toLowerCase().includes(busqueda)
-        );
+
+        const filtrados = boletas.filter(s => {
+            // Convertimos todo a String y usamos el operador || "" para evitar errores con nulos
+            const codigo = String(s.codigo_boleta || "").toLowerCase();
+            const numero = String(s.numero_boleta || "").toLowerCase();
+            const detalle = (s.solicitado_po || "").toLowerCase();
+
+            return (
+                codigo.includes(busqueda) ||
+                numero.includes(busqueda) ||
+                detalle.includes(busqueda)
+            );
+        });
+
         setBoletasFiltradas(filtrados);
     };
+
 
     return {
         boletas,
         itemsBoleta,
         boletasFiltradas,
         cargando,
-        estados: { idBoleta, idTramite, monto, detalle, fechaSolicitud },
-        setters: { setIdBoleta, setIdTramite, setMonto, setDetalle, setFechaSolicitud },
+        estados: { idBoleta, idTramite, monto, detalle, fechaSolicitud, archivoBoleta, },
+        setters: { setIdBoleta, setIdTramite, setMonto, setDetalle, setFechaSolicitud, setArchivoBoleta },
         listarBoletas,
         guardarBoletaMasiva,
         actualizarBoletaMasiva,

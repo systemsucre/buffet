@@ -1768,7 +1768,7 @@ button:not(:disabled),
 }
 
 /* --- RESPONSIVE --- */
-@media (max-width: 1200px) {
+@media (max-width: 1250px) {
   .nav-menu-desktop {
     display: none;
   }
@@ -2064,7 +2064,7 @@ thead {
   /* Sombra suave */
   padding: 0;
   height: 100%;
-  margin: 5px;
+  margin: 2px;
   transition: all 0.3s ease;
 }
 
@@ -2494,4 +2494,47 @@ thead {
   background: #1bbec0 !important;
   color: white !important;
   border-style: solid !important;
+}
+
+
+
+/* // elimnar desde la tabla */
+
+/* Contenedor del grupo de botones */
+.transition-buttons {
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    display: none;
+}
+
+/* Estilo inicial del botón de eliminar (Invisible y desplazado a la derecha) */
+.btn-delete-file {
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    background-color: transparent;
+}
+
+/* Solo mostramos el texto 'Eliminar' en pantallas más anchas o si realmente quieres el texto */
+.text-delete {
+    display: none;
+}
+
+/* EFECTO HOVER */
+.parent-hover:hover .btn-delete-file {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Opcional: Si quieres que el texto aparezca también */
+.parent-hover:hover .text-delete {
+    display: inline;
+}
+
+/* Cambio de color al pasar sobre el de eliminar */
+.btn-delete-file:hover {
+    background-color: #fff1f0 !important;
+    color: #dc3545 !important;
 }
