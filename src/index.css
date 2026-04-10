@@ -343,6 +343,10 @@ button {
   border-radius: 0;
 }
 
+.mb-4{
+  margin-bottom: 1.5rem;
+}
+
 button:focus:not(:focus-visible) {
   outline: 0;
 }
@@ -2064,6 +2068,7 @@ thead {
   /* Sombra suave */
   padding: 0;
   height: 100%;
+  padding-bottom: 4rem;
   margin: 4px;  
   transition: all 0.3s ease;
 }

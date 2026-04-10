@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
+import * as ss from 'simple-statistics';
+
 import { URL } from "../Auth/config";
 import { start } from '../service/service';
 
@@ -8,6 +10,40 @@ export const useDashboard = () => {
     const [stats, setStats] = useState([]);
     const [kpis, setKpis] = useState({ ingresos: 0, gastos: 0, saldo: 0, activos: 0 });
     const [cargando, setCargando] = useState(true);
+    const [historicoAll, setHistoricoAll] = useState([]);
+    const [dataConPrediccion, setDataConPrediccion] = useState([]);
+
+
+    const predecirFuturoFinanciero = async (historico) => {
+
+        // 1. Preparamos los puntos (x = mes consecutivo, y = utilidad)
+        // Utilidad = Ingresos - Gastos
+        const datosUtilidad = historico.map((h, index) => [index, h.total_ingresos - h.total_gastos]);  
+
+        if (datosUtilidad.length < 2) return "Datos insuficientes para predecir";
+
+        // 2. Calculamos la línea de tendencia (Regresión Lineal)
+        const linea = ss.linearRegression(datosUtilidad);
+        const proyector = ss.linearRegressionLine(linea);
+
+        // 3. Predecimos el próximo mes (el índice siguiente al último)
+        const proximoMesIndice = datosUtilidad.length;
+        const utilidadPredicha = proyector(proximoMesIndice);
+
+        // 4. Analizamos la "salud" del futuro
+        let mensaje = "";
+        if (linea.m > 0) {
+            mensaje = `Tendencia alcista. Se estima una utilidad de Bs. ${utilidadPredicha.toFixed(2)} para el próximo mes.`;
+        } else {
+            mensaje = `¡Ojo! Tendencia a la baja. Podrías terminar el próximo mes con Bs. ${utilidadPredicha.toFixed(2)}.`;
+        }
+
+        return {
+            prediccion: utilidadPredicha,
+            pendiente: linea.m,
+            mensaje: mensaje
+        };
+    };
 
     // FUNCIÓN ÚNICA DE CARGA
     const cargarDatos = useCallback(async () => {
@@ -55,15 +91,25 @@ export const useDashboard = () => {
         if (resCajas) setCajas(resCajas);
     };
 
+
+    const listarHistorico = async () => {
+        const h = await start(`${URL}comuun/historico-ia`, {});
+        setHistoricoAll(h)
+        const dh = await predecirFuturoFinanciero(h)
+        // console.log(dataPrediccion, ' data prediccion')
+        setDataConPrediccion(dh)
+    };
+
     // Solo se ejecuta al montar el componente
     useEffect(() => {
         // listarConfiguracion();
+        listarHistorico()
         cargarDatos();
     }, []);
 
     return {
-        kpis, stats, 
-         cajas, cargando,
+        kpis, stats,
+        cajas, cargando, dataConPrediccion,historicoAll,
         refresh: cargarDatos // Esta función ahora acepta un ID opcional
     };
 };
