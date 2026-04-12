@@ -41,7 +41,7 @@ export const useDashboard = () => {
         return {
             prediccion: utilidadPredicha,
             pendiente: linea.m,
-            mensaje: mensaje
+            mensaje: mensaje||'Lista con poca información'
         };
     };
 

@@ -85,7 +85,8 @@ const DashboardFinanciero = () => {
 
     // Alta desviación: Un mes ganas mucho y otro nada(riesgoso).
     const utilidades = historicoAll.map(h => h.total_ingresos - h.total_gastos);
-    const volatilidad = ss.standardDeviation(utilidades);
+    // Antes: ss.standardDeviation(utilidades)
+    const volatilidad = utilidades.length > 0 ? ss.standardDeviation(utilidades) : 0;
     // Si la volatilidad es muy alta comparada con el promedio, necesitas un fondo de emergencia.
 
 
@@ -147,7 +148,11 @@ const DashboardFinanciero = () => {
 
 
 
-    const sueldoSeguro = ss.quantile(utilidades.filter(u => u > 0), 0.20);
+    // Antes: ss.quantile(...)
+    const utilidadesFiltradas = utilidades.filter(u => u > 0);
+    const sueldoSeguro = utilidadesFiltradas.length > 0
+        ? ss.quantile(utilidadesFiltradas, 0.20)
+        : 0;
     // El 80% de los meses hemos ganado al menos esta cantidad. 
     //     Interpretación: El percentil 0.20 (20%) actuando sobre tus meses activos significa que, estadísticamente, el 80% de las veces tu utilidad será igual o mayor a Bs. 1588.20.
 
@@ -160,27 +165,28 @@ const DashboardFinanciero = () => {
     // Para que tu mensaje de la IA sea honesto, puedes añadir el margen de error a la predicción.
     const datosParaRegresion = utilidadesActivas.map((u, index) => [index + 1, u]);
 
-    // 1. Calculamos la línea (m y b)
-    const linea = ss.linearRegression(datosParaRegresion);
-    const formula = ss.linearRegressionLine(linea);
+    // 1. Validamos que existan suficientes datos para una línea
+    const puedeCalcularRegresion = datosParaRegresion.length >= 2;
 
-    // 2. Calculamos los Errores (Residuos)
-    // Comparamos lo que predice la línea vs lo que realmente ganaste
-    const residuos = datosParaRegresion.map(punto => {
-        const [x, yReal] = punto;
-        const yPredicho = formula(x);
-        return Math.pow(yReal - yPredicho, 2); // Error al cuadrado
-    });
+    let linea = null;
+    let formula = () => 0;
+    let errorEstandar = 0;
 
+    if (puedeCalcularRegresion) {
+        linea = ss.linearRegression(datosParaRegresion);
+        formula = ss.linearRegressionLine(linea);
 
-    // 3. Error Estándar de la Estimación (Raíz de la varianza de  los residuos)
-    const sumaResiduos = ss.sum(residuos);
-    const n = datosParaRegresion.length;
-    // Usamos n - 2 porque estamos estimando dos parámetros (m y b)
-    const errorEstandar = Math.sqrt(sumaResiduos / (n - 2));
+        const residuos = datosParaRegresion.map(punto => {
+            const [x, yReal] = punto;
+            const yPredicho = formula(x);
+            return Math.pow(yReal - yPredicho, 2);
+        });
 
-    // console.log(`Margen de error: ± Bs. ${errorEstandar.toFixed(2)}`);
-
+        const sumaResiduos = ss.sum(residuos);
+        const n = datosParaRegresion.length;
+        // Evitamos división por cero o negativo con n > 2
+        errorEstandar = n > 2 ? Math.sqrt(sumaResiduos / (n - 2)) : 0;
+    }
 
     return (
         <main className="container-xl mt-5" style={{ maxWidth: "100%", marginTop: '2rem' }}>

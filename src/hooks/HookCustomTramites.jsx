@@ -26,6 +26,8 @@ export const useTramites = () => {
     // --- ESTADOS PARA LISTADO Y AUXILIARES ---
     const [tramites, setTramites] = useState([]);
     const [tramitesFiltrados, setTramitesFiltrados] = useState([]);
+    const [tramitesFiltradosBoleta, setTramitesFiltradosBoleta] = useState([]);
+
     const [cargando, setCargando] = useState(false);
 
     // Listas para los Selects del formulario
@@ -55,7 +57,7 @@ export const useTramites = () => {
             setTramites(res);
             const activos = res.filter(t => t.eliminado > 0 && t.estado === 1);
             // setTramites(activos);
-            setTramitesFiltrados(activos);
+            setTramitesFiltradosBoleta(activos);
         }
         setCargando(false);
     };
@@ -260,7 +262,7 @@ export const useTramites = () => {
     }, []);
 
     return {
-        tramitesFiltrados, tramites,
+        tramitesFiltrados, tramites,tramitesFiltradosBoleta,
         auxiliares: { listaClientes, listaTipos },
         handleSearch,
         cargando,

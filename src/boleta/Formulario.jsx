@@ -11,7 +11,7 @@ export const FormularioBoleta = () => {
     const { codigo } = useParams();
     const navigate = useNavigate();
 
-    const { listarTramitesActivos, tramitesFiltrados } = useTramites();
+    const { listarTramitesActivos, tramitesFiltradosBoleta } = useTramites();
     const {
         guardarBoletaMasiva,
         actualizarBoletaMasiva,
@@ -106,7 +106,7 @@ export const FormularioBoleta = () => {
 
                             </div>
 
-                            {tramitesFiltrados.length > 0 ?
+                            {tramitesFiltradosBoleta.length > 0 ?
                                 <form onSubmit={handleGuardar} style={{ marginTop: '10px' }}>
 
                                     {itemsForm.map((item, index) => (
@@ -132,8 +132,8 @@ export const FormularioBoleta = () => {
                                                     <Select
                                                         placeholder={'Seleccione trámite...'}
                                                         onChange={(e) => actualizarFila(index, 'id_tramite', e ? e.value : '')}
-                                                        options={tramitesFiltrados}
-                                                        value={tramitesFiltrados.find(opt => String(opt.value) === String(item.id_tramite)) || null}
+                                                        options={tramitesFiltradosBoleta}
+                                                        value={tramitesFiltradosBoleta.find(opt => String(opt.value) === String(item.id_tramite)) || null}
                                                         // getOptionLabel={(e) => (
                                                         //     `${e.label} | Saldo: ${localStorage.getItem('moneda')} ${Number(e.saldoDisponible || 0).toLocaleString('es-BO')}`
                                                         // )}
