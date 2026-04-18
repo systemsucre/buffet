@@ -102,10 +102,10 @@ export const DetallesBoleta = () => {
                         </div>
                     </div>
                     <div className="card-body bg-light border-bottom py-4 px-4 mt-3">
-                        <button className="btn btn-pdf btn-lg px-4 shadow-sm" onClick={() => exportarBoletaPDF('print', infoCabecera)}>
+                        <button className="btn btn-pdf btn-lg px-4 shadow-sm" onClick={() => exportarBoletaPDF(window.innerWidth < 1100 ? 'b64' : "print", infoCabecera)}>
                             <FontAwesomeIcon icon={faFilePdf} className="me-2" />
                         </button>
-                        {infoCabecera?.estado === 1 && parseInt(localStorage.getItem('id')) === infoCabecera?.usuario ?
+                        {infoCabecera?.estado === 1 && parseInt(localStorage.getItem('id')) === infoCabecera?.usuario ?   
                             <>
                                 <button className="btn btn-info btn-lg px-4 shadow-sm" onClick={() => navigate(`${LOCAL_URL}/modificar-boleta/${codigo}`)}>
                                     <FontAwesomeIcon icon={faEdit} className="me-2" />
