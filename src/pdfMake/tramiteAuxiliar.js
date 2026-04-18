@@ -41,7 +41,10 @@ const reporteConsolidoTramiteAuxiliar = async (output, { tramite, ingresos = [],
                     [
                         { text: 'DETALLE:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.detalle, colSpan: 3 }, {}, {}
                     ],
-                  
+                    [
+                        { text: 'OBSERVACIONES:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.otros, colSpan: 3 }, {}, {}
+                    ],
+
                 ]
             },
             layout: 'lightHorizontalLines'

@@ -35,7 +35,7 @@ const reporteConsolidoTramite = async (output, { tramite, ingresos = [], salidas
                 body: [
                     [
                         { text: 'CÓDIGO TRAMITE:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.codigo },
-                        { text: ' NUMERO TRAMITE:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.numero  }
+                        { text: ' NUMERO TRAMITE:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.numero }
                     ],
                     [
                         { text: 'CLIENTE:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.cliente_nombre || 'S/D', colSpan: 3 }, {}, {}
@@ -44,7 +44,10 @@ const reporteConsolidoTramite = async (output, { tramite, ingresos = [], salidas
                         { text: 'DETALLE:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.detalle, colSpan: 3 }, {}, {}
                     ],
                     [
-                        { text: 'FECHA INGRESO: ', bold: true, fillColor: '#f2f2f2' }, { text:  new Date(tramite.fecha_ingreso).toLocaleDateString(), colSpan: 3 }, {}, {}
+                        { text: 'OBSERVACIONES:', bold: true, fillColor: '#f2f2f2' }, { text: tramite.otros, colSpan: 3 }, {}, {}
+                    ],
+                    [
+                        { text: 'FECHA INGRESO: ', bold: true, fillColor: '#f2f2f2' }, { text: new Date(tramite.fecha_ingreso).toLocaleDateString(), colSpan: 3 }, {}, {}
                     ]
                 ]
             },
@@ -84,7 +87,7 @@ const reporteConsolidoTramite = async (output, { tramite, ingresos = [], salidas
         { text: 'DETALLE DE EGRESOS / GASTOS', style: 'nhcheader', margin: [0, 10, 0, 5], color: '#dc3545' },
 
         // 4. TABLA DE SALIDAS
-        
+
         {
             table: {
                 headerRows: 1,
