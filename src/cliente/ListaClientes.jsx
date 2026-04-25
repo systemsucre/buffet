@@ -14,6 +14,7 @@ export function ListaClientes() {
 
     const {
         clientesFiltrados,
+        clientes,
         cargando,
         toggleEstadoCliente,
         handleSearch,
@@ -36,8 +37,8 @@ export function ListaClientes() {
                     <div className="d-flex align-items-center mb-3 bg-white p-3 shadow-sm row m-0">
                         <div className="col-sm-6">
                             <div className="d-flex gap-2">
-                                <button className="btn btn-light btn-sm border" onClick={allList}>Todos</button>
-                                <button className="btn btn-light btn-sm border text-primary" onClick={listUsuariosActivos}>Activos</button>
+                                <button className="btn btn-light btn-sm border" onClick={allList}>Todos({clientes.length})</button>
+                                <button className="btn btn-light btn-sm border text-primary" onClick={listUsuariosActivos}>Activos ({clientesFiltrados.length})</button>
                             </div>
                         </div>
                         <div className="col-sm-6 d-flex justify-content-end">

@@ -122,6 +122,7 @@ export const useClientes = () => {
     };
 
     const listUsuariosActivos = () => {
+        console.log()
         setClientesFiltrados(clientes.filter(u => u.estado == 1));
     };
 
@@ -133,7 +134,7 @@ export const useClientes = () => {
     }, [listarClientes]);
 
     return {
-        clientesFiltrados,
+        clientesFiltrados,clientes,
         handleSearch,
         cargando,
         estados: { nombre, ap1, ap2, ci, celular, direccion, estado },
