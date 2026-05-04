@@ -24,7 +24,7 @@ const DataTable = ({ columns, data, funciones }) => {
                                     </td>
                                 ))}
                               {funciones.length>0 ?<td>
-                                    <div className="contenedor-botones">
+                                    <div className="contenedor-botones" style={{ display: 'flex', gap: '5px' }}> 
                                       
                                         {funciones.map((f, index) => {
                                             // Resolvemos los valores dinámicos ejecutando la función si es necesario

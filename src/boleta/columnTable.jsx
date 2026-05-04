@@ -1,9 +1,9 @@
-import { faFileExcel, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faFileExcel, faTrash, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { LOCAL_URL, URL } from "../Auth/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { datosAuditoriaExtra } from "../hooks/datosAuditoriaExtra";
 import { saveDB } from "../service/service";
-
+import { formatearFechaYHora } from "../components/FormtaarFecha";
 
 const handleEliminarExcel = async (codigo) => {
     if (window.confirm('Eliminar Archivo excel ?')) {
@@ -17,40 +17,41 @@ const handleEliminarExcel = async (codigo) => {
 
 export const ColumnsTable = [
 
-    // {
-    //     label: 'CODIGO. BOLETA',
-    //     field: 'codigo',
-    //     render: (row) => (
-    //         <div className="d-flex align-items-center gap-2" style={{ minWidth: '150px' }}>
-    //             {/* Código de la Boleta */}
-    //             <div className="fw-bold text-dark">{row.codigo_boleta}</div>
+    {
+        label: 'Fecha y Hora',
+        field: 'fecha',
+        render: (row) => {
+            const info = formatearFechaYHora(row.fecha);
+            return (
+                <div className="movimiento-banco-wrapper">
+                    {/* Cabecera con icono de calendario */}
+                    <div className="fecha-header">
+                        {/* <i className="bi bi-calendar3 me-2"></i> */}
+                        <FontAwesomeIcon className="me-2" icon={faCalendarAlt} />
+                        {info.fechaLarga}
+                        {/* Hora (solo se muestra si existe) */}
+                        {info.hora && (
+                            <div className="hora-detalle">
 
-    //             {/* Enlace al Excel (Solo si existe) */}
-    //             {row.excel_path && (
-    //                 <a
-    //                     href={`${URL}storage/boletas/${row.excel_path}`}
-    //                     download={`${row.codigo_boleta}.xlsx`} // Sugiere el nombre al descargar
-    //                     target="_blank"
-    //                     rel="noopener noreferrer"
-    //                     className="btn btn-sm btn-outline-success border-0 p-1"
-    //                     title="Descargar Respaldo Excel"
-    //                 >
-    //                     <FontAwesomeIcon icon={faFileExcel} className="text-success" />
-    //                 </a>
-    //             )
-    //             }
-    //         </div >
-    //     ),
-    //     sortable: true,
-    // },
+                                {info.hora}
+                            </div>
+                        )}
+                    </div>
+
+
+                </div>
+            );
+        }
+    },
+
     {
         label: 'CODIGO. BOLETA',
         field: 'codigo',
         render: (row) => (
             /* Añadimos la clase 'parent-hover' para controlar los hijos con CSS */
-            <div className="d-flex align-items-center gap-2 parent-hover" style={{ minWidth: '200px', position: 'relative', overflow: 'hidden' }}>
+            <div >
 
-                <div className="fw-bold text-dark ">{row.codigo_boleta}</div>
+                <div className="td-descripcion">{row.codigo_boleta}</div>
 
                 {row.excel_path && (
                     <div className="d-flex align-items-center gap-1 transition-buttons">
@@ -81,66 +82,49 @@ export const ColumnsTable = [
         ),
         sortable: true,
     },
-    {
-        label: 'NUMERO BOLETA',
-        field: 'numero',
-        render: (row) => (
-            <div style={{ minWidth: '10px' }}>
-                <div className="fw-bold text-dark text-center ">{row.numero_boleta}</div>
+    window.innerWidth > 877 ?
+        {
+            label: 'Numero Boleta',
+            field: 'numero_boleta',
+            render: (row) => (
+                <div className="td-numero">
+                    <span className="ms-2"> {row.numero_boleta}</span>
+                </div>
+            )
+        } : {},
 
-            </div>
-        ),
-        sortable: true,
-    },
 
-    {
-        label: 'Fecha solicitud',
-        field: 'created_at',
-        render: (row) => {
-            const fecha = new Date(row.fecha?.split(" ")[0])
-            return (
-                <div className="small text-secondary">
-                    <i className="bi bi-calendar3 me-1"></i>
-                    {fecha.toLocaleDateString('es-BO')}
-                    <br />
-                    <span className="text-muted" style={{ fontSize: '0.7rem' }}>
-                        {fecha.toLocaleTimeString('es-BO', { hour: '2-digit', minute: '2-digit' })}
+    window.innerWidth > 877 ?
+        {
+            label: 'Items',
+            field: '_items',
+            render: (row) => (
+                <div className="text-center">
+                    <span className="fw-bold text-dark" style={{ fontSize: '0.85rem' }}>
+                        {row.total_items}
                     </span>
                 </div>
-            );
-        }
-    },
-    {
-        label: 'Items',
-        field: 'items',
-        render: (row) => (
-            <div className="text-center">
-                <span className="fw-bold text-dark" style={{ fontSize: '1.05rem' }}>
-                    {row.total_items}
-                </span>
-            </div>
-        )
-    },
-    {
-        label: 'Monto',
-        field: 'monto',
-        render: (row) => (
-            <div className="text-center">
-                <span className="fw-bold text-dark" style={{ fontSize: '1.05rem' }}>
-                    Bs. {Number(row.monto_total || 0).toLocaleString('es-BO', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    })}
-                </span>
-            </div>
-        )
-    },
+            ),
+        } : {},
+
+    window.innerWidth > 877 ?
+        {
+            label: 'Monto',
+            field: 'monto',
+            render: (row) => (
+                <div className="text-center">
+                    <span className="fw-bold text-dark" style={{ fontSize: '0.85rem' }}>
+                        {row.simbolo} {row.monto_total}
+                    </span>
+                </div>
+            ),
+        } : {},
     {
         label: 'Usuario Solicitante',
         field: 'solicitante',
         render: (row) => (
-            <div style={{ minWidth: '10px' }}>
-                <small className="text-muted" style={{ fontSize: '0.9rem' }}>
+            <div className="td-numero">
+                <small className="ms-2" >
                     {row.solicitado_por}
                 </small>
             </div>
@@ -152,20 +136,44 @@ export const ColumnsTable = [
         field: 'estado',
         render: (row) => {
             const estados = {
-                1: { badge: 'bgss-secondary text-dark', texto: 'SOLICITADO', icon: 'bi-hourglass-split' },
-                2: { badge: 'bg-info text-white', texto: 'APROBADO', icon: 'bi-check-circle' },
-                3: { badge: 'bg-success text-white', texto: 'DESPACHADO', icon: 'bi-cash-stack' },
-                4: { badge: 'bg-danger text-white', texto: 'RECHAZADO', icon: 'bi-x-circle' }
+                1: {
+                    badge: 'bgss-secsondary text-secondary',
+                    texto: 'SOLICITADO',
+                    icon: 'bi-hourglass-split',
+                },
+                2: {
+                    badge: 'bg-infos text-info',
+                    texto: 'APROBADO',
+                    icon: 'bi-check-circle',
+                },
+                3: {
+                    badge: 'tex-success text-success',
+                    texto: 'REGISTRADO',
+                    icon: 'bi-cash-stack',
+                },
+                4: {
+                    badge: 'bg-danger text-danger',
+                    texto: 'RECHAZADO',
+                    icon: 'bi-x-circle',
+                },
             };
 
-            const est = estados[row.estado] || { badge: 'bg-secondary', texto: 'DESCONOCIDO', icon: 'bi-question' };
+            const est = estados[row.estado] || {
+                badge: 'bg-secondary',
+                texto: 'DESCONOCIDO',
+                icon: 'bi-question',
+            };
 
             return (
-                <span className={`badge ${est.badge} d-flex align-items-center w-fit-content px-2 py-1`}>
+                <span
+                    className={`badge ${est.badge} d-flex align-items-center w-fit-content px-2 py-1 `}
+                    style={{ fontSize: '0.85rem', fontWeight: '600' }}
+                >
                     <i className={`bi ${est.icon} me-1`}></i>
                     {est.texto}
                 </span>
             );
-        }
-    }
+        },
+    },
+
 ];

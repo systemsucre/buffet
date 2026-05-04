@@ -1,7 +1,8 @@
 import {
 
     faEye,
-    faPlus
+    faPlus,
+    faSearch
 } from "@fortawesome/free-solid-svg-icons";
 
 import DataTable from "../components/DataTable";
@@ -53,44 +54,68 @@ export function ListaBoleta() {
 
     return (
         <>
-            <main className="container-xl mt-2" style={{ maxWidth: "100%", padding: '3px' }}>
-                <div className="d-flex justify-content-between align-items-center mb-4 m-2">
-                    <div>
-                        <h3 className="text-dark fw-bold mb-0 text-titulos text-titulos">Gestión de Boletas de Gasto</h3>
+            <main className="container-xl mt-2" >
+
+                <div className="panel-custom  rounded shadow-sm mx-2">
+                    <div className="banco-header-section mb-4">
+                        <div className="banco-title-container">
+                            <h3 className="banco-title-main">Gestión de Boletas de Gasto</h3>
+                            <p className="banco-subtitle">Administra y revisa tus solicitudes de fondos</p>
+                        </div>
                     </div>
-
-                </div>
-                <div className=" d-flex justify-content-end gap-2 " style={{ marginBottom: '10px' }}>
-                    < button
-                        className="btn btn-success  fw-bold"
-                        onClick={() => navigate(LOCAL_URL + `/nueva-boleta`)}
-                    >
-                        <FontAwesomeIcon icon={faPlus} className="me-2" /> REGISTRAR BOLETA
-                    </button>
-                </div>
-
-                <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">
-                    <div className="row align-items-center mb-3 g-3">
-                        <div className="col-xl-8 ">
+                    <div className="banco-filter-row">
+                        <div className="banco-tabs-container">
                             <div className="d-flex1  gap-2">
-                                <button className={`btn btn-sm border fw-bold ${filtroEstado === 'MIOS' ? 'btn-dark' : 'text-success'}`}
+                                <button
+                                    className={`banco-tab-item ${filtroEstado === 'MIOS' ? 'active' : ''}`}
                                     onClick={() => setFiltroEstado('MIOS')}>
                                     MIS BOLETAS <span>({mios})</span>
                                 </button>
-                                <button className="btn  btn-sm border text-success fw-bold" onClick={() => setFiltroEstado('TODOS')}>TODOS <span className="fw-bold mb-0 text-success">({boletasFiltradas.length})</span></button>
-                                <button className="btn  btn-sm border text-warning fw-bold" onClick={() => setFiltroEstado(1)}>SOLICITADOS <span className="fw-bold mb-0 text-warning">{countSolicitados}</span></button>
-                                <button className="btn  btn-sm border text-primary fw-bold" onClick={() => setFiltroEstado(2)}>APROBADOS <span className="fw-bold mb-0 text-primary">{countAprobados}</span></button>
-                                <button className="btn  btn-sm border text-success fw-bold" onClick={() => setFiltroEstado(3)}>DESPACHADOS <span className="fw-bold mb-0 text-success">{countDespachados}</span></button>
-                                {/* <button className="btn  btn-sm border text-danger fw-bold" onClick={() => setFiltroEstado(4)}>RECHAZADOS <span className="fw-bold mb-0 text-danger">{countRechazados}</span></button> */}
+
+                                <button
+                                    className={`banco-tab-item ${filtroEstado === 'TODOS' ? 'active' : ''}`}
+                                    onClick={() => setFiltroEstado('TODOS')}>
+                                    MIS BOLETAS <span>({boletasFiltradas.length})</span>
+                                </button>
+
+                                <button
+                                    className={`banco-tab-item ${filtroEstado === 1 ? 'active' : ''}`}
+                                    onClick={() => setFiltroEstado(1)}>
+                                    SOLICITADOS <span>({countSolicitados})</span>
+                                </button>
+                                <button
+                                    className={`banco-tab-item ${filtroEstado === 2 ? 'active' : ''}`}
+                                    onClick={() => setFiltroEstado(2)}>
+                                    APROBADOS <span>({countAprobados})</span>
+                                </button>
+
+                                 <button
+                                    className={`banco-tab-item ${filtroEstado === 2 ? 'active' : ''}`}
+                                    onClick={() => setFiltroEstado(3)}>
+                                    DEPSPACHADOS <span>({countDespachados})</span>
+                                </button>
+
                             </div>
                         </div>
 
 
-                        <div className="col-xl-4 ">
-                            <InputUsuarioSearch
+                        <div className="banco-search-wrapper">
+                            <FontAwesomeIcon
+                                icon={faSearch}
+                                style={{
+                                    position: 'absolute',
+                                    left: '18px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    color: '#8e8e93',
+                                    zIndex: 1
+                                }}
+                            />
+                            <input
                                 name="search-boleta"
                                 placeholder="Buscar por Nro/código Boleta o solicitante "
                                 onChange={handleSearchBoleta}
+                                className="banco-input-search"
                             />
                         </div>
                     </div>

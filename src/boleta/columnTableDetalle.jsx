@@ -1,84 +1,85 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { formatearFechaYHora } from "../components/FormtaarFecha";
+import { faCalendar, faListNumeric, faTimeline } from "@fortawesome/free-solid-svg-icons";
+
 export const ColumnsTableDetalle = [
-    // {
-    //     label: 'ITEM',
-    //     field: 'numero',
-    //     render: (row) => (
-    //         <div style={{ minWidth: '10px' }}>
-    //             <div className="fw-bold text-dark ">{row.numero}</div>
-
-    //         </div>
-    //     ),
-    //     sortable: true,
-    // },
-
-
-
     {
-        label: 'Código Tramite',
-        field: 'codigo',
-        render: (row) =>
-            <div> <span className="fw-bold text-primary">{row.codigo_tramite}</span></div>
-    },
-    {
-        label: 'CLIENTE',
-        field: 'cliente',
+        label: 'Fecha y Hora',
+        field: 'fecha_solicitud',
         render: (row) => {
+            const info = formatearFechaYHora(row.fecha_solicitud);
             return (
-                <div className={`fw-bold  text-dark`} style={{ fontSize: '0.7rem' }}>
-                    {row.cliente}
+                <div className="movimiento-banco-wrapper">
+                    {/* Cabecera con icono de calendario */}
+                    <div className="fecha-header">
+                        {/* <i className="bi bi-calendar3 me-2"></i> */}
+                        <FontAwesomeIcon className="me-2" icon={faCalendar} />
+                        {info.fechaLarga}
+                        {/* Hora (solo se muestra si existe) */}
+                        {info.hora && (
+                            <div className="hora-detalle">
+
+                                {info.hora}
+                            </div>
+                        )}
+                    </div>
+
+
                 </div>
             );
         }
     },
+
     {
-        label: 'Detalle del Gasto',
+        label: 'Detalle',
         field: 'detalle',
-        render: (row) => {
-            return (
-                <div className="small text-secondary">
-                    {row.detalle?.length < 20 ?
-                        <div className="text-dark">{row.detalle}</div> :
-                        <small className="text-muted" style={{ fontSize: '0.7rem' }}>
-                            {row.detalle?.substring(0, 40)}...
-                        </small>
-                    }
-                </div>
-            );
-        }
-    },
-    {
-        label: 'Monto',
-        field: 'monto',
         render: (row) => (
-            <div className="text-center">
-                <span className="fw-bold text-dark" style={{ fontSize: '1.05rem' }}>
-                    Bs. {Number(row.monto || 0).toLocaleString('es-BO', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    })}
-                </span>
+            <div className="td-descripcion">
+                {row.detalle?.substring(0, 100)}
             </div>
         )
     },
 
     {
-        label: 'Estado Item',
-        field: 'estado',
-        render: (row) => {
-            const estados = {
-                1: { badge: 'bgss-secondary text-dark', texto: 'SOLICITADO', icon: 'bi-hourglass-split' },
-                2: { badge: 'bg-info text-white', texto: 'APROBADO', icon: 'bi-check-circle' },
-                3: { badge: 'bg-success text-white', texto: 'DESPACHADO', icon: 'bi-cash-stack' },
-                4: { badge: 'bg-danger text-white', texto: 'RECHAZADO', icon: 'bi-x-circle' }
-            };
+        label: 'Caja',
+        field: 'codigo',
+        render: (row) => (
+            <div className="td-detalle">
+                {row.codigo_tramite && <span className="ms-2">{row.codigo_tramite}</span>}
+            </div>
+        )
+    },
 
-            const est = estados[row.estado] || { badge: 'bg-secondary', texto: 'DESCONOCIDO', icon: 'bi-question' };
+    {
+        label: 'CLIENTE',
+        field: 'cliente',
+        render: (row) => {
+            return (
+                <div className="td-numero">
+                    <span className="ms-2">   {row.cliente}</span>
+                </div>
+            );
+        }
+    },
+
+
+
+    {
+        label: 'Monto',
+        field: 'monto',
+        render: (row) => {
+            // Lógica de color: si es egreso rojo, si es ingreso verde
+            const esEgreso = row.estado === 4 || row.monto < 0;
+            const colorMonto = esEgreso ? '#e53e3e' : '#38a169';
+            const prefijo = esEgreso ? '-' : '';
 
             return (
-                <span className={`badge ${est.badge} d-flex align-items-center w-fit-content px-2 py-1`}>
-                    <i className={`bi ${est.icon} me-1`}></i>
-                    {est.texto}
-                </span>
+                <div className="td-monto" style={{ color: colorMonto }}>
+                    Bs. {Number(row.monto || 0).toLocaleString('es-BO', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    })}
+                </div>
             );
         }
     }

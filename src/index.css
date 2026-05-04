@@ -439,6 +439,7 @@ button:not(:disabled),
   padding-left: calc(var(--bs-gutter-x) * 0.5); */
   margin-right: auto;
   margin-left: auto;
+  padding-top: 6rem;
 }
 
 @media (max-width: 500px) {
@@ -1520,12 +1521,12 @@ button:not(:disabled),
 /* --- NAVEGACIÓN BASE (CENTRADA Y AJUSTABLE) --- */
 .nav-main {
   position: fixed;
-  top: 5px; /* Tu margen superior */
+  /* top: 5px; Tu margen superior */
   
   /* EL SECRETO DEL CENTRADO CON MÁRGENES FIJOS */
-  left: 5px; 
-  right: 5px;
-  width: calc(100% - 10px); /* 100% menos la suma de los márgenes (8px + 8px) */
+  /* left: 5px;  */
+  /* right: 5px; */
+  width: 100%; /* 100% menos la suma de los márgenes (8px + 8px) */
   
   height: 85px;
   display: flex;
@@ -1536,7 +1537,7 @@ button:not(:disabled),
   /* ESTILO VISUAL */
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px); /* Toque Pro: desenfoca el fondo de finanzas al pasar */
-  border-radius: 8px;
+  /* border-radius: 8px; */
   border: 1px solid rgba(255, 255, 255, 0.3); /* Borde sutil para resaltar */
   
   /* Eliminamos margin-left manual para que left/right hagan el trabajo */
@@ -1881,6 +1882,237 @@ button:not(:disabled),
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Contenedor principal del encabezado */ 
+.banco-header-section {
+    padding: 10px 15px;
+    border-left: 4px solid #fbfbfb; /* Línea de acento azul BancoEstado */
+    margin-left: 5px;
+}
+
+/* Título Principal */
+.banco-title-main {
+    color: #ffffff; /* Casi negro para legibilidad alta */
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 2px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Subtítulo descriptivo (opcional, pero le da el look de App) */
+.banco-subtitle {
+    color: #f7f7f7;
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+/* Ajuste para pantallas grandes */
+@media (min-width: 992px) {
+    .banco-header-section {
+        padding: 15px 25px;
+        margin-left: 0;
+    }
+    
+    .banco-title-main {
+        font-size: 1.7rem;
+    }
+}
+
+
+
+
+
+/* Contenedor principal de la navegación */
+.banco-nav-header {
+  /* background: linear-gradient(to right, #ff6b00, #ff8c00); */
+  /* Naranja BancoEstado */
+  padding: 0px 0px;
+  display: flex;
+  align-items: center;
+  color: white;
+  position: sticky;
+  top: 0;
+  /* z-index: 1000; */
+}
+
+/* Botón volver (Flecha) */
+.banco-btn-back {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  margin-right: 15px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Título de la sección en la barra */
+.banco-nav-title {
+  font-size: 1.1rem;
+  font-weight: 200;
+  color: white;
+  margin: 0;
+}
+
+/* Ajuste para que la tarjeta no quede pegada al borde superior */
+.banco-card-header {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin: 20px 15px;
+  /* Espaciado externo */
+}
+
+
+
+
+
+/* Estilo base (Móvil) */
+.banco-btn-cartolas {
+    width: 100%; /* Ocupa todo el ancho en móviles */
+    background-color: #3b4cb8;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 0 auto; /* Lo mantiene centrado si es más corto */
+}
+
+/* Ajuste para Tablet y Computador (Pantallas medianas y grandes) */
+@media (min-width: 768px) {
+    .banco-btn-cartolas {
+        width: auto;           /* Ya no ocupa el 100% */
+        min-width: 200px;      /* Le da un tamaño mínimo consistente */
+        max-width: 300px;      /* Evita que se alargue demasiado */
+        padding: 10px 40px;    /* Más espacio a los lados, menos alto */
+    }
+} 
+
+.banco-btn-cartolas:hover {
+    background-color: #2d3a8c;
+    transform: translateY(-1px); /* Efecto sutil de elevación */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+/* Contenedor para alinear a la derecha con margen de app */
+.be-actions-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 10px;
+    margin-top: -10px; /* Para que parezca que flota sobre la cabecera si es necesario */
+}
+
+/* Botón Principal Estilo BancoEstado */
+.be-main-button {
+    background-color: var(--bs-blue); /* Naranja institucional */
+    color: white;
+    border: none;
+    border-radius: 30px; /* Estilo píldora */
+    padding: 10px 25px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 12px rgba(255, 90, 0, 0.3); /* Sombra de color */
+    transition: all 0.2s ease;
+    cursor: pointer;
+    outline: none;
+}
+
+.be-main-button:active {
+    transform: scale(0.96);
+    box-shadow: 0 2px 6px rgba(255, 90, 0, 0.2);
+}
+
+/* Estado Deshabilitado (Grisado bancario) */
+.be-main-button.be-disabled {
+    background-color: #e0e0e0;
+    color: #9e9e9e;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.be-button-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Icono dentro de un pequeño círculo para dar detalle */
+.be-icon-circle {
+    background: rgba(255, 255, 255, 0.2);
+    width: 14px;
+    height: 14px;
+    padding: 6px;
+    border-radius: 50%;
+    margin-right: 10px;
+    font-size: 0.75rem;
+}
+
+.be-disabled .be-icon-circle {
+    background: rgba(0, 0, 0, 0.05);
+}
+
 /* TABLE */
 
 /* --- ESTILOS DE TABLA RESPONSIVA --- */
@@ -1896,7 +2128,6 @@ button:not(:disabled),
 @media (max-width: 500px) {
   .table-container {
     padding: 0px;
-
   }
 }
 
@@ -1930,14 +2161,18 @@ button:not(:disabled),
 
 /* 4. Tus estilos de celdas */
 .table-responsive-custom thead th {
-  background-color: var(--clinical-bg, #f8f9fa);
-  padding: 15px;
-  font-weight: 800;
+  background-color: #f8fafc;
+  /* Un gris muy, muy claro (casi blanco pero neutro) */
+  padding: 12px 15px;
+  font-weight: 500;
+  /* Bajamos el peso para que no compita con los datos */
   text-transform: uppercase;
-  font-size: 0.85rem;
-  border-bottom: 2px solid var(--hospital-blue, #0d6efd);
+  font-size: 0.7rem;
+  border-bottom: 1px solid #e2e8f0;
+  /* Línea delgada y discreta */
+  color: #64748b;
+  /* Gris neutro */
   white-space: nowrap;
-  /* Evita que los títulos se rompan en dos líneas */
 }
 
 .table-responsive-custom td {
@@ -1952,7 +2187,6 @@ thead {
 }
 
 .table-responsive-custom tr {
-
   background: #fff;
 }
 
@@ -1979,31 +2213,631 @@ thead {
 
   .table-responsive-custom td {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
-    text-align: right;
+    /* text-align: right; */
     border-bottom: 1px solid #f1f1f1;
     padding: 10px 5px;
   }
 
-  /* Usamos el atributo data-label para mostrar el nombre del campo */
   .table-responsive-custom td::before {
     content: attr(data-label);
-    font-weight: 800;
+    font-weight: 500;
+    /* Reducimos de 800 a 500 para que sea menos agresivo */
     text-transform: uppercase;
-    font-size: 0.75rem;
-    color: var(--hospital-blue);
+    font-size: 0.65rem;
+    /* Un poco más pequeño para dar jerarquía */
+    color: #94a3b8;
+    /* Un gris azulado claro, muy sutil */
     text-align: left;
+    display: block;
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+    /* Un toque moderno */
   }
 
   .table-responsive-custom td:last-child {
     border-bottom: none;
     justify-content: center;
-    background: var(--clinical-bg);
+    /* background: var(--clinical-bg); */
     /* border-radius: 8px; */
     margin-top: 10px;
   }
 }
+
+@media (max-width: 768px) {
+
+  /* Hacemos que el cuerpo de la tabla sea un grid */
+  .table-responsive-custom tbody {
+    display: grid;
+    gap: 15px;
+    padding: -10px;
+  }
+
+
+
+  .table-responsive-custom tr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+  }
+
+  /* Ocultamos los encabezados en móvil */
+  .table-responsive-custom thead {
+    display: none;
+  }
+}
+
+
+/* Contenedor del grupo de fecha */
+.fecha-header {
+  display: flex;
+  align-items: center;
+  color: #555e69;
+  /* Gris oscuro suave de BancoEstado */
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+  padding-top: 15px;
+}
+
+/* Estilo para la hora debajo del movimiento */
+.hora-detalle {
+  color: #94a3b8;
+  /* Gris más claro */
+  font-size: 0.78rem;
+  margin-top: 1.8px;
+  margin-left: 5px;
+  font-weight: 400;
+}
+
+/* Ajuste de padding para que parezca una lista de app móvil */
+@media (max-width: 878px) {
+  .movimiento-banco-wrapper {
+    width: 100%;
+    text-align: left;
+    border-bottom: none;
+  }
+}
+
+
+
+
+
+/* Contenedor principal */
+.table-container {
+  background: #f4f7f9;
+  padding: 0;
+  box-shadow: none;
+}
+
+/* En móviles y escritorio, queremos que parezca una lista de transacciones */
+@media (max-width: 878px) {
+  .table-responsive-custom {
+    min-width: 100%;
+  }
+
+  /* Agrupador de fecha (el encabezado pequeño) */
+  .fecha-grupo {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background: #f4f7f9;
+    color: #555;
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+
+  .table-responsive-custom tr {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-bottom: 1px solid #edf2f7;
+    margin: 0;
+    padding: 15px 20px;
+    border-radius: 0;
+  }
+
+  /* Ocultar celdas que no sirven en esta vista */
+  .table-responsive-custom td {
+    display: flex;
+    /* justify-content: space-between; */
+    padding: 2px 0;
+    border: none;
+    white-space: normal;
+  }
+
+  /* Flecha a la derecha estilo iOS/Android */
+  .table-responsive-custom tr::after {
+    content: '〉';
+    position: absolute;
+    right: 5px;
+    top: 40%;
+    color: #cbd5e0;
+    font-size: 0.8rem;
+  }
+
+  /* Escondemos los labels de "data-label" porque la app de banco no los usa */
+  .table-responsive-custom td::before {
+    display: none !important;
+  }
+}
+
+
+  /* Estilo específico para la descripción (Giro, TEF, etc) */
+  .td-descripcion {
+    order: 1;
+    font-weight: 700;
+    color: #323842;
+    font-size: .9rem;
+    justify-content: flex-start !important;
+  }
+
+  /* Estilo para el Monto */
+  .td-monto {
+    order: 2;
+    position: absolute;
+    right: 20px;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  /* Estilo para la hora/ubicación */
+  .td-detalle {
+    order: 3;
+    color: #718096;
+    font-size: 0.7rem;
+    justify-content: flex-start !important;
+  }
+
+  /* Estilo para la hora/ubicación */
+  .td-numero {
+    order: 3;
+    color: #848484;
+    font-size: 0.7rem;
+    justify-content: flex-start !important;
+  }
+
+
+
+
+
+
+.banco-card-header {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  /* Sombra muy suave */
+  margin: 15px;
+  font-family: 'Inter', 'Roboto', sans-serif;
+}
+
+.banco-label-top {
+  color: #1a202c;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.banco-id-secondary {
+  color: #718096;
+  font-weight: 400;
+  margin-left: 5px;
+}
+
+.banco-monto-principal {
+  color: #1a202c;
+  font-size: 2rem;
+  /* Tamaño grande tipo el saldo de la app */
+  font-weight: 700;
+  margin: 8px 0 2px 0;
+}
+
+.banco-label-sub {
+  color: #718096;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+.banco-divider {
+  border: 0;
+  border-top: 1px solid #edf2f7;
+  margin: 16px 0;
+}
+
+.banco-info-grid {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.banco-grid-label {
+  display: block;
+  color: #718096;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.banco-grid-value {
+  color: #1a202c;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+
+
+
+
+/* Contenedor de acciones debajo de la info principal */
+.banco-actions-container {
+    display: flex;
+    gap: 12px;
+    padding: 24px 24px 24px 24px; /* Alineado con el padding de la tarjeta */
+    background: #fff;
+}
+
+/* Estilo base para botones secundarios */
+.banco-btn-secondary {
+    flex: 1; /* Hacen que ocupen el mismo ancho */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+    background: #fff;
+}
+
+/* Variación Editar (Azul sutil) */
+.banco-btn-secondary.edit {
+    color: #3b4cb8;
+    border-color: #3b4cb8;
+}
+
+.banco-btn-secondary.edit:hover {
+    background: #f0f2ff;
+}
+
+/* Variación Eliminar (Rojo suave) */
+.banco-btn-secondary.delete {
+    color: #e53e3e;
+    border-color: #feb2b2;
+}
+
+.banco-btn-secondary.delete:hover {
+    background: #fff5f5;
+}
+
+/* Ajuste para Tablet/PC: que no sean tan anchos */
+@media (min-width: 768px) {
+    .banco-actions-container {
+        justify-content: flex-start;
+    }
+    .banco-btn-secondary {
+        flex: none;
+        min-width: 160px;
+    }
+}
+
+
+/* Fila contenedora principal */
+/* Fila contenedora principal */
+.banco-filter-row {
+    display: flex;
+    flex-direction: column; /* Móvil: una columna vertical */
+    gap: 16px;
+    padding: 10px 5px;
+    /* margin-bottom: 20px; */
+    width: 100%;
+}
+
+/* Contenedor de los botones */
+.banco-tabs-container {
+    display: flex;
+    background: #f0f2f5;
+    border-radius: 25px;
+    padding: 4px;
+    
+    /* Habilitar scroll horizontal */
+    overflow-x: auto; 
+    white-space: nowrap; /* Evita que los botones salten a la siguiente línea */
+    gap: 4px;
+    
+    /* Mejorar el scroll en móviles */
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    
+    /* Ocultar la barra de scroll para estética limpia */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* Ocultar barra de scroll en Chrome, Safari y Opera */
+.banco-tabs-container::-webkit-scrollbar {
+    display: none;
+}
+
+.banco-tab-item {
+    flex: 0 0 auto; /* Importante: impide que los botones se encojan */
+    scroll-snap-align: start;
+    border: none;
+    background: transparent;
+    padding: 8px 18px;
+    border-radius: 22px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #5f6368;
+    transition: all 0.2s ease;
+}
+
+.banco-tab-item.active {
+    background: #ffffff;
+    color: #3b4cb8;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.banco-tab-count {
+    font-weight: 400;
+    opacity: 0.8;
+    font-size: 0.75rem;
+}
+
+/* Estilo para el buscador */
+/* Contenedor del buscador para posicionar el icono si lo deseas */
+.banco-search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* El input con estilo BancoEstado */
+.banco-input-search {
+    width:100%;
+    background-color: #f2f2f2; /* Gris claro característico */
+    border: 1px solid transparent;
+    border-radius: 25px; /* Forma de píldora */
+    padding: 10px 20px 10px 45px; /* Espacio extra a la izquierda para una lupa */
+    font-size: 0.9rem;
+    color: #333;
+    transition: all 0.3s ease;
+    outline: none;
+    height: 45px;
+}
+
+/* Efecto al hacer clic (Focus) */
+.banco-input-search:focus {
+    background-color: #ffffff;
+    border-color: #3b4cb8; /* Azul institucional */
+    box-shadow: 0 4px 12px rgba(59, 76, 184, 0.1);
+}
+
+/* Estilo para el placeholder */
+.banco-input-search::placeholder {
+    color: #8e8e93;
+    font-weight: 400;
+}
+
+/* --- PANTALLAS GRANDES (2 COLUMNAS) --- */
+@media (min-width: 992px) { /* xl de bootstrap */
+    .banco-filter-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Dos columnas de igual tamaño */
+        align-items: center; /* Alineación vertical perfecta */
+        gap: 0; /* Controlamos el espacio internamente */
+    }
+
+    .banco-tabs-container {
+        justify-self: start; /* Filtros pegados a la izquierda */
+        align-self: center;
+    }
+
+    .banco-search-wrapper {
+        justify-self: end; /* Buscador pegado a la derecha */
+        width: 100%;
+        max-width: 400px; /* Evita que el buscador sea gigante */
+    }
+}
+/* Ajustes para Pantallas Grandes (PC/Tablets) */
+@media (min-width: 768px) {
+    .banco-filter-row {
+        flex-direction: row; /* Se pone en formato horizontal (como row de Bootstrap) */
+        align-items: center;
+        justify-content: space-between; /* Tabs a la izquierda, Buscador a la derecha */
+    }
+
+    .banco-tabs-container {
+        align-self: center; /* Centrado vertical en la fila */
+    }
+
+    .banco-tab-item {
+        padding: 8px 20px; /* Más aire en pantallas grandes */
+        font-size: 0.85rem;
+        flex: none; /* Que cada botón use solo el espacio necesario */
+    }
+
+    .banco-search-wrapper {
+        max-width: 350px; /* El buscador no se estira infinitamente */
+    }
+}
+
+/* Contenedor Principal */
+.be-card-container {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin: 10px;
+    overflow: hidden;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    border: 1px solid #e0e0e0;
+}
+
+/* Cabecera con Azul Institucional */
+.be-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: #002464; /* Azul BancoEstado */
+    color: white;
+}
+
+.be-id-pill {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.be-status-dot {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+    font-weight: 600;
+}
+
+.status-green { color: #4caf50; border: 1px solid #4caf50; }
+.status-orange { color: #ff9800; border: 1px solid #ff9800; }
+.status-blue { color: #00bcd4; border: 1px solid #00bcd4; }
+
+/* Cuerpo de la tarjeta */
+.be-body {
+    padding: 20px 16px;
+    text-align: center;
+}
+
+.be-label {
+    font-size: 0.65rem;
+    color: #666;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.be-client-name {
+    font-size: 1.1rem;
+    color: #002464;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.be-balance-main {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.be-label-light {
+    font-size: 0.7rem;
+    color: #888;
+    display: block;
+}
+
+.be-amount-highlight {
+    font-size: 1.8rem;
+    color: #222;
+    margin: 0;
+    font-weight: 700;
+}
+
+/* Barra de progreso y footer */
+.be-footer {
+    padding: 16px;
+    background: #ffffff;
+}
+
+.be-progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #444;
+    margin-bottom: 6px;
+    font-weight: 600; 
+}
+
+.be-progress-bar-bg {
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.be-progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff5a00, #ff8a00); /* Naranja BancoEstado */
+    transition: width 1s ease-in-out;
+}
+
+.be-quick-details {
+    border-top: 1px dashed #ddd;
+    padding-top: 12px;
+}
+
+.be-detail-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.be-percentage {
+    color: #ff5a00;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* // cabecera */
@@ -2062,14 +2896,14 @@ thead {
 .panel-custom {
   /* background: #ffffff; */
   border-radius: 10px;
-  border: 1px solid #edf2f7;  
+  /* border: 1px solid #edf2f7;   */
   /* Un borde muy sutil */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   /* Sombra suave */
   padding: 0;
   height: 100%;
   padding-bottom: 4rem;
-  margin: 4px;  
+  /* margin: 4px;   */
   transition: all 0.3s ease;
 }
 

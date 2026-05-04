@@ -3,7 +3,9 @@ import {
     faPlus,
     faEdit,
     faTrash,
-    faHandHoldingUsd, faArrowLeft
+    faHandHoldingUsd, faArrowLeft,
+    faChevronLeft,
+    faSearch
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DataTable from "../components/DataTable";
@@ -85,60 +87,56 @@ export function ListaIngresosTramite() {
 
     return (
         <>
-            <main className="container-xl mt-2" style={{ maxWidth: "100%", padding: '3px' }}>
-                <div className="d-flex justify-content-between align-items-center mb-4 m-2">
-                    <div>
-                        <h3 className="text-dark fw-bold mb-0 text-titulos">Historial de Ingresos y Abonos</h3>
-                    </div>
-                </div>
+            <main className="container-xl mt-2" style={{ maxWidth: "100%", }}>
+                <div className="panel-custom rounded shadow-sm mx-2">
 
-                <div className=" d-flex justify-content-end gap-2 " style={{ marginRight: '10px' }}>
-                    {/* El botón nuevo gasto hereda el UUID correctamente */}
-                    {tramites.length > 0 && parseInt(localStorage.getItem('numRol')) === 3 ?
-                        tramites.find(t => String(t.id) === String(id)).estado === 1 ?
-                            < button
-                                className="btn btn-success  fw-bold"
-                                onClick={() => navigate(LOCAL_URL + `/crear-ingreso/${id}`)}
-                                disabled={!id || !UUID_REGEX.test(id)}
-                            >
-                                <FontAwesomeIcon icon={faPlus} className="me-2" /> REGISTRAR PAGO
-                            </button> : < button
-                                className="btn btn-success  fw-bold"
-                                disabled
-                            >
-                                <FontAwesomeIcon icon={faPlus} className="me-2" /> NO DISPONIBLE
-                            </button> : null
-                    }
-                    <button className=" btn btn-dark" style={{ marginLeft: '4px' }} onClick={() => {
-                        navigate(LOCAL_URL + "/movimientos")
-                    }
-                    }>
-                        <FontAwesomeIcon icon={faArrowLeft} className="me-2" /> VOLVER
-                    </button>
-                </div>
-
-                <CabeceraTramite id={id} />
-
-                <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">
-                    <div className="row align-items-center mb-3 g-3">
-                        <div className="col-md-6">
-                            <div className="d-flex align-items-center gap-3">
-                                <div className="bg-light p-2 rounded border">
-                                    <FontAwesomeIcon icon={faHandHoldingUsd} className="text-success me-2" />
-                                    <span className="fw-bold">Total en Caja: </span>
-                                    <span className="text-success fw-bold">Bs. {totalRecaudado.toLocaleString('es-BO')}</span>
-                                </div>
-                                <span className="text-muted small">({ingresosFiltrados.length} registros)</span>
-                            </div>
+                    <div className="banco-header-section mb-4">
+                        <div className="banco-title-container">
+                            <h3 className="banco-title-main">Ingresos </h3>
+                            <p className="banco-subtitle">Verifique sus Ingresos del tramite seleccionado</p>
                         </div>
-                        <div className="col-md-6 d-flex justify-content-end">
-                            <div style={{ width: '100%', maxWidth: '300px' }}>
-                                <InputUsuarioSearch
-                                    name="input-search-ingreso"
-                                    placeholder="numero ingreso, detalle..."
-                                    onChange={handleSearch}
-                                />
-                            </div>
+                    </div>
+
+                    <div className="be-actions-container">
+                        {tramites.length > 0 && parseInt(localStorage.getItem('numRol')) === 3 && (() => {
+                            const tramiteActual = tramites.find(t => String(t.id) === String(id));
+                            const esValido = tramiteActual?.estado === 1 && id && UUID_REGEX.test(id);
+
+                            return (
+                                <button
+                                    className={`be-main-button ${!esValido ? 'be-disabled' : ''}`}
+                                    onClick={() => esValido && navigate(LOCAL_URL + `/crear-ingreso/${id}`)}
+                                    disabled={!esValido}
+                                >
+                                    <div className="be-button-content">
+                                        <FontAwesomeIcon icon={faPlus} className="be-icon-circle" />
+                                        <span>{tramiteActual?.estado === 1 ? 'REGISTRAR PAGO' : 'NO DISPONIBLE'}</span>
+                                    </div>
+                                </button>
+                            );
+                        })()}
+                    </div>
+
+
+                    <div className="banco-search-wrapper p-2">
+                        <div className="banco-search-wrapper">
+                            <FontAwesomeIcon
+                                icon={faSearch}
+                                style={{
+                                    position: 'absolute',
+                                    left: '18px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    color: '#8e8e93',
+                                    zIndex: 1
+                                }}
+                            />
+                            <input
+                                name="input-search-salida"
+                                placeholder="numero ingreso, detalle..."
+                                onChange={handleSearch}
+                                className="banco-input-search"
+                            />
                         </div>
                     </div>
 

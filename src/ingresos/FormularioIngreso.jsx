@@ -66,8 +66,7 @@ const FormularioIngreso = () => {
                                 <p className="text-muted small">Registro de dinero percibido para trámites</p>
                             </div>
 
-                            {/* Info del Trámite Contextual */}
-                            <CabeceraTramite id={id_tramite} />
+                       
 
 
                             <form className="row g-3" onSubmit={(e) => handleGuardar(e, isEdit)}>

@@ -2,6 +2,8 @@ import {
     faFilePdf,
     faCheck,
     faArrowLeft,
+    faChevronLeft,
+    faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 
 import DataTable from "../components/DataTable";
@@ -47,55 +49,50 @@ export function ListaSalidas() {
         return s.estado === filtroEstado;
     });
 
-    // Contadores para los botones
-    const countPendientes = salidasFiltradas.filter(s => s.estado === 1).length;
-    const countAprobados = salidasFiltradas.filter(s => s.estado === 2).length;
-    const countDespachados = salidasFiltradas.filter(s => s.estado === 3).length;
-    const countRechazados = salidasFiltradas.filter(s => s.estado === 4).length;
 
 
     return (
         <>
-            <main className="container-xl mt-2" style={{ maxWidth: "100%", padding: '3px' }}>
-                <div className="d-flex justify-content-between align-items-center mb-4 m-2">
-                    <div>
-                        <h3 className="text-dark fw-bold mb-0 text-titulos text-titulos">Panel de Gastos</h3>
-                    </div>
-                </div>
+            <main className="container-xl" style={{ maxWidth: "100%", }}>
 
-                <div className=" d-flex justify-content-end gap-2 " style={{ marginRight: '10px' }}>
-                    <button className=" btn btn-dark" style={{ marginLeft: '4px' }} onClick={() => {
-                       
-                        navigate(LOCAL_URL + "/movimientos")
-                    }
-                    }>
-                        <FontAwesomeIcon icon={faArrowLeft} className="me-2" /> VOLVER
-                    </button>
-                </div>
+                <div className="panel-custom rounded shadow-sm  mx-2">
 
-                {/* Cabecera de información del Trámite */}
-                <CabeceraTramite id={id} />
-
-                {/* --- SECCIÓN DE FILTROS GERENCIALES --- */}
-                <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">
-                    <div className="row align-items-center mb-3 g-3">
-                        <div className="col-md-6">
-                            <div className="d-flex1 gap-2">
-                                <button className="btn  btn-sm border text-success fw-bold" onClick={() => setFiltroEstado('TODOS')}>TODOS <span className="fw-bold mb-0 text-success">({salidasFiltradas.length})</span></button>
-                                <button className="btn  btn-sm border text-warning fw-bold" onClick={() => setFiltroEstado(1)}>SOLICITADOS <span className="fw-bold mb-0 text-warning">{countPendientes}</span></button>
-                                <button className="btn  btn-sm border text-primary fw-bold" onClick={() => setFiltroEstado(2)}>APROBADOS <span className="fw-bold mb-0 text-primary">{countAprobados}</span></button>
-                                <button className="btn  btn-sm border text-success fw-bold" onClick={() => setFiltroEstado(3)}>DESPACHADOS <span className="fw-bold mb-0 text-success">{countDespachados}</span></button>
-                                {/* <button className="btn  btn-sm border text-danger fw-bold" onClick={() => setFiltroEstado(4)}>RECHAZADOS <span className="fw-bold mb-0 text-danger">{countRechazados}</span></button> */}
-                            </div>
+                    <div className="banco-header-section mb-4">
+                        <div className="banco-title-container">
+                            <h3 className="banco-title-main">Gastos </h3>
+                            <p className="banco-subtitle">Verifique sus gastos del tramite seleccionado</p>
                         </div>
-                        <div className="col-md-6 d-flex justify-content-end ">
-                            <div style={{ width: '100%', maxWidth: '300px', paddingRight: '10px' }}>
-                                <InputUsuarioSearch
-                                    name="input-search-salida"
-                                    placeholder="codigo/numero boleta, detalle"
-                                    onChange={handleSearch}
-                                />
-                            </div>
+                    </div>
+                    <div className="banco-nav-header">
+                        <button className="banco-btn-back" onClick={() => navigate(-1)}>
+                            <FontAwesomeIcon icon={faChevronLeft} />
+                        </button>
+                        <h1 className="banco-nav-title">Volver a Lista de Boletas</h1>
+                    </div>
+
+
+
+                    {/* --- SECCIÓN DE FILTROS GERENCIALES --- */}
+                    <div className="banco-search-wrapper ">
+
+                        <div className="banco-search-wrapper">
+                            <FontAwesomeIcon
+                                icon={faSearch}
+                                style={{
+                                    position: 'absolute',
+                                    left: '18px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    color: '#8e8e93',
+                                    zIndex: 1
+                                }}
+                            />
+                            <input
+                                name="input-search-salida"
+                                placeholder="codigo/numero boleta, detalle"
+                                onChange={handleSearch}
+                                className="banco-input-search"
+                            />
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -104,12 +101,12 @@ export function ListaSalidas() {
                             data={dataFiltrada}
                             cargando={cargando}
                             funciones={[
-                             
+
                                 {
                                     boton: (id_salida, row) => { exportPDf(window.innerWidth < 1100 ? 'b64' : "print", row) },
-                                    className: 'btn btn-secondary py-1 px-3 x-small',
+                                    className:"banco-btn-secondary delete",
                                     icono: faFilePdf,
-                                    label: 'PDF'
+                                    label: 'Generar PDF'
                                 }
                             ]}
                         />
