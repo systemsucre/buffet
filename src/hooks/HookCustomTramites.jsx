@@ -51,7 +51,7 @@ export const useTramites = () => {
     // 1.1 LISTAR TRÁMITES (Activos)
     const listarTramitesActivos = async () => {
         setCargando(true);
-        const res = await start(`${URL}comuun/listar-tramites`,);
+        const res = await start(`${URL}comuun/listar-tramites-activos`,);
         // alert()
         if (res) {
             setTramites(res);

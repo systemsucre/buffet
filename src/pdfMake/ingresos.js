@@ -2,6 +2,8 @@ import createPdf from './base.js';
 
 const ticketIngresoIndividual = async (output, { ingreso }) => {
     // ingreso: es el objeto que viene de tu consulta SQL 'listarPorTramite'
+
+    console.log(ingreso, 'ingreso para pdf')
     
     const montoFormateado = ingreso?.monto ? parseFloat(ingreso.monto).toFixed(2) : "0.00";
     const numeroIngreso = ingreso?.numero || "S/N";
@@ -39,6 +41,7 @@ const ticketIngresoIndividual = async (output, { ingreso }) => {
             ]
         },
         { text: `Trámite Ref: ${ingreso.codigo_tramite}`, style: 'text', alignment: 'left' },
+        { text: `Cliente: ${ingreso.cliente_nombre}`, style: 'text', alignment: 'left',size: 9, },
 
         { text: '_______________________________________________________________________________________________', color: '#eeeeee', margin: [0, 5, 0, 10] },
 

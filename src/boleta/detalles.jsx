@@ -110,7 +110,7 @@ export const DetallesBoleta = () => {
                             <div className="banco-grid-item text-end">
                                 <span className="banco-grid-label">Total Boleta</span>
                                 <span className="banco-grid-value">
-                                    {
+                                 Bs.   {
                                         itemsBoleta.reduce((acumulador, item) => {
                                             // Convertimos el string "10.00" a número flotante
                                             return acumulador + parseFloat(item.monto);

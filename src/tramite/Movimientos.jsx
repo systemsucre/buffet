@@ -137,7 +137,7 @@ export function Movimientos() {
                                     className: 'btn btn-info py-1 px-3 x-small me-1 ml-2',
                                     icono: faFileInvoiceDollar, // Nuevo icono de factura/dinero
                                     // Cambiamos la ruta a la lista de salidas
-                                    enlace: LOCAL_URL + '/listar-ingresos',
+                                    enlace: LOCAL_URL + '/listar-ingresos-por-tramite',
                                     label: 'Ver ingresos'
                                 },
                                 {

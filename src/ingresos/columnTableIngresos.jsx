@@ -31,50 +31,47 @@ export const ColumnsTableIngresos = [
             );
         }
     },
-
-    window.innerWidth > 877 ? {
-        label: 'ÍTEM',
-        field: 'numero',
+    {
+        label: 'TRAMITE REF',
+        field: 'codigo_tramite',
         render: (row) => (
-            <div className="td-numero">
-                <span >{row.numero}</span>
+            <>            <div className="td-descripcion">
+
+                {row.codigo_tramite}
             </div>
-        ),
-        sortable: true,
-    } : {},
+                <div className="td-numero">
+                    <span >{row.cliente_nombre}</span>
+                </div>
+            </>
+
+        )
+    },
+
+
+
     {
         label: 'Detalle ítem',
         field: 'detalle',
         render: (row) => (
             <div className="td-descripcion">
                 <small>
-                    {row.detalle?.substring(0, 100)}
+                    {row.detalle?.substring(0, 50)}
                 </small>
             </div>
         )
     },
 
 
-
-    {
-        label: 'TIPO PAGO',
-        field: 'TIPO',
-        render: (row) => (
-            <div className="td-numero">
-                <span >{row.tipo}</span>
-            </div>
-        )
-    },
-        window.innerWidth > 877 ?
-    {
-        label: 'RECIBIDO POR',
-        field: 'username',
-        render: (row) => (
-            <div className="td-numero">
-                <span >{row.usuario_nombre}</span>
-            </div>
-        )
-    }:{},
+    window.innerWidth > 877 ?
+        {
+            label: 'RECIBIDO POR',
+            field: 'username',
+            render: (row) => (
+                <div className="td-numero">
+                    <span >{row.usuario_nombre}</span>
+                </div>
+            )
+        } : {},
 
     window.innerWidth > 877 ?
         {
@@ -86,13 +83,18 @@ export const ColumnsTableIngresos = [
                 const colorMonto = esEgreso ? '#e53e3e' : '#38a169';
                 const prefijo = esEgreso ? '-' : '';
 
-                return (
+                return (<>
                     <div className="td-descripcion" style={{ color: colorMonto }}>
                         Bs. {Number(row.monto || 0).toLocaleString('es-BO', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2
                         })}
+
                     </div>
+                    <div className="td-numero" >
+                        <span >{row.tipo}</span>
+                    </div>
+                </>
                 );
             }
         } :
@@ -106,13 +108,18 @@ export const ColumnsTableIngresos = [
                 const colorMonto = esEgreso ? '#e53e3e' : '#38a169';
                 const prefijo = esEgreso ? '-' : '';
 
-                return (
+                return (<>
                     <div className="td-monto" style={{ color: colorMonto }}>
                         Bs. {Number(row.monto || 0).toLocaleString('es-BO', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2
                         })}
                     </div>
+                    <div className="td-monto td-numero" style={{ marginTop: '2.5rem' }}>
+                        <span >{row.tipo}</span>
+                    </div>
+                </>
+
                 );
             }
         }

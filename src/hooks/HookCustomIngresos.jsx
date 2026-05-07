@@ -25,7 +25,18 @@ export const UseCustomIngresos = () => {
 
 
     // 2. LISTAR INGRESOS DE UN TRÁMITE
-    const listarIngresos = async (id_tramite) => {
+
+    //para listar todos los ingresos sin filtro por trámite, aunque no se usa actualmente en la vista
+    const listarIngresos = async () => {
+        const res = await start(`${URL}ingresos/listar-por-tramites`,);
+        if (res) {
+            setIngresos(res);
+            setIngresosFiltrados(res);
+        }
+    };
+
+    // para ingresos generales sin filtro por trámite, aunque no se usa actualmente en la vista
+    const listarIngresosPorTramite = async (id_tramite) => {
         if (!id_tramite) return;
         const res = await start(`${URL}ingresos/listar-por-tramites`, { id_tramite });
         if (res) {
@@ -82,7 +93,7 @@ export const UseCustomIngresos = () => {
             payload,
             () => {
                 // listarIngresos(idTramite.campo);
-                const rutaDestino = LOCAL_URL + '/listar-ingresos/' + idTramite.campo;
+                const rutaDestino = LOCAL_URL + '/cajero/ingresos-directos';
 
                 // console.log(rutaDestino, '   ruta destino')
                 setTimeout(() => {
@@ -119,7 +130,7 @@ export const UseCustomIngresos = () => {
 
                 if (res1) {
                     // Éxito: Refrescamos la lista de ese trámite específico
-                    listarIngresos(data.id_tramite);
+                    listarIngresos();
                 } else {
                     alert('No se pudo completar la eliminación en el servidor.');
                 }
@@ -173,7 +184,7 @@ export const UseCustomIngresos = () => {
         // Ejecutamos la promesa con los mensajes automáticos
         toast.promise(generarDocumento(), {
             loading: 'Generando PDF profesional...',
-            success: (msg) => <b>{msg|| 'Documento Generado'}</b>,
+            success: (msg) => <b>{msg || 'Documento Generado'}</b>,
             error: (err) => <b>{err.message}</b>,
         }, {
             style: {
@@ -205,6 +216,7 @@ export const UseCustomIngresos = () => {
         estados: { idTramite, monto, tipo, detalle, fechaIngreso },
         setters: { setIdTramite, setMonto, setTipo, setDetalle, setFechaIngreso },
         listarIngresos,
+        listarIngresosPorTramite,
         cargarIngresoPorId,
         handleGuardar,
         eliminarIngreso,

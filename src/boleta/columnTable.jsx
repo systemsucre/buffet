@@ -84,10 +84,10 @@ export const ColumnsTable = [
     },
     window.innerWidth > 877 ?
         {
-            label: 'Numero Boleta',
+            label: 'Num. Boleta',
             field: 'numero_boleta',
             render: (row) => (
-                <div className="td-numero">
+                <div className="td-numero text-center">
                     <span className="ms-2"> {row.numero_boleta}</span>
                 </div>
             )
@@ -107,18 +107,7 @@ export const ColumnsTable = [
             ),
         } : {},
 
-    window.innerWidth > 877 ?
-        {
-            label: 'Monto',
-            field: 'monto',
-            render: (row) => (
-                <div className="text-center">
-                    <span className="fw-bold text-dark" style={{ fontSize: '0.85rem' }}>
-                        {row.simbolo} {row.monto_total}
-                    </span>
-                </div>
-            ),
-        } : {},
+
     {
         label: 'Usuario Solicitante',
         field: 'solicitante',
@@ -148,7 +137,7 @@ export const ColumnsTable = [
                 },
                 3: {
                     badge: 'tex-success text-success',
-                    texto: 'REGISTRADO',
+                    texto: 'DESPACHADO',
                     icon: 'bi-cash-stack',
                 },
                 4: {
@@ -160,7 +149,7 @@ export const ColumnsTable = [
 
             const est = estados[row.estado] || {
                 badge: 'bg-secondary',
-                texto: 'DESCONOCIDO',
+                texto: 'DESCONOCIDO',  
                 icon: 'bi-question',
             };
 
@@ -175,5 +164,40 @@ export const ColumnsTable = [
             );
         },
     },
+
+        window.innerWidth > 877 ?
+        {
+            label: 'Monto',
+            field: 'monto',
+            render: (row) => (
+                <div className="text-center">
+                    <span className="fw-bold text-dark" style={{ fontSize: '0.85rem' }}>
+                        Bs. {row.monto_total}
+                    </span>
+                </div>
+            ),
+        } : 
+        {
+            label: 'Monto',
+            field: 'monto',
+            render: (row) => {
+                // Lógica de color: si es egreso rojo, si es ingreso verde
+                const esEgreso = row.estado === 4 || row.monto_total < 0;
+                const colorMonto = esEgreso ? '#e53e3e' : '#38a169';
+                const prefijo = esEgreso ? '-' : '';
+
+                return (<>
+                    <div className="td-monto" style={{ color: colorMonto }}>
+                        Bs. {Number(row.monto_total || 0).toLocaleString('es-BO', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        })}
+                    </div>
+                  
+                </>
+
+                );
+            }
+        },
 
 ];

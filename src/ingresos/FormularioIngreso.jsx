@@ -25,6 +25,9 @@ const FormularioIngreso = () => {
 
     const {
         cargarTramitePorId,
+        listarTramitesActivos,
+        tramitesFiltradosBoleta,
+
     } = useTramites();
 
     // 1. Efecto para EDICIÓN
@@ -32,13 +35,13 @@ const FormularioIngreso = () => {
     useEffect(() => {
         if (isEdit && id && UUID_REGEX.test(id)) {
             cargarIngresoPorId(id);
-            if (id_tramite && cargarTramitePorId) cargarTramitePorId(id_tramite);
+            // if (id_tramite && cargarTramitePorId) cargarTramitePorId(id_tramite);
         }
     }, [id, isEdit]);
 
     // 2. Efecto para NUEVO INGRESO (vincular trámite)
     useEffect(() => {
-        if (!isEdit && id_tramite && UUID_REGEX.test(id_tramite)) {
+        if (!isEdit ) {
             setters.setIdTramite({
                 campo: id_tramite,
                 valido: 'true'
@@ -46,14 +49,55 @@ const FormularioIngreso = () => {
 
 
         }
-    }, [id_tramite, isEdit]);
+    }, [ isEdit]);
+
+    useEffect(() => {
+        listarTramitesActivos();
+    }, []);
+    const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      backgroundColor: '#ffffff', // Fondo blanco limpio
+      borderColor: state.isFocused ? '#3b82f6' : '#d1d5db', // Azul suave al enfocar
+      boxShadow: state.isFocused ? '0 0 0 1px #3b82f6' : 'none',
+      borderRadius: '8px',
+      padding: '4px',
+      '&:hover': { borderColor: '#3b82f6' },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      borderRadius: '8px',
+      boxShadow:
+        '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      marginTop: '8px',
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      padding: '12px 16px', // Más espacio para que no se sienta apretado
+      backgroundColor: state.isSelected
+        ? '#eff6ff'
+        : state.isFocused
+          ? '#f3f4f6'
+          : 'transparent',
+      color: state.isSelected ? '#1d4ed8' : '#374151',
+      fontWeight: state.isSelected ? '600' : '400',
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+      borderBottom: '1px solid #f3f4f6', // Separador sutil entre items
+      '&:active': { backgroundColor: '#dbeafe' },
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: '#9ca3af',
+    }),
+  };
 
     const lista = [{ value: 'EFECTIVO', label: 'EFECTIVO' }, { value: 'TRANFERENCIA', label: 'TRANFERENCIA' }, { value: 'CHEQUE', label: 'CHEQUE' },]
     return (
         <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh' }}>
             <section className="container">
                 <div className="row justify-content-center">
-                    <div className="login-card shadow-clinical p-4 p-md-5 bg-white" style={{ borderTop: `10px solid  #0d6efd`, marginTop: '2rem' }} >
+                    <div className="login-card shadow-clinical p-4 p-md-5 bg-white" style={{ marginTop: '2rem' }} >
                         <div className="form-boleta-container">
                             {/* Encabezado dinámico */}
                             <div className="text-center mb-4">
@@ -66,11 +110,39 @@ const FormularioIngreso = () => {
                                 <p className="text-muted small">Registro de dinero percibido para trámites</p>
                             </div>
 
-                       
+
 
 
                             <form className="row g-3" onSubmit={(e) => handleGuardar(e, isEdit)}>
                                 {/* MONTO (Si lo incluiste en tu tabla) */}
+
+                                <div className="col-md-12">
+                                    <label className="hospital-label w-100 mb-2">TRÁMITE</label>
+
+                                    <Select
+                                        styles={customStyles}
+                                        placeholder={'Seleccione trámite...'}
+                                        options={tramitesFiltradosBoleta}
+                                        components={{ Option: CustomOption }} // <-- Aquí aplicamos la personalización
+                                        getOptionLabel={(e) => `${e.label}`} // Limpio para el buscador
+                                        getOptionValue={(e) => e.value}
+                                        onChange={(e) => {
+                                            setters.setIdTramite({
+                                                campo: e.value,
+                                                valido: 'true',
+                                            });
+                                        }}
+                                        value={
+                                            tramitesFiltradosBoleta.find(
+                                                (opt) => opt.value === estados.idTramite.campo,
+                                            ) || null
+                                        }
+                                        isSearchable={true}
+                                        className="react-select-container"
+                                        classNamePrefix="react-select"
+                                    />
+                                </div>
+
                                 <div className="col-md-3">
                                     <InputUsuarioStandard
                                         estado={estados.monto}
@@ -171,4 +243,33 @@ const FormularioIngreso = () => {
     );
 };
 
+import { components } from 'react-select';
+import { useEffectEvent } from 'react';
+
+// Este componente personaliza cómo se ve cada fila en la lista desplegable
+const CustomOption = (props) => {
+    return (
+        <components.Option {...props}>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                }}
+            >
+                <div>
+                    <strong>{props.data.label}</strong>
+                    <div style={{ fontSize: '0.8em', color: '#666' }}>
+                        Saldo: Bs.{props.data.saldoDisponible}
+                    </div>
+                    <div
+                        style={{ fontSize: '0.55em', color: '#444444', fontWeight: '100' }}
+                    >
+                        {props.data.detalle.substring(0, 80)}
+                    </div>
+                </div>
+            </div>
+        </components.Option>
+    );
+};
 export default FormularioIngreso;

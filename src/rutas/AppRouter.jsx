@@ -41,7 +41,8 @@ import NavbarCajero from "../components/etc/menuCajero";
 // ALL USERS
 import { Movimientos } from "../tramite/Movimientos";
 import { ListaSalidas } from "../salidas/ListaSalidas";
-import { ListaIngresosTramite } from "../ingresos/ListaIngresos";
+import { ListaIngresos } from "../ingresos/ListaIngresos";
+import { ListaIngresosVista } from "../ingresos/ListaIngresosVista";
 import FormularioIngreso from "../ingresos/FormularioIngreso";
 import { ReportesAdministracionPorTramite } from "../reportes/reportesAdministracionPorTramite";
 import { ReportesAdministracionConsolidado } from "../reportes/reportesAdministracionConsolidado";
@@ -341,6 +342,24 @@ export default function AppRouter() {
         },
 
 
+            {
+          path: 'ingresos-directos',
+          element: (
+            <Check component={ListaIngresos} roleRequired="cajero" />  
+          ),
+        },
+
+               {
+          path: 'crear-ingreso',
+          element: (
+            <Check component={FormularioIngreso } roleRequired="cajero" />
+          ),
+        },
+
+        {
+          path: 'editar-ingreso/:id',
+          element: <Check component={FormularioIngreso} roleRequired="all" />,
+        },
 
       ],
     },
@@ -389,19 +408,16 @@ export default function AppRouter() {
         },
 
         {
-          path: 'listar-ingresos/:id',
-          element: <Check component={ListaIngresosTramite} roleRequired="all" />,
+          path: 'listar-ingresos-por-tramite/:id',
+          element: <Check component={ListaIngresosVista} roleRequired="all" />,
         },
 
-        {
-          path: 'crear-ingreso/:id_tramite',
-          element: <Check component={FormularioIngreso} roleRequired="all" />,
-        },
+        // {
+        //   path: 'crear-ingreso/:id_tramite',
+        //   element: <Check component={FormularioIngreso} roleRequired="all" />,
+        // },
 
-        {
-          path: 'editar-ingreso/:id_tramite/:id',
-          element: <Check component={FormularioIngreso} roleRequired="all" />,
-        },
+
 
         {
           path: 'reportes-por-tramite',

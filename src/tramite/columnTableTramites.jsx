@@ -3,19 +3,24 @@ import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const ColumnsTableTramites = [
-    window.innerWidth > 877 ?
-        {
-            label: 'Numero',
-            field: 'numero,',
-            render: (row) =>
-                <div className="td-numero"> <span >{row.numero}</span></div>
-        } : {},
+    // window.innerWidth > 877 ?
+    //     {
+    //         label: 'Numero',
+    //         field: 'numero,',
+    //         render: (row) =>
+    //             <div className="td-numero"> <span >{row.numero}</span></div>
+    //     } : {},
 
     {
-        label: 'Código',
+        label: 'Tramite',
         field: 'codigo',
         render: (row) =>
-            <div className="td-descripcion"> <span>{row.codigo}</span></div>
+            <>
+                <div className="td-descripcion"> <span>{row.codigo}</span></div>
+                <div className="td-numero">
+                    <div>{row.nombre_tipo_tramite?.toUpperCase()}</div>
+                </div>
+            </>
     },
 
     {
@@ -24,7 +29,7 @@ export const ColumnsTableTramites = [
         render: (row) =>
             <div className="td-descripcion">
                 <small>
-                    {row.detalle?.substring(0, 100)}
+                    {row.detalle?.substring(0, 30)}
                 </small>
             </div>
     },
@@ -38,29 +43,7 @@ export const ColumnsTableTramites = [
             </div>
         )
     },
-    window.innerWidth > 877 ?
-        {
-            label: 'Tipo de Trámite',
-            field: 'nombre_tipo_tramite',
-            render: (row) => (
-                <span className="badge bg-light text-dark border">
-                    {row.nombre_tipo_tramite?.toUpperCase()}
-                </span>
-            )
-        } : {},
-    {
-        label: 'Estado',
-        field: 'estado',
-        render: (row) => (<>
-            <span className={`badge ${row.estado === 1 ? 'text-success' : 'text-warning text-dark'}`}>
-                {row.estado === 1 ? 'EN CURSO' : row.estado === 2 ? 'PARALIZADO' : 'FINALIZADO'}
-            </span> <br />
-            <span className={`badge ${row.eliminado === 0 ? 'bg-white' : 'bg-white text-dark'}`}>
-                {row.eliminado === 0 ? 'Eliminado' : ''}
-            </span>
-        </>
-        )
-    },
+
     {
         label: 'Plazo y Fechas',
         field: 'fecha_finalizacion',
@@ -78,7 +61,7 @@ export const ColumnsTableTramites = [
             return (
                 <>
                     <div className="td-numero" >
-                        <FontAwesomeIcon className="me-2" icon={faCalendar } />
+                        <FontAwesomeIcon className="me-2" icon={faCalendar} />
                         Apertura: {new Date(row.fecha_ingreso).toLocaleDateString()}
                         <br />
                         <FontAwesomeIcon className="me-2" icon={faCalendar} />

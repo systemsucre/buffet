@@ -90,7 +90,7 @@ export function ListaBoleta() {
                                 </button>
 
                                  <button
-                                    className={`banco-tab-item ${filtroEstado === 2 ? 'active' : ''}`}
+                                    className={`banco-tab-item ${filtroEstado === 3 ? 'active' : ''}`}
                                     onClick={() => setFiltroEstado(3)}>
                                     DEPSPACHADOS <span>({countDespachados})</span>
                                 </button>
