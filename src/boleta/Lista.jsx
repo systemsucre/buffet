@@ -54,7 +54,7 @@ export function ListaBoleta() {
 
     return (
         <>
-            <main className="container-xl mt-2" >
+            <main className="container-xl mt-2" style={{maxWidth:'100%'}}>
 
                 <div className="panel-custom  rounded shadow-sm mx-2">
                     <div className="banco-header-section mb-4">

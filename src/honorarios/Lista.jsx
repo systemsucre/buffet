@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DataTable from "../components/DataTable";
 import { InputUsuarioSearch } from "../components/input/elementos";
 import { UseCustomHonorarios } from "../hooks/HookCustomHonorarios"; // El hook que creamos
-import { useNavigate,} from "react-router-dom";
+import { useNavigate, } from "react-router-dom";
 import { useEffect } from "react";
 import { ColumnsTableHonorarios } from "./columnTableHonorarios"; // Deberás crear este archivo de columnas
 import { LOCAL_URL } from "../Auth/config";
@@ -42,7 +42,7 @@ export function ListaHonorariosTramite() {
         {
             boton: (id_honorario) => {
                 const rol = parseInt(localStorage.getItem('numRol'))
-                const path = rol === 1?'admin':rol === 2 ? 'gerente':rol ===3?'cajero':''
+                const path = rol === 1 ? 'admin' : rol === 2 ? 'gerente' : rol === 3 ? 'cajero' : ''
                 navigate(`${LOCAL_URL}/${path}/editar-honorario/${id_honorario}`);
             },
             className: 'btn btn-info py-1 px-3 x-small me-1',
@@ -50,7 +50,7 @@ export function ListaHonorariosTramite() {
             label: 'Editar'
         },
         {
-            boton: (id_honorario, row) => { exportPDfIngresos(window.innerWidth < 1100 ? 'b64' : "print",row) },
+            boton: (id_honorario, row) => { exportPDfIngresos(window.innerWidth < 1100 ? 'b64' : "print", row) },
             className: 'btn btn-pdf py-1 px-3 x-small me-1',
             icono: faFilePdf,
             label: 'Recibo'
@@ -67,21 +67,20 @@ export function ListaHonorariosTramite() {
 
     return (
         <>
-            <main className="container-xl mt-3" style={{ maxWidth: "100%", padding: '5px' }}>
-                <div className="d-flex justify-content-between align-items-center mb-4 m-2">
-                    <div>
-                        <h3 className="text-dark fw-bold mb-0 text-titulos">Honorarios Profesionales</h3>
-                      
+            <main className="container-xl mt-2" style={{ maxWidth: "100%",}}>
+                 <div className="panel-custom rounded shadow-sm mx-2">
+                    
+                    <div className="banco-header-section">
+                        <div className="banco-title-container">
+                            <h3 className="banco-title-main">Honorarios Profesionales </h3>
+                            <p className="banco-subtitle">Monto Ingresado por honorarios profesionales</p>
+                        </div>
                     </div>
-                </div>
 
-
-
-                <div className="panel-custom bg-white rounded shadow-sm p-2 mx-2">
-                    <div className="row align-items-center mb-3 g-3">
+                    <div className="row align-items-center">
                         <div className="col-md-6">
                             <div className="d-flex align-items-center gap-3">
-                                <div className="bg-light p-2 rounded border">
+                                <div className="bg-light  rounded border">
                                     <FontAwesomeIcon icon={faFileInvoiceDollar} className="text-primary me-2" />
                                     <span className="fw-bold">Total Honorarios: </span>
                                     <span className="text-primary fw-bold">Bs. {totalHonorarios.toLocaleString('es-BO')}</span>

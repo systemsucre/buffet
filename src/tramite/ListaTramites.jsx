@@ -38,7 +38,7 @@ export function ListaTramites() {
                     </div>
                 </div>
 
-                <div className="panel-custom bg-white rounded shadow-sm mx-2">
+                <div className="panel-custom rounded shadow-sm mx-2">
                     <div className="banco-filter-row">
 
                         <div className="banco-tabs-container">

@@ -2,36 +2,81 @@ export const columns = [
     {
         label: 'Nombre Completo',
         field: 'Nombre Completo',
-        render: row => row.nombre_completo, // Generado por el CONCAT en el SQL
+        render: (row) => (
+            <div >
+                <span className="td-descripcion" >
+                    {row.nombre_completo}
+                </span>
+            </div>
+        ),
         sortable: true,
         wrap: true
     },
     {
         label: 'CI',
         field: 'CI',
-        render: row => row.ci,
+        render: row => <div >
+            <span className="td-descripcion" >
+                {row.ci || 'S/N'}
+            </span>
+        </div>,
         sortable: true
     },
-    {   
+    {
         label: 'Celular',
         field: 'Celular',
-        render: row => row.celular || 'S/N'
+        render: row => <div >
+            <span className="td-numero" >
+                {row.celular || 'S/N'}
+            </span>
+        </div>,
+        sortable: true
     },
     {
         label: 'Dirección',
         field: 'Dirección',
-        render: row => row.direccion,
+        render: row => <div >
+            <span className="td-numero" >
+                {row.direccion || 'S/N'}
+            </span>
+        </div>,
         wrap: true
     },
     {
         label: 'Estado',
         field: 'Estado',
         sortable: true,
-        render: (row) => (
-            <span className={`badge ${row.estado === 1 ? 'bg-success' : 'bg-danger'}`}>
-                {row.estado === 1 ? 'ACTIVO' : 'INACTIVO'}
-            </span>
-        )
+             render: (row) => {
+            const estados = {
+                1: {
+                    badge: 'bgss-secsondary text-success',
+                    texto: 'ACTIVO',
+                    icon: 'bi-hourglass-split',
+                },
+                0: {
+                    badge: 'bg-infos text-secondary',
+                    texto: 'INACTIVO',
+                    icon: 'bi-check-circle',
+                },
+       
+            };
+
+            const est = estados[row.estado] || {
+                badge: 'bg-secondary',
+                texto: 'DESCONOCIDO',  
+                icon: 'bi-question',
+            };
+
+            return (
+                <span
+                    className={`badge ${est.badge} d-flex align-items-center w-fit-content px-2 py-1 `}
+                    style={{ fontSize: '0.85rem', fontWeight: '600' }}
+                >
+                    <i className={`bi ${est.icon} me-1`}></i>
+                    {est.texto}
+                </span>
+            );
+        },
     },
     {
         label: 'Fecha Registro',
