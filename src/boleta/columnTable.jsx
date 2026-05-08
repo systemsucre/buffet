@@ -165,7 +165,7 @@ export const ColumnsTable = [
         },
     },
 
-        window.innerWidth > 877 ?
+        window.innerWidth > 877 ? 
         {
             label: 'Monto',
             field: 'monto',

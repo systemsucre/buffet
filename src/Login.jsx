@@ -114,7 +114,7 @@ const HomeLogin = () => {
                                         mayusculas={false}
                                         ExpresionRegular={INPUT.INPUT_USUARIO}
                                         etiqueta={'Usuario'}
-                                        placeholder={"mauri@mauri.com"}
+                                        placeholder={"user@krjuridica.com"}
                                         logo={false}
                                     />
                                 </div>
@@ -161,7 +161,7 @@ const HomeLogin = () => {
                         {/* Footer de Seguridad */}
                         <div className="text-center mt-4 animate-delayed">
                             <p className="text-muted-light x-small">
-                                🔒 Conexión segura de grado médico SSL/TLS
+                                🔒 Conexión segura con tecnologias SSL/TLS
                             </p>
                         </div>
                     </div>

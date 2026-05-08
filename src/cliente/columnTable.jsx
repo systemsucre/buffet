@@ -78,6 +78,7 @@ export const columns = [
             );
         },
     },
+      window.innerWidth > 877 ? 
     {
         label: 'Fecha Registro',
         field: 'Fecha Registro',
@@ -91,5 +92,5 @@ export const columns = [
                 year: 'numeric'
             });
         }
-    }
+    }:{}
 ];
