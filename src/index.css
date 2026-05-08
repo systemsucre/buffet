@@ -1519,7 +1519,7 @@ button:not(:disabled),
 
 
 /* --- NAVEGACIÓN BASE (CENTRADA Y AJUSTABLE) --- */
-.nav-main {
+.nav-main { 
   position: fixed;
   /* top: 5px; Tu margen superior */
   
@@ -1692,12 +1692,198 @@ button:not(:disabled),
   padding-left: 25px;
   /* Efecto de desplazamiento */
 }
+/* ///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 
 
 
+/* MENU - Banking Style (Full Width Edition) */
+
+/* --- NAVEGACIÓN BASE (ANCHO COMPLETO) --- */
+.nav-main {
+  position: fixed;
+  width: 100%; /* Ocupa todo el ancho de la ventana */
+  left: 0;
+  right: 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  transition: all 0.4s ease-in-out;
+  background: #ffffff;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.main-content {
+  padding-top: 5px;
+  min-height: calc(100vh - 80px);
+}
+
+/* Efecto al hacer scroll */
+.nav-scrolled {
+  height: 70px;
+  background: #003366; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-bottom: none;
+}
+
+.nav-scrolled .brand-text,
+.nav-scrolled .nav-link-item,
+.nav-scrolled .arrow {
+  color: #ffffff !important;
+}
+
+/* --- CONTENEDOR AJUSTADO A LOS BORDES --- */
+.nav-container {
+  width: 100%; 
+  max-width: 100%; /* Eliminamos el límite de 1300px para que llegue a los cantos */
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px; /* Pequeño respiro para que no pegue físicamente al monitor */
+}
+
+/* --- LOGO (FIJO) --- */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #003366;
+  flex-shrink: 0; /* Evita que el logo se comprima al haber muchos menús */
+}
+
+.brand-text {
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+/* --- OPTIMIZACIÓN DE LINKS PARA MUCHOS MENÚS --- */
+.nav-menu-desktop {
+  display: flex;
+  list-style: none;
+  gap: 8px; /* Espacio reducido entre menús para ganar espacio horizontal */
+  align-items: center;
+  flex-grow: 1; /* Permite que el menú use el espacio disponible */
+  justify-content: flex-end; /* Empuja los menús hacia la derecha */
+}
+
+.nav-link-item {
+  text-decoration: none;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.82rem; /* Fuente ligeramente más pequeña para mejorar la densidad */
+  padding: 6px 8px; /* Padding más compacto */
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  white-space: nowrap; /* Evita que los nombres largos se dividan en dos líneas */
+}
+
+.nav-link-item:hover {
+  background-color: #f0f7ff;
+  color: #0056b3;
+}
+
+/* --- SUBMENÚS --- */
+.submenu-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  min-width: 180px;
+  list-style: none;
+  padding: 10px 0;
+  margin-top: 2px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 51, 102, 0.15);
+  border: 1px solid #e2eefb;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.2s ease;
+}
+
+.has-submenu:hover .submenu-list {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.submenu-link {
+  display: block;
+  padding: 8px 15px;
+  text-decoration: none;
+  color: #334155;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.submenu-link:hover {
+  background-color: #003366;
+  color: #ffffff !important;
+}
+
+/* --- PERFIL --- */
+.btn-nav-profile {
+  background: #f1f5f9;
+  width: 35px;
+  height: 35px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50% !important;
+  color: #003366 !important;
+  margin-left: 5px;
+  flex-shrink: 0;
+}
 
 
+
+
+/* Evita el scroll horizontal en toda la aplicación */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Forzar que el main no crezca más allá del ancho de pantalla */
+main {
+  width: 100vw;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ajuste para los paneles de KR Estudios */
+.panel-custom {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Corrección para que las filas de Bootstrap no se salgan del borde */
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Asegura que los contenedores de gráficas no empujen el ancho */
+.recharts-responsive-container {
+  max-width: 100% !important;
+}
 
 
 
