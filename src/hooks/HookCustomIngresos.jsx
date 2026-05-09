@@ -31,7 +31,7 @@ export const UseCustomIngresos = () => {
         const res = await start(`${URL}ingresos/listar-por-tramites`,);
         if (res) {
             setIngresos(res);
-            setIngresosFiltrados(res);
+            setIngresosFiltrados(res);  
         }
     };
 
@@ -205,6 +205,8 @@ export const UseCustomIngresos = () => {
         const busqueda = e.target.value.toLowerCase();
         const filtrados = ingresos.filter(i =>
             i.detalle?.toLowerCase().includes(busqueda) ||
+            i.codigo_tramite?.toLowerCase().includes(busqueda) ||
+            i.cliente_nombre?.toLowerCase().includes(busqueda) ||
             String(i.numero).toLowerCase().includes(busqueda)
         );
         setIngresosFiltrados(filtrados);

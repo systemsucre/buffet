@@ -97,7 +97,7 @@ export function ListaIngresos() {
                             />
                             <input
                                 name="input-search-salida"
-                                placeholder="numero ingreso, detalle..."
+                                placeholder="Tramite, Cliente, detalle..."
                                 onChange={handleSearch}
                                 className="banco-input-search"
                             />
