@@ -85,7 +85,7 @@ const NavbarCajero = () => {
                   to={LOCAL_URL + '/cajero/ingresos-directos'}
                   className="submenu-link"
                 >
-                  listar Ingresos 
+                  listar Ingresos
                 </NavLink>
               </li>
             </ul>
@@ -101,15 +101,6 @@ const NavbarCajero = () => {
           </div>
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-              Clientes <FontAwesomeIcon icon={faChevronDown} />
-            </NavLink>
-            <ul className="submenu-list">
-              <li><NavLink to={LOCAL_URL + "/cajero/nuevo-cliente"} className="submenu-link">Nuevo Cliente</NavLink></li>
-              <li><NavLink to={LOCAL_URL + "/cajero/lista-clientes"} className="submenu-link">Listar Clientes</NavLink></li>
-            </ul>
-          </div>
-          <div className="nav-item-container has-submenu">
-            <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
               Tramites <FontAwesomeIcon icon={faChevronDown} />
             </NavLink>
             <ul className="submenu-list">
@@ -117,6 +108,16 @@ const NavbarCajero = () => {
               <li><NavLink to={LOCAL_URL + "/cajero/lista-tramites"} className="submenu-link">Lista Tramites</NavLink></li>
             </ul>
           </div>
+          <div className="nav-item-container has-submenu">
+            <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+              Clientes <FontAwesomeIcon icon={faChevronDown} />
+            </NavLink>
+            <ul className="submenu-list">
+              <li><NavLink to={LOCAL_URL + "/cajero/nuevo-cliente"} className="submenu-link">Nuevo Cliente</NavLink></li>
+              <li><NavLink to={LOCAL_URL + "/cajero/lista-clientes"} className="submenu-link">Listar Clientes</NavLink></li>
+            </ul>
+          </div>
+
           <div className="nav-item-container has-submenu">
             <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
               Reportes <FontAwesomeIcon icon={faChevronDown} />
@@ -169,33 +170,33 @@ const NavbarCajero = () => {
                 <li><NavLink to={LOCAL_URL + "/boletas"} className="submenu-link">Lista Boletas</NavLink></li>
               </ul>
             </div>
-              <div className="nav-item-container has-submenu">
-                <NavLink
-                  to="#"
-                  className="nav-link-item"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Ingresos <FontAwesomeIcon icon={faChevronDown} />
-                </NavLink>
-                <ul className="submenu-list">
-                  <li>
-                    <NavLink
-                      to={LOCAL_URL + '/cajero/crear-ingreso'}
-                      className="submenu-link"
-                    >
-                      Crear Ingreso
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to={LOCAL_URL + '/cajero/ingresos-directos'}
-                      className="submenu-link"
-                    >
-                      Listar Ingresos
-                    </NavLink>
-                  </li>
-                </ul>
-              </div>
+            <div className="nav-item-container has-submenu">
+              <NavLink
+                to="#"
+                className="nav-link-item"
+                onClick={(e) => e.preventDefault()}
+              >
+                Ingresos <FontAwesomeIcon icon={faChevronDown} />
+              </NavLink>
+              <ul className="submenu-list">
+                <li>
+                  <NavLink
+                    to={LOCAL_URL + '/cajero/crear-ingreso'}
+                    className="submenu-link"
+                  >
+                    Crear Ingreso
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to={LOCAL_URL + '/cajero/ingresos-directos'}
+                    className="submenu-link"
+                  >
+                    Listar Ingresos
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
                 Honorarios<FontAwesomeIcon icon={faChevronDown} />
@@ -203,6 +204,16 @@ const NavbarCajero = () => {
               <ul className="submenu-list">
                 <li><NavLink to={LOCAL_URL + "/cajero/guardar-honorario"} className="submenu-link">Registrar Honorario</NavLink></li>
                 <li><NavLink to={LOCAL_URL + "/cajero/listar-honorarios"} className="submenu-link">Listar Honorarios</NavLink></li>
+              </ul>
+            </div>
+
+            <div className="nav-item-container has-submenu">
+              <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
+                Tramites <FontAwesomeIcon icon={faChevronDown} />
+              </NavLink>
+              <ul className="submenu-list">
+                <li><NavLink to={LOCAL_URL + "/cajero/nuevo-tramite"} className="submenu-link">Nuevo Trámite</NavLink></li>
+                <li><NavLink to={LOCAL_URL + "/cajero/lista-tramites"} className="submenu-link">Lista Tramites</NavLink></li>
               </ul>
             </div>
             <div className="nav-item-container has-submenu">
@@ -216,16 +227,6 @@ const NavbarCajero = () => {
             </div>
             <div className="nav-item-container has-submenu">
               <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
-                Tramites <FontAwesomeIcon icon={faChevronDown} />
-              </NavLink>
-              <ul className="submenu-list">
-                <li><NavLink to={LOCAL_URL + "/cajero/nuevo-tramite"} className="submenu-link">Nuevo Trámite</NavLink></li>
-                <li><NavLink to={LOCAL_URL + "/cajero/lista-tramites"} className="submenu-link">Lista Tramites</NavLink></li>
-              </ul>
-            </div>
-
-            <div className="nav-item-container has-submenu">
-              <NavLink to="#" className="nav-link-item" onClick={(e) => e.preventDefault()}>
                 Reportes <FontAwesomeIcon icon={faChevronDown} />
               </NavLink>
               <ul className="submenu-list">
@@ -237,7 +238,6 @@ const NavbarCajero = () => {
               </ul>
             </div>
 
-            <NavLink to={LOCAL_URL + "/cajero/reportes"} className="mobile-link">Reportes</NavLink>
             <div className="nav-item-container has-submenu mt-4" >
               <NavLink to={'#'} className="mobile-link profile" onClick={(e) => e.preventDefault()} >Mi Perfil</NavLink>
               <ul className="submenu-list mt-4">

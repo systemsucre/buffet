@@ -1738,7 +1738,7 @@ button:not(:disabled),
 }
 
 .nav-scrolled .brand-text,
-.nav-scrolled .nav-link-item,
+.nav-scrolled 
 .nav-scrolled .arrow {
   color: #ffffff !important;
 }
@@ -1779,16 +1779,7 @@ button:not(:disabled),
   justify-content: flex-end; /* Empuja los menús hacia la derecha */
 }
 
-.nav-link-item {
-  text-decoration: none;
-  color: #475569;
-  font-weight: 600;
-  font-size: 0.82rem; /* Fuente ligeramente más pequeña para mejorar la densidad */
-  padding: 6px 8px; /* Padding más compacto */
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  white-space: nowrap; /* Evita que los nombres largos se dividan en dos líneas */
-}
+
 
 .nav-link-item:hover {
   background-color: #f0f7ff;
