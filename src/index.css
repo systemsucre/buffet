@@ -1438,6 +1438,8 @@ button:not(:disabled),
   background: rgba(0, 123, 255, 0.1);
   border-radius: 50%;
   animation: pulseBlue 3s infinite;
+  margin-right: 30px;
+
 }
 
 .hospital-label {
@@ -1512,36 +1514,36 @@ button:not(:disabled),
 
 
 
-
-
-
-/* MENU */
+ /* MENU */
 
 
 /* --- NAVEGACIÓN BASE (CENTRADA Y AJUSTABLE) --- */
-.nav-main { 
+.nav-main {
   position: fixed;
   /* top: 5px; Tu margen superior */
-  
+
   /* EL SECRETO DEL CENTRADO CON MÁRGENES FIJOS */
   /* left: 5px;  */
   /* right: 5px; */
-  width: 100%; /* 100% menos la suma de los márgenes (8px + 8px) */
-  
+  width: 100%;
+  /* 100% menos la suma de los márgenes (8px + 8px) */
+
   height: 85px;
   display: flex;
   align-items: center;
   z-index: 1000;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   /* ESTILO VISUAL */
   background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px); /* Toque Pro: desenfoca el fondo de finanzas al pasar */
+  backdrop-filter: blur(10px);
+  /* Toque Pro: desenfoca el fondo de finanzas al pasar */
   /* border-radius: 8px; */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde sutil para resaltar */
-  
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* Borde sutil para resaltar */
+
   /* Eliminamos margin-left manual para que left/right hagan el trabajo */
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 .main-content {
@@ -1553,7 +1555,7 @@ button:not(:disabled),
 
 .nav-scrolled {
   height: 70px;
-  background:transparent;   
+  background: transparent;
   /* rgba(255, 255, 255, 0.85); */
   backdrop-filter: blur(12px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -1562,14 +1564,7 @@ button:not(:disabled),
 
 
 
-.nav-container {
-  width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+
 
 /* --- LOGO --- */
 .nav-brand {
@@ -1579,7 +1574,7 @@ button:not(:disabled),
   text-decoration: none;
   font-weight: 800;
   font-size: 1.4rem;
-  color: #1e293b;
+  color: #4A4A4A;
 }
 
 /* --- DESKTOP LINKS & ANIMACIONES --- */
@@ -1593,11 +1588,11 @@ button:not(:disabled),
 
 .nav-link-item {
   text-decoration: none;
-  color: #64748b;
+  color: #4A4A4A;
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: 0.90rem;
   position: relative;
-  padding: 5px 0;
+  padding: 5px 5px;
   transition: color 0.3s ease;
 }
 
@@ -1623,7 +1618,7 @@ button:not(:disabled),
 }
 
 .nav-link-item.active {
-  color: #007bff;
+  color: #4A4A4A;
 }
 
 
@@ -1692,6 +1687,7 @@ button:not(:disabled),
   padding-left: 25px;
   /* Efecto de desplazamiento */
 }
+
 /* ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1712,7 +1708,8 @@ button:not(:disabled),
 /* --- NAVEGACIÓN BASE (ANCHO COMPLETO) --- */
 .nav-main {
   position: fixed;
-  width: 100%; /* Ocupa todo el ancho de la ventana */
+  width: 100%;
+  /* Ocupa todo el ancho de la ventana */
   left: 0;
   right: 0;
   height: 80px;
@@ -1732,26 +1729,27 @@ button:not(:disabled),
 /* Efecto al hacer scroll */
 .nav-scrolled {
   height: 70px;
-  background: #003366; 
+  background: #cecece;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-bottom: none;
 }
 
 .nav-scrolled .brand-text,
-.nav-scrolled 
-.nav-scrolled .arrow {
+.nav-scrolled .nav-scrolled .arrow {
   color: #ffffff !important;
 }
 
 /* --- CONTENEDOR AJUSTADO A LOS BORDES --- */
 .nav-container {
-  width: 100%; 
-  max-width: 100%; /* Eliminamos el límite de 1300px para que llegue a los cantos */
+  width: 90%;
+  max-width: 100%;
+  /* Eliminamos el límite de 1300px para que llegue a los cantos */
   margin: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px; /* Pequeño respiro para que no pegue físicamente al monitor */
+  padding: 0 15px;
+  /* Pequeño respiro para que no pegue físicamente al monitor */
 }
 
 /* --- LOGO (FIJO) --- */
@@ -1761,11 +1759,12 @@ button:not(:disabled),
   gap: 8px;
   text-decoration: none;
   color: #003366;
-  flex-shrink: 0; /* Evita que el logo se comprima al haber muchos menús */
+  flex-shrink: 0;
+  /* Evita que el logo se comprima al haber muchos menús */
 }
 
 .brand-text {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   letter-spacing: 0.5px;
 }
 
@@ -1773,10 +1772,13 @@ button:not(:disabled),
 .nav-menu-desktop {
   display: flex;
   list-style: none;
-  gap: 8px; /* Espacio reducido entre menús para ganar espacio horizontal */
+  gap: 8px;
+  /* Espacio reducido entre menús para ganar espacio horizontal */
   align-items: center;
-  flex-grow: 1; /* Permite que el menú use el espacio disponible */
-  justify-content: flex-end; /* Empuja los menús hacia la derecha */
+  flex-grow: 1;
+  /* Permite que el menú use el espacio disponible */
+  justify-content: flex-end;
+  /* Empuja los menús hacia la derecha */
 }
 
 
@@ -1838,6 +1840,7 @@ button:not(:disabled),
   margin-left: 5px;
   flex-shrink: 0;
 }
+
 
 
 
@@ -1913,7 +1916,7 @@ main {
   transition: all 0.3s ease;
   border: 2px solid transparent;
 
-  margin-top: 20px;
+  margin-top: 0px;
   color: #198754;
   border-bottom: none;
   background: rgba(25, 135, 84, 0.05);

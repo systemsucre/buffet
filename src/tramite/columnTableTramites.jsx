@@ -82,8 +82,8 @@ export const ColumnsTableTramites = [
         render: (row) => {
             const costo = row.costo || 0;
             return (
-                <div className="text-end">
-                    <div className="fw-bold text-dark">
+                <div className="td-numero">
+                    <div className="me-2">
                         GASTOS : Bs. {row.total_gastos}
                     </div>
                     {/* {localStorage.getItem('numRol') != 4 ?
@@ -91,10 +91,10 @@ export const ColumnsTableTramites = [
                             COSTO TRAMITE  Bs. {costo}
                         </div>
                         : null} */}
-                    <div className=" fw-bold text-muted text-success italic" style={{ fontSize: '0.7rem' }}>
+                    <div className="text-success">
                         MONTO ABONADO  Bs. {row.total_ingresos}
                     </div>
-                    <div className={`fw-bold ${row.saldoDisponible > 2000 ? `text-dark` : row.saldoDisponible > 1000 ? `text-warning` : `text-danger`}`} style={{ fontSize: '0.7rem' }}>
+                    <div className={`fw-bold ${row.saldoDisponible > 2000 ? `text-dark` : row.saldoDisponible > 1000 ? `text-warning` : `text-danger`}`}>
                         SALDO DISP.  BS. {row.saldoDisponible}
                     </div>
                 </div>

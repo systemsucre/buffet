@@ -60,6 +60,7 @@ export const DetallesBoleta = () => {
         tableHeader: { backgroundColor: '#2c3e50', color: '#fff', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' },
         badgeStatus: { padding: '8px 12px', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 'bold' }
     };
+
     return (
         !cargando ?
             <main className="container-xl">
@@ -79,6 +80,7 @@ export const DetallesBoleta = () => {
                             <p className="banco-label-top">
                                 BOLETA <span className="banco-id-secondary">{codigo}</span>
                             </p>
+                            <p className="banco-label-sub">{'Usuario: ' + infoCabecera?.solicitado_por}</p>
 
                             {/* Identificador Principal (como el saldo) */}
                             <h2 className="banco-monto-principal">
