@@ -1,5 +1,6 @@
 // const URL = 'https://etvs.alwaysdata.net/server_chagas/'
-const URL = 'https://kr0001.vercel.app/'
+// const URL = 'https://kr0001.vercel.app/'
+const URL = 'https://cobal.info/kr_server/'
 // const URL = 'http://localhost:3005/'
 const LOCAL_URL = '/kr'
 

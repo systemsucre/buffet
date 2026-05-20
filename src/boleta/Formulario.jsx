@@ -73,13 +73,13 @@ export const FormularioBoleta = () => {
         if (e) e.preventDefault();
 
         // Validación: Verificar que no haya campos vacíos
-        const incompleto = itemsForm.some(i => !i.id_tramite || !i.monto || !i.detalle);
+        const incompleto = itemsForm.some(i => !i.id_tramite || (!i.monto || i.monto < 1) || !i.detalle ||!i.fecha);
         if (incompleto) return toast.error("Por favor, completa todos los campos del formulario");
 
         try {
             if (codigo) {
                 await actualizarBoletaMasiva(codigo, itemsForm);
-            } else {
+            } else { 
                 await guardarBoletaMasiva(e, itemsForm);
             }
             // Opcional: navigate('/boletas') tras éxito si el hook no lo hace

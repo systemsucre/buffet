@@ -201,16 +201,21 @@ export const UseCustomIngresos = () => {
     };
 
     // 5. BUSCADORES
-    const handleSearch = (e) => {
-        const busqueda = e.target.value.toLowerCase();
-        const filtrados = ingresos.filter(i =>
-            i.detalle?.toLowerCase().includes(busqueda) ||
-            i.codigo_tramite?.toLowerCase().includes(busqueda) ||
-            i.cliente_nombre?.toLowerCase().includes(busqueda) ||
-            String(i.numero).toLowerCase().includes(busqueda)
-        );
-        setIngresosFiltrados(filtrados);
-    };
+  const handleSearch = (e) => {
+    const busqueda = e.target.value.toLowerCase();
+
+    const filtrados = ingresos.filter((i) => {
+      // Retornamos true si la búsqueda coincide con cualquiera de estos campos
+      return (
+        i.detalle?.toLowerCase().includes(busqueda) ||
+        i.codigo_tramite?.toLowerCase().includes(busqueda) ||
+        String(i.numero).toLowerCase().includes(busqueda)
+      );
+    });
+
+    setIngresosFiltrados(filtrados);
+  };
+
 
 
     return {

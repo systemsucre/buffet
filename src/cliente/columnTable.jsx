@@ -46,7 +46,7 @@ export const columns = [
         label: 'Estado',
         field: 'Estado',
         sortable: true,
-             render: (row) => {
+        render: (row) => {
             const estados = {
                 1: {
                     badge: 'bgss-secsondary text-success',
@@ -58,12 +58,12 @@ export const columns = [
                     texto: 'INACTIVO',
                     icon: 'bi-check-circle',
                 },
-       
+
             };
 
             const est = estados[row.estado] || {
                 badge: 'bg-secondary',
-                texto: 'DESCONOCIDO',  
+                texto: 'DESCONOCIDO',
                 icon: 'bi-question',
             };
 
@@ -78,19 +78,21 @@ export const columns = [
             );
         },
     },
-      window.innerWidth > 877 ? 
-    {
-        label: 'Fecha Registro',
-        field: 'Fecha Registro',
-        sortable: true,
-        render: row => {
-            if (!row.created_at) return '---';
-            const fecha = new Date(row.created_at);
-            return fecha.toLocaleDateString('es-BO', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            });
-        }
-    }:{}
+    window.innerWidth > 877 ?
+        {
+            label: 'Fecha Registro',
+            field: 'Fecha Registro',
+            sortable: true,
+            render: row => {
+                if (!row.created_at) return '---';
+                const fecha = new Date(row.created_at);
+                return fecha.toLocaleDateString('es-BO', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+            }
+        } : {},
+
+
 ];
