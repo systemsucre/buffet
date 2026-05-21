@@ -4,7 +4,8 @@ import { UseCustomBoletas } from "../hooks/HookCustomBoleta";
 import { useTramites } from "../hooks/HookCustomTramites";
 import toast from 'react-hot-toast';
 import Select from 'react-select';
-import { faPlusCircle, faTimesSquare } from '@fortawesome/free-solid-svg-icons';
+import { components } from 'react-select';
+import { faPlus, faTrashAlt, faCheckCircle, faFileAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const FormularioBoleta = () => {
@@ -18,27 +19,23 @@ export const FormularioBoleta = () => {
         consultarDetalleBoleta,
         itemsBoleta,
         setters,
-        estados,
         cargando
     } = UseCustomBoletas();
 
     const [itemsForm, setItemsForm] = useState([]);
-    // 1. Carga inicial de datos
+
     useEffect(() => {
         listarTramitesActivos();
         if (codigo) {
             consultarDetalleBoleta(codigo);
         } else {
-            agregarFila(); // Iniciar con una fila si es nuevo
+            agregarFila();
         }
-
     }, [codigo]);
 
-    // 2. Sincronización de datos del backend (Modo Edición)
     useEffect(() => {
         if (codigo && itemsBoleta.length > 0) {
             const itemsMapeados = itemsBoleta.map(item => ({
-                // Asegúrate de que 'item.id_tramite' sea el UUID que viene del backend
                 id_tramite: item.value || item.id,
                 monto: item.monto,
                 detalle: item.detalle,
@@ -50,10 +47,7 @@ export const FormularioBoleta = () => {
 
     const agregarFila = () => {
         setItemsForm([...itemsForm, {
-            id_tramite: '',
-            monto: '',
-            detalle: '',
-            fecha: new Date().toISOString().split('T')[0]
+            id_tramite: '', monto: '', detalle: '', fecha: new Date().toISOString().split('T')[0]
         }]);
     };
 
@@ -68,21 +62,13 @@ export const FormularioBoleta = () => {
         setItemsForm(itemsForm.filter((_, i) => i !== index));
     };
 
-
     const handleGuardar = async (e) => {
         if (e) e.preventDefault();
-
-        // Validación: Verificar que no haya campos vacíos
-        const incompleto = itemsForm.some(i => !i.id_tramite || (!i.monto || i.monto < 1) || !i.detalle ||!i.fecha);
-        if (incompleto) return toast.error("Por favor, completa todos los campos del formulario");
-
+        const incompleto = itemsForm.some(i => !i.id_tramite || (!i.monto || i.monto < 1) || !i.detalle || !i.fecha);
+        if (incompleto) return toast.error("Por favor, completa todos los campos obligatorios");
         try {
-            if (codigo) {
-                await actualizarBoletaMasiva(codigo, itemsForm);
-            } else { 
-                await guardarBoletaMasiva(e, itemsForm);
-            }
-            // Opcional: navigate('/boletas') tras éxito si el hook no lo hace
+            if (codigo) await actualizarBoletaMasiva(codigo, itemsForm);
+            else await guardarBoletaMasiva(e, itemsForm);
         } catch (error) {
             toast.error("Error al procesar la operación");
         }
@@ -93,229 +79,133 @@ export const FormularioBoleta = () => {
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
-            backgroundColor: '#ffffff', // Fondo blanco limpio
-            borderColor: state.isFocused ? '#3b82f6' : '#d1d5db', // Azul suave al enfocar
-            boxShadow: state.isFocused ? '0 0 0 1px #3b82f6' : 'none',
-            borderRadius: '8px',
-            padding: '4px',
-            '&:hover': { borderColor: '#3b82f6' }
+            backgroundColor: '#f8fafc',
+            borderColor: state.isFocused ? '#b91c1c' : '#cbd5e1', // Rojo al enfocar
+            boxShadow: state.isFocused ? '0 0 0 1px #b91c1c' : 'none',
+            borderRadius: '12px',
+            padding: '4px 8px',
+            fontSize: '14px',
+            fontWeight: '500',
+            minHeight: '45px',
+            transition: 'all 0.2s ease',
+            '&:hover': { borderColor: '#b91c1c' },
         }),
         menu: (provided) => ({
             ...provided,
-            borderRadius: '8px',
-            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-            marginTop: '8px'
+            borderRadius: '16px',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.08)',
+            border: '1px solid #f1f5f9',
+            padding: '4px',
+            zIndex: 9999
         }),
         option: (provided, state) => ({
             ...provided,
-            padding: '12px 16px', // Más espacio para que no se sienta apretado
-            backgroundColor: state.isSelected
-                ? '#eff6ff'
-                : state.isFocused
-                    ? '#f3f4f6'
-                    : 'transparent',
-            color: state.isSelected ? '#1d4ed8' : '#374151',
-            fontWeight: state.isSelected ? '600' : '400',
+            padding: '12px 16px',
+            borderRadius: '10px',
+            fontSize: '14px',
+            backgroundColor: state.isSelected ? '#fee2e2' : state.isFocused ? '#fef2f2' : 'transparent', // Fondos rojos suaves
+            color: '#0f172a',
             cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            borderBottom: '1px solid #f3f4f6', // Separador sutil entre items
-            '&:active': { backgroundColor: '#dbeafe' }
         }),
-        placeholder: (provided) => ({
-            ...provided,
-            color: '#9ca3af'
-        })
     };
+
     return (
-        <main className="login-wrapper d-flex align-items-center justify-content-center py-5" style={{ minHeight: '100vh' }}>
-            <section className="container mt-5">
-                <div className="row justify-content-center">
-                    <div className="col-12 col-md-10 col-lg-8 col-xl-7 animate-fade-in">
-                        <div className="login-card shadow-clinical p-4 p-md-5 bg-white" >
+        <main style={{ minHeight: '100vh', background: '#f1f5f9', padding: '40px 20px', marginTop: '3rem' }}>
+            <section style={{ maxWidth: '780px', margin: '0 auto' }}>
+                <div style={{ marginBottom: '28px' }}>
+                    <h1 style={{ color: '#0f172a', fontWeight: '800', fontSize: '28px' }}>
+                        {codigo ? 'Modificar Boleta' : 'Nueva Boleta de Gastos'}
+                    </h1>
+                    {codigo && <span style={{ color: '#b91c1c', fontWeight: '600' }}>Caja: {codigo}</span>}
+                </div>
 
-                            <div className="text-center mb-5">
-                                <span style={{ fontSize: '3rem' }}>{codigo ? '📝' : '📑'}</span>
-                                <h2 className="h3 fw-bold text-primary text-uppercase titulo-boleta" style={{ marginTop: '10px' }}>
-                                    {codigo ? `Modificar Boleta` : 'Nueva Boleta de Gastos'}
-                                </h2>
-                                {codigo && <p className='text-center'> <span className="badge bg-info text-dark">Editando Código: {codigo}</span></p>}
+                {tramitesFiltradosBoleta.length > 0 ? (
+                    <form onSubmit={handleGuardar}>
+                        <div style={{ marginBottom: '20px' }}>
+                            {itemsForm.map((item, index) => (
+                                <div key={index} style={{ background: '#ffffff', borderRadius: '16px', padding: '24px', marginBottom: '16px', borderLeft: '4px solid #b91c1c', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+                                        <span style={{ background: '#fef2f2', color: '#b91c1c', padding: '4px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: '700' }}>ITEM #{index + 1}</span>
+                                        {itemsForm.length > 1 && <button type="button" onClick={() => eliminarFila(index)} style={{ border: 'none', background: 'none', color: '#dc2626' }}><FontAwesomeIcon icon={faTrashAlt} /></button>}
+                                    </div>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '16px' }}>
+                                        <Select styles={customStyles} options={tramitesFiltradosBoleta} components={{ Option: CustomOption }} onChange={(e) => actualizarFila(index, 'id_tramite', e?.value)} value={tramitesFiltradosBoleta.find(o => String(o.value) === String(item.id_tramite)) || null} />
+                                        <input type="number" style={{ width: '100%', height: '45px', borderRadius: '12px', padding: '0 14px', border: '1px solid #cbd5e1' }} placeholder="Monto" value={item.monto} onChange={(e) => actualizarFila(index, 'monto', e.target.value)} />
+                                        <input type="date" style={{ width: '100%', height: '45px', borderRadius: '12px', padding: '0 14px', border: '1px solid #cbd5e1' }} value={item.fecha} onChange={(e) => actualizarFila(index, 'fecha', e.target.value)} />
+                                    </div>
+                                    <input type="text" style={{ width: '100%', height: '45px', borderRadius: '12px', padding: '0 14px', border: '1px solid #cbd5e1' }} placeholder="Concepto del gasto..." value={item.detalle} onChange={(e) => actualizarFila(index, 'detalle', e.target.value)} />
+                                </div>
+                            ))}
+                        </div>
 
+                        <div style={{ background: '#fff', padding: '20px', borderRadius: '16px', marginBottom: '20px' }}>
+                            <label style={{ fontWeight: '700', marginBottom: '8px', display: 'block' }}>Archivo de Respaldo</label>
+                            <input type="file" onChange={(e) => setters.setArchivoBoleta(e.target.files[0])} />
+                        </div>
+
+                        <button type="button" onClick={agregarFila} style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '2px dashed #cbd5e1', background: '#f8fafc', marginBottom: '20px' }}>
+                            <FontAwesomeIcon icon={faPlus} /> Añadir otra línea
+                        </button>
+
+                        <div style={{
+                            background: '#ffffff',
+                            borderRadius: '16px',
+                            padding: '24px',
+                            display: 'flex',
+                            flexDirection: window.innerWidth < 768 ? 'column' : 'row', // Column en móvil, Row en escritorio
+                            justifyContent: 'space-between',
+                            alignItems: window.innerWidth < 768 ? 'flex-start' : 'center',
+                            gap: '20px',
+                            boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
+                        }}>
+                            <div style={{ width: window.innerWidth < 768 ? '100%' : 'auto' }}>
+                                <span style={{ color: '#64748b', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>
+                                    Total Acumulado
+                                </span>
+                                <div style={{ color: '#b91c1c', fontSize: '32px', fontWeight: '800' }}>
+                                    Bs. {totalBoleta.toLocaleString('es-BO', { minimumFractionDigits: 2 })}
+                                </div>
                             </div>
 
-                            {tramitesFiltradosBoleta.length > 0 ?
-                                <form
-                                    onSubmit={handleGuardar}
-                                    onKeyDown={(e) => {
-                                        // Si la tecla es "Enter", evitamos que el formulario se envíe
-                                        if (e.key === 'Enter') {
-                                            e.preventDefault();
-                                        }
-                                    }}
-                                    style={{ marginTop: '10px' }}>
-
-                                    {itemsForm.map((item, index) => (
-                                        <div className="item-gasto-row" key={index}>
-                                            {/* Indicador visual de fila */}
-                                            <div className="item-number">ITEM #{index + 1}</div>
-
-                                            {/* Botón eliminar arriba a la derecha */}
-                                            {itemsForm.length > 1 && (
-                                                <button
-                                                    type="button"
-                                                    className="btn-eliminar-fila"
-                                                    onClick={() => eliminarFila(index)}
-                                                    title="Eliminar este gasto"
-                                                >
-                                                    <FontAwesomeIcon icon={faTimesSquare} />
-                                                </button>
-                                            )}
-
-                                            <div className="row g-3">
-                                                <div className="col-md-6">
-                                                    <label className="form-label-profesional">CAJA</label>
-                                                    <Select
-                                                        styles={customStyles}
-                                                        placeholder={'Seleccione trámite...'}
-                                                        onChange={(e) => actualizarFila(index, 'id_tramite', e ? e.value : '')}
-                                                        options={tramitesFiltradosBoleta}
-                                                        value={tramitesFiltradosBoleta.find(opt => String(opt.value) === String(item.id_tramite)) || null}
-                                                        components={{ Option: CustomOption }} // <-- Aquí aplicamos la personalización
-                                                        getOptionLabel={(e) => `${e.label}`} // Limpio para el buscador
-                                                        isSearchable={true}
-                                                        className="react-select-container"
-                                                        classNamePrefix="react-select"
-                                                    />
-                                                </div>
-
-                                                <div className="col-md-3">
-                                                    <label className="form-label-profesional">Monto Bs.</label>
-                                                    <input
-                                                        type="number"
-                                                        className="form-control form-control-profesional text-end fw-bold"
-                                                        value={item.monto}
-                                                        placeholder="0.00"
-                                                        onChange={(e) => actualizarFila(index, 'monto', e.target.value)}
-                                                    />
-                                                </div>
-
-                                                <div className="col-md-3">
-                                                    <label className="form-label-profesional">Fecha de Gasto</label>
-                                                    <input
-                                                        type="date"
-                                                        className="form-control form-control-profesional"
-                                                        value={item.fecha}
-                                                        onChange={(e) => actualizarFila(index, 'fecha', e.target.value)}
-                                                    />
-                                                </div>
-
-                                                <div className="col-md-12">
-                                                    <label className="form-label-profesional">Concepto del Gasto</label>
-                                                    <textarea
-                                                        className="form-control form-control-profesional"
-                                                        placeholder="Escriba el detalle del gasto realizado..."
-                                                        rows="2"
-                                                        value={item.detalle}
-                                                        onChange={(e) => actualizarFila(index, 'detalle', e.target.value)}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-
-                                    <div className="col-12" >
-                                        <div className="card border-primary-subtle bg-light">
-                                            <div className="card-body">
-                                                <label className="form-label-profesional text-primary fw-bold">
-                                                    <FontAwesomeIcon icon={faPlusCircle} className="me-2" />
-                                                    DOCUMENTO DE RESPALDO (EXCEL ÚNICO)
-                                                </label>
-                                                <input
-                                                    type="file"
-                                                    className="form-control form-control-profesional"
-                                                    accept=".xlsx, .xls"
-                                                    onChange={(e) => setters.setArchivoBoleta(e.target.files[0])}
-                                                />
-                                                <small className="text-muted">
-                                                    Adjunte el archivo Excel que resume todos los ítems de esta boleta.
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* Botón de Añadir Gasto Mejorado */}
-                                    <div className="mt-2 mb-4 mt-5">
-                                        <button type="button" className="btn btn-add-gasto" onClick={agregarFila}>
-                                            <FontAwesomeIcon icon={faPlusCircle} />
-                                            Añadir otra línea de gasto
-                                        </button>
-                                    </div>
-
-                                    <div className="row align-items-center mt-5">
-                                        <div className="col-md-6 text-start">
-                                            <strong className="text-uppercase" style={{ letterSpacing: '1px' }}>Total Acumulado: </strong>
-                                            <span className="text-success fw-bold ms-1 fs-5">Bs.  {totalBoleta}</span>
-                                        </div>
-
-                                        <div className="col-md-6 text-end btn-action-container d-flex justify-content-end gap-2" style={{ padding: '5px' }}>
-                                            <button type="button" className="btn btn-cancelar-boleta" onClick={() => navigate(-1)}>
-                                                Cancelar
-                                            </button>
-
-                                            <button type="submit" className="btn btn-guardar-boleta" disabled={cargando || itemsForm.length === 0}
-                                            >
-                                                <i className="fas fa-save me-2"></i> {/* Icono FontAwesome */}
-                                                {cargando ? (
-                                                    <><span className="spinner-border spinner-border-sm me-2"></span>PROCESANDO...</>
-                                                ) : (
-                                                    codigo ? 'ACTUALIZAR' : 'GUARDAR BOLETA'
-                                                )}
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </form>
-                                :
-                                <div className="p-3">
-                                    {[1, 2, 3].map(n => <SkeletonRow key={n} />)}
-                                </div>
-                            }
+                            <div style={{
+                                display: 'flex',
+                                gap: '10px',
+                                width: window.innerWidth < 768 ? '100%' : 'auto',
+                                justifyContent: window.innerWidth < 768 ? 'stretch' : 'flex-end'
+                            }}>
+                                <button
+                                    type="button"
+                                    onClick={() => navigate(-1)}
+                                    style={{ flex: 1, padding: '14px', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f1f5f9', fontWeight: '600' }}
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={cargando}
+                                    style={{ flex: 1, padding: '14px', borderRadius: '12px', background: '#0f172a', color: '#fff', border: 'none', fontWeight: '700' }}
+                                >
+                                    {cargando ? 'Procesando...' : (codigo ? 'Confirmar Cambios' : 'Registrar ')}
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </form>
+                ) : <p>Cargando información...</p>}
             </section>
         </main>
     );
 };
 
-export const SkeletonRow = () => {
-    return (
-        <div className="skeleton-card">
-            <div className="skeleton-content">
-                <div className="skeleton-line" style={{ width: '40%' }}></div> {/* Simula Código */}
-                <div className="skeleton-line" style={{ width: '100%' }}></div> {/* Simula Detalle */}
-                <div className="skeleton-line" style={{ width: '60%' }}></div> {/* Simula Fecha/Monto */}
+const CustomOption = (props) => (
+    <components.Option {...props}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            <div style={{ fontWeight: '700', color: '#1e293b', fontSize: '14px' }}>{props.data.label}</div>
+            <div style={{ fontSize: '11px', color: '#64748b' }}>
+                Moneda: <span style={{ fontWeight: '600', color: '#334155' }}>{props.data.simbolo}</span> | Saldo Disp: <span style={{ fontWeight: '600', color: '#b91c1c' }}>{props.data.saldoDisponible}</span>
+            </div>
+            <div style={{ fontSize: '10px', color: '#94a3b8', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {props.data.detalle}
             </div>
         </div>
-    );
-};
-
-import { components } from 'react-select';
-
-// Este componente personaliza cómo se ve cada fila en la lista desplegable
-const CustomOption = (props) => {
-    return (
-        <components.Option {...props}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                    <strong>{props.data.codigo}</strong>
-                    <div style={{ fontSize: '0.8em', color: '#666' }}>
-                        {props.data.cliente_nombre} | Saldo: {props.data.saldoDisponible}
-                    </div>
-                    <div style={{ fontSize: '0.55em', color: '#444444', fontWeight: '100' }}>
-                        {props.data.detalle.substring(0, 40)}
-                    </div>
-                </div>
-
-            </div>
-        </components.Option>
-    );
-};
+    </components.Option>
+);

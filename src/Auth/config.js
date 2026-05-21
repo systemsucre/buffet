@@ -1,7 +1,7 @@
 // const URL = 'https://etvs.alwaysdata.net/server_chagas/'
 // const URL = 'https://kr0001.vercel.app/'
 const URL = 'https://cobal.info/kr_server/'
-// const URL = 'http://localhost:3005/'
+// const URL = 'http://localhost:3002/kr_server/'
 const LOCAL_URL = '/kr'
 
 const TIEMPO_INACTIVO = 60 // MINUTOS DE TOLERANCIA ANTESDE QUE EL USUARIO VUELVA A INTERACTUAR CON EL SISTEMA YA SEA MEDIANTE MUOSE O TECLADO

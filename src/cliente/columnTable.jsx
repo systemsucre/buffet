@@ -1,3 +1,6 @@
+import { faCheckCircle, faX, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export const columns = [
     {
         label: 'Nombre Completo',
@@ -49,14 +52,14 @@ export const columns = [
         render: (row) => {
             const estados = {
                 1: {
-                    badge: 'bgss-secsondary text-success',
-                    texto: 'ACTIVO',
-                    icon: 'bi-hourglass-split',
+                    badge: 'text-success',
+                    texto: 'Activo',
+                    icon: faCheckCircle ,
                 },
                 0: {
-                    badge: 'bg-infos text-secondary',
-                    texto: 'INACTIVO',
-                    icon: 'bi-check-circle',
+                    badge: 'text-secondary',
+                    texto: 'Inactivo',
+                    icon: faXmarkCircle,
                 },
 
             };
@@ -69,10 +72,9 @@ export const columns = [
 
             return (
                 <span
-                    className={`badge ${est.badge} d-flex align-items-center w-fit-content px-2 py-1 `}
-                    style={{ fontSize: '0.85rem', fontWeight: '600' }}
+                    className={`text-descripcion ${est.badge} `}
                 >
-                    <i className={`bi ${est.icon} me-1`}></i>
+                    <FontAwesomeIcon className={`bi me-1`} icon={est.icon} ></FontAwesomeIcon>
                     {est.texto}
                 </span>
             );
@@ -83,15 +85,17 @@ export const columns = [
             label: 'Fecha Registro',
             field: 'Fecha Registro',
             sortable: true,
-            render: row => {
-                if (!row.created_at) return '---';
-                const fecha = new Date(row.created_at);
-                return fecha.toLocaleDateString('es-BO', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric'
-                });
-            }
+            render: row =>
+
+                <div className="td-numero" >
+                    {
+                        new Date(row.created_at).toLocaleDateString('es-BO', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                        })}
+                </div>
+
         } : {},
 
 

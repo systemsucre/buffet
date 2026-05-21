@@ -1,45 +1,80 @@
-import toast from "react-hot-toast";
-import { faCheckCircle, faSearch, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import Select from 'react-select';
+import toast from 'react-hot-toast';
 import {
-  Input,
-  IconoValidacion,
-  IconoValidacionSelect,
-} from "./stylos"
-import { useEffect, useState } from "react";
-import { FormGroup, } from "reactstrap"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+  faCheckCircle,
+  faSearch,
+  faTimesCircle,
+} from '@fortawesome/free-solid-svg-icons';
+import Select from 'react-select';
+import { Input, IconoValidacion } from './stylos';
+import { useEffect, useState } from 'react';
+import { FormGroup } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+// --- Estilos Base ---
+const baseLabelStyle = {
+  display: 'block',
+  color: '#475569',
+  fontSize: '13px',
+  fontWeight: '600',
+  marginBottom: '8px',
+  textTransform: 'none',
+  letterSpacing: 'normal'
+};
 
+const baseInputStyle = (valido, disabled) => ({
+  width: '100%',
+  height: '45px',
+  borderRadius: '12px',
+  padding: '0 40px 0 14px',
+  backgroundColor: disabled ? '#f1f5f9' : '#ffffff',
+  border: '1px solid',
+  borderColor: valido === 'true' ? '#2e7559' : valido === 'false' ? '#dc2626' : '#cbd5e1',
+  fontSize: '14px',
+  fontWeight: '500',
+  color: disabled ? '#64748b' : '#0f172a',
+  outline: 'none',
+  transition: 'all 0.2s ease',
+});
 
+const getSelectStyles = (valido) => ({
+  control: (provided, state) => ({
+    ...provided,
+    backgroundColor: '#ffffff',
+    borderColor: valido === 'true' ? '#2e7559' : valido === 'false' ? '#dc2626' : state.isFocused ? '#0f172a' : '#cbd5e1',
+    boxShadow: state.isFocused ? `0 0 0 1px ${valido === 'true' ? '#2e7559' : valido === 'false' ? '#dc2626' : '#0f172a'}` : 'none',
+    borderRadius: '12px',
+    padding: '4px 8px',
+    fontSize: '14px',
+    fontWeight: '500',
+    minHeight: '45px',
+    transition: 'all 0.2s ease',
+    '&:hover': { borderColor: valido === 'true' ? '#2e7559' : valido === 'false' ? '#dc2626' : '#0f172a' },
+  }),
+  menu: (provided) => ({ ...provided, borderRadius: '16px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.08)', border: '1px solid #f1f5f9', zIndex: 9999 }),
+  option: (provided, state) => ({
+    ...provided,
+    padding: '12px 16px',
+    borderRadius: '10px',
+    fontSize: '14px',
+    backgroundColor: state.isSelected ? '#e2e8f0' : state.isFocused ? '#f1f5f9' : 'transparent',
+    color: '#0f172a',
+    cursor: 'pointer',
+  }),
+});
 
-// Asumiendo que usas styled-components o alguna librería similar para FormGroup, Input, etc.
+// --- Componentes ---
 
 const InputUsuarioStandard = ({
-  estado,
-  cambiarEstado,
-  name = "input-default",
-  tipo = "text",
-  ExpresionRegular,
-  msg,
-  placeholder,
-  etiqueta,
-  importante = true,
-  logo = true,
-  mayusculas = true,
-  disabled = false,
-
+  estado, cambiarEstado, name = "input-default", tipo = "text",
+  ExpresionRegular, msg, placeholder, etiqueta, importante = true,
+  logo = true, mayusculas = true, disabled = false,
 }) => {
   const [mostrarMsg, setMostrarMsg] = useState(false);
 
   useEffect(() => {
     let timer;
-    if (mostrarMsg) {
-      timer = setTimeout(() => {
-        setMostrarMsg(false);
-      }, 10000);
-    }
-    return () => clearTimeout(timer); // Limpieza de memoria
+    if (mostrarMsg) { timer = setTimeout(() => { setMostrarMsg(false); }, 10000); }
+    return () => clearTimeout(timer);
   }, [mostrarMsg]);
 
   const onChange = (e) => {
@@ -60,287 +95,80 @@ const InputUsuarioStandard = ({
   };
 
   return (
-    <>
-      <label className="hospital-label w-100 mb-2">
-        {etiqueta}  {importante && logo && <span style={{ color: 'red' }}>*</span>}
-      </label>
-      <div className="input-group-custom">
+    <div style={{ marginBottom: '4px', width: '100%' }}>
+      <label style={baseLabelStyle}>{etiqueta} {importante && logo && <span style={{ color: '#dc2626' }}>*</span>}</label>
+      <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
         <Input
           type={tipo}
-          className="form-control-clinical"
-          id={name}
-          name={name}
-          placeholder={placeholder}
+          style={baseInputStyle(estado.valido, disabled)}
+          id={name} name={name} placeholder={placeholder}
           value={disabled ? "" : (estado.campo || "")}
-          onChange={onChange}
-          onKeyUp={validacion}
-          onBlur={validacion}
-          valido={estado.valido}
-          disabled={disabled}
-          required={importante}
+          onChange={onChange} onKeyUp={validacion} onBlur={validacion}
+          valido={estado.valido} disabled={disabled} required={importante}
         />
-
-        {/* Validación de Icono mejorada con paréntesis */}
         {(tipo === 'text' || tipo === 'number') && estado.valido && (
-          <IconoValidacion
-            valido={estado.valido}
-            icon={estado.valido === 'true' ? faCheckCircle : faTimesCircle}
-          // style={{ right: tipo === 'text' ? '10px' : "30px" }}
-          />
+          <div style={{ position: 'absolute', right: '14px', color: estado.valido === 'true' ? '#2e7559' : '#dc2626', pointerEvents: 'none' }}>
+            <FontAwesomeIcon icon={estado.valido === 'true' ? faCheckCircle : faTimesCircle} />
+          </div>
         )}
       </div>
-      {/* Renderizado condicional en lugar de manipular el style directamente */}
-      {mostrarMsg && (
-        <label style={{ color: '#FF3D85', fontSize: '11px', fontWeight: 'bold', display: 'block', marginTop: '5px' }}>
-          {msg}
-        </label>
-      )}
-    </>
-  );
-};
-
-const InputUsuarioSearch = ({
-  name = "input-default",
-  placeholder,
-  onChange
-}) => {
-
-
-  return (
-    <div className="buscador-contenedor">
-      <FontAwesomeIcon icon={faSearch} className="icono-busqueda" />
-      <Input
-        type='text'
-        className="input-buscador"
-        id={name}
-        name={name}
-        placeholder={placeholder}
-        onChange={onChange}
-        valido={null}
-      />
+      {mostrarMsg && <label style={{ color: '#dc2626', fontSize: '11px', fontWeight: '700', marginTop: '6px' }}>{msg}</label>}
     </div>
   );
 };
 
+const InputUsuarioSearch = ({ name = "input-default", placeholder, onChange }) => (
+  <div style={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%' }}>
+    <FontAwesomeIcon icon={faSearch} style={{ position: 'absolute', left: '16px', color: '#94a3b8', pointerEvents: 'none' }} />
+    <Input type="text" style={{ ...baseInputStyle(null, false), padding: '0 14px 0 44px' }} id={name} name={name} placeholder={placeholder} onChange={onChange} />
+  </div>
+);
 
-const Select1 = ({
-  estado,
-  cambiarEstado,
-  Name,
-  ExpresionRegular,
-  lista,
-  name,
-  funcion = null,
-  msg,
-  etiqueta = null,
-  importante = true,
-}) => {
+const Select1 = ({ estado, cambiarEstado, Name, ExpresionRegular, lista, name, funcion = null, msg, etiqueta = null, importante = true }) => {
   const [mostrarMsg, setMostrarMsg] = useState(false);
-
-  useEffect(() => {
-    let timer;
-    if (mostrarMsg) {
-      timer = setTimeout(() => {
-        setMostrarMsg(false);
-      }, 5000); // Reducido a 5s para mejor UX
-    }
-    return () => clearTimeout(timer);
-  }, [mostrarMsg]);
-
   const handleChange = (selectedOption) => {
-    // 1. Extraer el valor (si es null por borrar la selección, ponemos null)
     const valor = selectedOption ? parseInt(selectedOption.value) : null;
-
-    // 2. Validar inmediatamente con la ExpresionRegular
-    let esValido = "null";
-    if (ExpresionRegular) {
-      esValido = ExpresionRegular.test(valor) ? "true" : "false";
-    }
-
-    // 3. Actualizar el estado global
-    cambiarEstado({ 
-      ...estado, 
-      campo: valor, 
-      valido: esValido 
-    });
-
-    // 4. Manejar mensajes de error
+    let esValido = ExpresionRegular ? (ExpresionRegular.test(valor) ? "true" : "false") : "null";
+    cambiarEstado({ ...estado, campo: valor, valido: esValido });
     setMostrarMsg(esValido === "false");
-
-    // 5. Ejecutar función extra (como la del prefijo LOT-)
-    if (funcion && selectedOption) {
-      funcion(valor);
-    }
+    if (funcion && selectedOption) funcion(valor);
   };
 
   return (
-    <div className="mb-3">
-      {etiqueta && (
-        <label className="hospital-label w-100 mb-2 fw-bold" style={{ fontSize: '14px' }}>
-          {etiqueta} {importante && <span style={{ color: 'red' }}>*</span>}
-        </label>
-      )}
-
-      <Select
-        name={Name}
-        id={name}
-        placeholder={'Seleccione...'}
-        onChange={handleChange}
-        options={lista}
-        // react-select necesita el objeto completo, lo buscamos en la lista por su ID
-        value={lista.find(opt => opt.value === estado.campo) || null}
-        isSearchable={true}
-        isClearable={true}
-        styles={{
-          control: (base) => ({
-            ...base,
-            borderRadius: '8px',
-            minHeight: '45px',
-            borderColor: estado.valido === 'true' ? '#1ed12d' : estado.valido === 'false' ? '#dc3545' : '#dee2e6',
-            boxShadow: 'none',
-            '&:hover': {
-              borderColor: estado.valido === 'true' ? '#1ed12d' : estado.valido === 'false' ? '#dc3545' : '#86b7fe'
-            }
-          })
-        }}
-      />
-
-      {mostrarMsg && (
-        <small className="text-danger fw-bold d-block mt-1 animate__animated animate__fadeIn" style={{ fontSize: '11px' }}>
-          {msg}
-        </small>
-      )}
+    <div style={{ marginBottom: '4px', width: '100%' }}>
+      {etiqueta && <label style={baseLabelStyle}>{etiqueta} {importante && <span style={{ color: '#dc2626' }}>*</span>}</label>}
+      <Select name={Name} id={name} placeholder="Seleccione..." onChange={handleChange} options={lista} value={lista.find(o => o.value === estado.campo) || null} isSearchable isClearable styles={getSelectStyles(estado.valido)} />
+      {mostrarMsg && <small style={{ color: '#dc2626', fontSize: '11px', fontWeight: '700', marginTop: '6px' }}>{msg}</small>}
     </div>
   );
 };
 
-const Select1EasyColors = ({
-  estado,
-  cambiarEstado,
-  Name,
-  ExpresionRegular,
-  lista,
-  name,
-  funcion = null,
-  msg,
-  etiqueta = null,
-  nivel = null,
-}) => {
-
-
+const Select1EasyColors = ({ estado, cambiarEstado, Name, ExpresionRegular, lista, name, funcion = null, etiqueta = null }) => {
   const onChange = (e) => {
-    if (ExpresionRegular) {
-
-      if (ExpresionRegular.test(e.value)) {
-        cambiarEstado({ ...estado, valido: "true" }); //el valor del campo valido, debe ser una cadena
-        if (funcion) funcion(parseInt(e.value))
-        if (nivel) nivel({ campo: parseInt(e.nivel), valido: "true" })
-        cambiarEstado({ campo: parseInt(e.value), valido: "true" });
-      } else {
-        cambiarEstado({ ...estado, valido: "false" });
-      }
-    }
-
+    const esValido = ExpresionRegular.test(e.value) ? "true" : "false";
+    cambiarEstado({ campo: parseInt(e.value), valido: esValido });
+    if (esValido === "true" && funcion) funcion(parseInt(e.value));
   };
-  const validacion = (e) => {
-    if (ExpresionRegular) {
-      if (ExpresionRegular.test(estado.campo)) {
-        cambiarEstado({ ...estado, valido: "true" }); //el valor del campo valido, debe ser una cadena
-        if (funcion) funcion(parseInt(e.value))
-        if (nivel) nivel({ campo: parseInt(e.nivel), valido: "true" })
-
-      } else {
-        cambiarEstado({ ...estado, valido: "false" });
-      }
-    }
-  };
-
-  let valor = ''
-  for (let e of lista) {
-    if (e.value == estado.campo) {
-      valor = e.label
-    }
-  }
-  // console.log(lista)
-
-
-
-
   return (
     <FormGroup>
-      <label htmlFor={name}>
-        {etiqueta}
-      </label>
-      <Select
-        name={Name}
-        onClick={validacion}
-        value={lista.find(opt => opt.value === estado.campo) || null}
-        className={estado.valido === 'true' ? 'select-valid' : estado.valido === 'false' ? 'select-invalid' : ''}
-        styles={{
-          control: (base, state) => ({
-            ...base,
-
-            borderColor: estado.valido === 'true' ? '#1ed12d' : estado.valido === 'false' ? '#dc3545' : base.borderColor,
-            '&:hover': {
-              borderColor: estado.valido === 'true' ? '#1ed12d' : estado.valido === 'false' ? '#dc3545' : base.borderColor
-            }
-          }),
-
-        }}
-        placeholder={'Seleccione'}
-        onChange={onChange}
-        options={lista}
-      />
-    </FormGroup >
-  );
-};
-
-const ComponenteInputUserDisabled = ({ estado, etiqueta, placeholder, tabla = false, importante = true }) => {
-  return (
-    <FormGroup>
-      {!tabla && <label>{etiqueta}{importante ? <span style={{ color: 'red' }}>*</span> : null}</label>}
-      <Input
-        type="text"
-        value={estado.campo || ""}
-        valido={estado.valido}
-        placeholder={placeholder}
-        // toUpperCase
-        disabled
-      />
+      {etiqueta && <label style={baseLabelStyle}>{etiqueta}</label>}
+      <Select name={Name} value={lista.find(o => o.value === estado.campo) || null} styles={getSelectStyles(estado.valido)} placeholder="Seleccione..." onChange={onChange} options={lista} />
     </FormGroup>
   );
 };
 
-const ComponenteCheck = ({
-  etiqueta,
-  estado,
-  onChange,
-  name
-}) => {
+const ComponenteInputUserDisabled = ({ estado, etiqueta, placeholder, importante = true }) => (
+  <FormGroup>
+    <label style={baseLabelStyle}>{etiqueta}{importante && <span style={{ color: '#dc2626' }}>*</span>}</label>
+    <Input type="text" style={baseInputStyle('null', true)} value={estado.campo || ""} disabled placeholder={placeholder} />
+  </FormGroup>
+);
 
+const ComponenteCheck = ({ etiqueta, estado, onChange, name }) => (
+  <label htmlFor={name} style={{ display: 'inline-flex', alignItems: 'center', color: '#475569', fontSize: '14px', fontWeight: '500', cursor: 'pointer', marginTop: '8px' }}>
+    <input type="checkbox" name={name} id={name} checked={estado} onChange={onChange} style={{ width: '16px', height: '16px', marginRight: '8px', cursor: 'pointer', accentColor: '#0f172a' }} />
+    {etiqueta}
+  </label>
+);
 
-  return (
-    <label className="text-muted cursor-pointer" htmlFor={name}>
-      <input
-        type="checkbox"
-        className="me-2"
-        name={name}
-        id={name}
-        checked={estado} // Valor vinculado al estado
-        onChange={onChange}
-      />{etiqueta}
-    </label>
-  );
-};
-
-
-
-export {
-  InputUsuarioStandard,
-  Select1,
-  Select1EasyColors,
-  ComponenteCheck,
-  ComponenteInputUserDisabled,
-  InputUsuarioSearch
-
-};
+export { InputUsuarioStandard, Select1, Select1EasyColors, ComponenteCheck, ComponenteInputUserDisabled, InputUsuarioSearch };
